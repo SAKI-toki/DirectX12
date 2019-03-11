@@ -21,8 +21,8 @@ class ObjModelManager :public saki::singleton<ObjModelManager>
 		ComPtr<ID3D12Resource> index_buffer;
 		D3D12_INDEX_BUFFER_VIEW index_buffer_view;
 	};
-	std::unordered_map<std::string, ObjModelData> obj_data_map;
+	std::unordered_map<std::wstring, ObjModelData> obj_data_map;
 	friend class ObjModel;
-	HRESULT LoadObjModel(const std::string&, const WCHAR*);
-	void SetObjModel(const std::string&, ComPtr<ID3D12GraphicsCommandList>&);
+	HRESULT LoadObjModel(const std::wstring&);
+	void SetObjModel(const std::wstring&, ComPtr<ID3D12GraphicsCommandList>&);
 };

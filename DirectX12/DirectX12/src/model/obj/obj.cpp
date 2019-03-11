@@ -3,16 +3,16 @@
 #include "../../camera/camera.h"
 #include "../../common/message_box.h"
 
-HRESULT Obj::Init(const std::string& model_key, const WCHAR* model_path,
-	const std::string& texture_key, const WCHAR* texture_path)
+HRESULT Obj::Init(const std::wstring& model_path,
+	const std::wstring& texture_path)
 {
 	HRESULT hr = S_OK;
 
 	hr = CreateBuffer();
 	if (FAILED(hr))return hr;
-	hr = model.LoadObjModel(model_key, model_path);
+	hr = model.LoadObjModel(model_path);
 	if (FAILED(hr))return hr;
-	hr = texture.LoadTexture(texture_key, texture_path);
+	hr = texture.LoadTexture(texture_path);
 	if (FAILED(hr))return hr;
 	hr = pipeline.CreatePipeline("obj", L"resources/shader/SimpleShader3D.hlsl",
 		L"resources/shader/SimpleShader3D.hlsl", true, false);

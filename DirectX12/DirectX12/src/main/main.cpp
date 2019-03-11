@@ -51,7 +51,7 @@ bool Main::InitWindow(HINSTANCE hInst, int nCmdShow)
 	wcex.hIconSm = wcex.hIcon;
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszClassName = APP_NAME;
+	wcex.lpszClassName = APP_NAME.c_str();
 	if (!RegisterClassEx(&wcex))
 	{
 		Comment(L"ƒEƒBƒ“ƒhƒE“o˜^‚ÉŽ¸”s", L"main.cpp/Main::InitWindow");
@@ -59,7 +59,7 @@ bool Main::InitWindow(HINSTANCE hInst, int nCmdShow)
 	}
 
 	hinst = hInst;
-	hwnd = CreateWindowEx(WS_EX_ACCEPTFILES, APP_NAME, APP_NAME, 
+	hwnd = CreateWindowEx(WS_EX_ACCEPTFILES, APP_NAME.c_str(), APP_NAME.c_str(),
 		WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
 		0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, hinst, 0);
 
@@ -134,7 +134,7 @@ void Main::MessageLoop()
 		hr = Render();
 		if (FAILED(hr))break;
 	}
-	UnregisterClass(APP_NAME, 0);
+	UnregisterClass(APP_NAME.c_str(), 0);
 	hwnd = 0;
 }
 

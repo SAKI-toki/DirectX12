@@ -6,28 +6,23 @@
 */
 #include "texture.h"
 
-HRESULT Texture::LoadTexture(const std::string& _key, const WCHAR* path)
+HRESULT Texture::LoadTexture(const std::wstring& _path)
 {
-	key = _key;
-	return TextureManager::getinstance()->LoadTexture(key, path);
+	path = _path;
+	return TextureManager::getinstance()->LoadTexture(path);
 }
 
 void Texture::SetTexture(ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
-	TextureManager::getinstance()->SetTexture(key, command_list);
+	TextureManager::getinstance()->SetTexture(path, command_list);
 }
 
 int Texture::GetWidth()
 {
-	return TextureManager::getinstance()->GetWidth(key);
+	return TextureManager::getinstance()->GetWidth(path);
 }
 
 int Texture::GetHeight()
 {
-	return TextureManager::getinstance()->GetHeight(key);
-}
-
-std::string Texture::GetKey()const
-{
-	return key;
+	return TextureManager::getinstance()->GetHeight(path);
 }

@@ -9,13 +9,13 @@
 #include "../camera/camera.h"
 #include "../common/message_box.h"
 
-HRESULT Sprite::Init(const std::string& key, const WCHAR* path)
+HRESULT Sprite::Init(const std::wstring& path)
 {
 	HRESULT hr = S_OK;
 
 	hr = CreateBuffer();
 	if (FAILED(hr))return hr;
-	hr = texture.LoadTexture(key, path);
+	hr = texture.LoadTexture(path);
 	if (FAILED(hr))return hr;
 	hr = CreatePlane();
 	if (FAILED(hr))return hr;

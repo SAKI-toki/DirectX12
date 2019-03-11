@@ -1,11 +1,9 @@
 #pragma once
+#include "manager/shader_manager.h"
 class Shader
 {
-	std::string key;
+	std::wstring path;
 public:
-	HRESULT LoadTexture(const std::string&, const WCHAR*);
-	void SetTexture(ComPtr<ID3D12GraphicsCommandList>&);
-	int GetWidth();
-	int GetHeight();
-	std::string GetKey()const;
+	HRESULT LoadShader(const std::wstring&, const std::string&, const std::string&);
+	ComPtr<ID3DBlob>& GetShader();
 };

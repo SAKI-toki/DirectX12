@@ -24,7 +24,7 @@ class Sprite
 	Texture texture;
 	Pipeline pipeline;
 public:
-	HRESULT Init(const std::string&, const WCHAR*);
+	HRESULT Init(const std::wstring&);
 	HRESULT UpdateTransform(const Transform&);
 	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>&);
 };

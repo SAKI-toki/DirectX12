@@ -9,11 +9,11 @@
 #include "../../common/message_box.h"
 #include <fstream>
 
-HRESULT TextureManager::LoadTexture(const std::string& key, const WCHAR* path)
+HRESULT TextureManager::LoadTexture(const std::wstring& path)
 {
 	HRESULT hr = S_OK;
 
-	auto itr = texture_data_map.find(key);
+	auto itr = texture_data_map.find(path);
 	//既に読み込んでいる場合
 	if (itr != std::end(texture_data_map)) { return hr; }
 	TextureData texture_data;
@@ -94,13 +94,13 @@ HRESULT TextureManager::LoadTexture(const std::string& key, const WCHAR* path)
 		Comment(L"サブリソースへの書き込みに失敗", L"texture_manager.cpp/TextureManager::LoadTexture");
 		return E_FAIL;
 	}
-	texture_data_map.insert(std::make_pair(key, texture_data));
+	texture_data_map.insert(std::make_pair(path, texture_data));
 	return hr;
 }
 
-void TextureManager::SetTexture(const std::string& key, ComPtr<ID3D12GraphicsCommandList>& command_list)
+void TextureManager::SetTexture(const std::wstring& path, ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
-	auto itr = texture_data_map.find(key);
+	auto itr = texture_data_map.find(path);
 
 	Device::getinstance()->SetResourceBarrier(D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_GENERIC_READ, itr->second.texture.Get(),command_list);
 	ID3D12DescriptorHeap* ppHeaps[] = { itr->second.dh_texture.Get() };
@@ -109,13 +109,13 @@ void TextureManager::SetTexture(const std::string& key, ComPtr<ID3D12GraphicsCom
 	Device::getinstance()->SetResourceBarrier(D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON, itr->second.texture.Get(), command_list);
 }
 
-int TextureManager::GetWidth(const std::string& key)
+int TextureManager::GetWidth(const std::wstring& path)
 {
-	auto itr = texture_data_map.find(key);
+	auto itr = texture_data_map.find(path);
 	return itr->second.width;
 }
-int TextureManager::GetHeight(const std::string& key)
+int TextureManager::GetHeight(const std::wstring& path)
 {
-	auto itr = texture_data_map.find(key);
+	auto itr = texture_data_map.find(path);
 	return itr->second.height;
 }

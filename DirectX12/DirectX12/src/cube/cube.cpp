@@ -16,7 +16,7 @@
 * @param path テクスチャのパス
 * @return 成功したかどうか
 */
-HRESULT Cube::Init(const std::string& key, const WCHAR* path)
+HRESULT Cube::Init(const std::wstring& path)
 {
 	HRESULT hr = S_OK;
 
@@ -25,7 +25,7 @@ HRESULT Cube::Init(const std::string& key, const WCHAR* path)
 	hr = CreateCube();
 	if (FAILED(hr))return hr;
 
-	hr = texture.LoadTexture(key, path);
+	hr = texture.LoadTexture(path);
 	if (FAILED(hr))return hr;
 	hr = pipeline.CreatePipeline("cube",
 		L"resources/shader/SimpleShader3D.hlsl", 

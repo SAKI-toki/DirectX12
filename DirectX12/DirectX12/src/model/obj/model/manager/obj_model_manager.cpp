@@ -4,11 +4,11 @@
 #include <fstream>
 #include <saki/vector.h>
 
-HRESULT ObjModelManager::LoadObjModel(const std::string& key, const WCHAR* path)
+HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 {
 	HRESULT hr = S_OK;
 
-	auto itr = obj_data_map.find(key);
+	auto itr = obj_data_map.find(path);
 	//ä˘Ç…ì«Ç›çûÇÒÇ≈Ç¢ÇÈèÍçá
 	if (itr != std::end(obj_data_map)) { return hr; }
 	ObjModelData obj_data;
@@ -141,14 +141,14 @@ HRESULT ObjModelManager::LoadObjModel(const std::string& key, const WCHAR* path)
 		ib = nullptr;
 	}
 
-	obj_data_map.insert(std::make_pair(key, obj_data));
+	obj_data_map.insert(std::make_pair(path, obj_data));
 
 	return hr;
 }
 
-void ObjModelManager::SetObjModel(const std::string& key, ComPtr<ID3D12GraphicsCommandList>& command_list)
+void ObjModelManager::SetObjModel(const std::wstring& path, ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
-	auto itr = obj_data_map.find(key);
+	auto itr = obj_data_map.find(path);
 
 	command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	command_list->IASetVertexBuffers(0, 1, &itr->second.vertex_buffer_view);

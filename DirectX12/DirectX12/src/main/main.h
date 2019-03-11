@@ -8,11 +8,12 @@
 #include "../common/window_size.h"
 #include "../common/d3d12.h"
 #include <saki/singleton.h>
+#include <string>
 
 class Main :public saki::singleton<Main>
 {
 	//アプリ名
-	static constexpr WCHAR* APP_NAME = L"Game";
+	const std::wstring APP_NAME{ L"Game" };
 	//ウィンドウハンドラ
 	HWND hwnd;
 	//インスタンスハンドラ

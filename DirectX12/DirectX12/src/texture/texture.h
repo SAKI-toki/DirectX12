@@ -8,11 +8,10 @@
 #include "manager/texture_manager.h"
 class Texture
 {
-	std::string key;
+	std::wstring path;
 public:
-	HRESULT LoadTexture(const std::string&, const WCHAR*);
+	HRESULT LoadTexture(const std::wstring&);
 	void SetTexture(ComPtr<ID3D12GraphicsCommandList>&);
 	int GetWidth();
 	int GetHeight();
-	std::string GetKey()const;
 };

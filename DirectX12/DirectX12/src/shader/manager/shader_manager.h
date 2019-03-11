@@ -16,15 +16,8 @@
 */
 class ShaderManager :public saki::singleton<ShaderManager>
 {
-	/**
-	* @brief シェーダーの情報構造体
-	*/
-	struct ShaderData
-	{
-		ComPtr<ID3DBlob> vertex_shader;
-		ComPtr<ID3DBlob> pixel_shader;
-	};
 	friend class Shader;
-	std::unordered_map<std::string, ShaderData> shader_data_map;
-	HRESULT LoadShader(const std::string&, const WCHAR*);
+	std::unordered_map<std::wstring, ComPtr<ID3DBlob>> shader_data_map;
+	HRESULT LoadShader(const std::wstring&, const std::string&, const std::string&);
+	ComPtr<ID3DBlob>& GetShader(const std::wstring&);
 };

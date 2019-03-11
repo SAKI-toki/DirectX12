@@ -151,6 +151,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\camera\camera.h" />
+    <ClInclude Include="src\command_list\Bundle\bundle.h" />
+    <ClInclude Include="src\command_list\Execute\execute_command_list.h" />
     <ClInclude Include="src\common\alias.h" />
     <ClInclude Include="src\common\d3d12.h" />
     <ClInclude Include="src\common\message_box.h" />
@@ -180,6 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera\camera.cpp" />
+    <ClCompile Include="src\command_list\Bundle\bundle.cpp" />
+    <ClCompile Include="src\command_list\Execute\execute_command_list.cpp" />
     <ClCompile Include="src\cube\cube.cpp" />
     <ClCompile Include="src\device\device.cpp" />
     <ClCompile Include="src\input\gamepad\gamepad_input.cpp" />
@@ -194,6 +198,7 @@
     <ClCompile Include="src\scene\main\title\title_scene.cpp" />
     <ClCompile Include="src\scene\manager\scene_manager.cpp" />
     <ClCompile Include="src\shader\manager\shader_manager.cpp" />
+    <ClCompile Include="src\shader\shader.cpp" />
     <ClCompile Include="src\sphere\sphere.cpp" />
     <ClCompile Include="src\sprite\sprite.cpp" />
     <ClCompile Include="src\texture\manager\texture_manager.cpp" />
