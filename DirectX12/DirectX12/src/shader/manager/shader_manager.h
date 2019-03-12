@@ -18,6 +18,6 @@ class ShaderManager :public saki::singleton<ShaderManager>
 {
 	friend class Shader;
 	std::unordered_map<std::wstring, ComPtr<ID3DBlob>> shader_data_map;
-	HRESULT LoadShader(const std::wstring&, const std::string&, const std::string&);
+	HRESULT LoadShader(const std::wstring&, const std::wstring&, const std::string&, const std::string&);
 	ComPtr<ID3DBlob>& GetShader(const std::wstring&);
 };

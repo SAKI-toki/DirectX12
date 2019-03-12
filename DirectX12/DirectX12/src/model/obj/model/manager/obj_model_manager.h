@@ -7,6 +7,7 @@
 
 class ObjModelManager :public saki::singleton<ObjModelManager>
 {
+	friend class ObjModel;
 	struct Vertex3D
 	{
 		Float3 pos;
@@ -22,7 +23,7 @@ class ObjModelManager :public saki::singleton<ObjModelManager>
 		D3D12_INDEX_BUFFER_VIEW index_buffer_view;
 	};
 	std::unordered_map<std::wstring, ObjModelData> obj_data_map;
-	friend class ObjModel;
-	HRESULT LoadObjModel(const std::wstring&);
-	void SetObjModel(const std::wstring&, ComPtr<ID3D12GraphicsCommandList>&);
+	HRESULT LoadObjModel(const std::wstring& path);
+	void SetObjModel(const std::wstring& path,
+		ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 };

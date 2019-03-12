@@ -25,7 +25,7 @@ public:
 	void UpdateTime();
 	//スケールを反映した経過時間を取得
 	float GetElapsedTime();
-	//スケールを反映しない詠歌時間を取得
+	//スケールを反映しない経過時間を取得
 	float GetElapsedTimeNotScale();
 	//スケールのセッタ
 	void SetTimeScale(float);

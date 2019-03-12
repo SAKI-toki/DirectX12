@@ -157,11 +157,11 @@
     <ClInclude Include="src\common\d3d12.h" />
     <ClInclude Include="src\common\message_box.h" />
     <ClInclude Include="src\common\window_size.h" />
+    <ClInclude Include="src\cube\command_list\cube_command_list.h" />
     <ClInclude Include="src\cube\cube.h" />
     <ClInclude Include="src\device\device.h" />
     <ClInclude Include="src\input\gamepad\gamepad_input.h" />
     <ClInclude Include="src\input\keyboard\keyboard_input.h" />
-    <ClInclude Include="src\light\directional\directional_light.h" />
     <ClInclude Include="src\main\main.h" />
     <ClInclude Include="src\model\obj\model\manager\obj_model_manager.h" />
     <ClInclude Include="src\model\obj\model\obj_model.h" />
@@ -184,6 +184,7 @@
     <ClCompile Include="src\camera\camera.cpp" />
     <ClCompile Include="src\command_list\Bundle\bundle.cpp" />
     <ClCompile Include="src\command_list\Execute\execute_command_list.cpp" />
+    <ClCompile Include="src\cube\command_list\cube_command_list.cpp" />
     <ClCompile Include="src\cube\cube.cpp" />
     <ClCompile Include="src\device\device.cpp" />
     <ClCompile Include="src\input\gamepad\gamepad_input.cpp" />

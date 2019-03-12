@@ -7,10 +7,12 @@
 #include "camera.h"
 #include "../common/window_size.h"
 
+#pragma region public
+
 /**
-* @brief カメラの初期化
+* @brief カメラのコンストラクタ
 */
-void Camera::Init()
+Camera::Camera()
 {
 	MatrixUpdate();
 }
@@ -51,18 +53,6 @@ Matrix Camera::GetViewMulProjection()const
 }
 
 /**
-* @brief 行列の更新
-*/
-void Camera::MatrixUpdate()
-{
-	view = DirectX::XMMatrixLookAtLH(pos, lookat, up);
-	projection = DirectX::XMMatrixPerspectiveFovLH(
-		fov, static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT),
-		NEAR_Z, FAR_Z);
-	view_mul_projection = view * projection;
-}
-
-/**
 * @brief 位置のゲッタ
 * @return 位置
 */
@@ -97,3 +87,21 @@ void Camera::SetLookAt(const Vector& _lookat)
 {
 	lookat = _lookat;
 }
+
+#pragma endregion
+
+#pragma region private
+
+/**
+* @brief 行列の更新
+*/
+void Camera::MatrixUpdate()
+{
+	view = DirectX::XMMatrixLookAtLH(pos, lookat, up);
+	projection = DirectX::XMMatrixPerspectiveFovLH(
+		fov, static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT),
+		NEAR_Z, FAR_Z);
+	view_mul_projection = view * projection;
+}
+
+#pragma endregion

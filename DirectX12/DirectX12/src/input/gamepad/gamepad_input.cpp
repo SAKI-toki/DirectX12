@@ -77,10 +77,10 @@ void GamepadInput::Update()
 /**
 * @brief コントローラーの振動
 * @param index コントローラーの番号
-* @param right 右のモーターの力
 * @param left 左のモーターの力
+* @param right 右のモーターの力
 */
-void GamepadInput::Vibration(size_t index, float right, float left)
+void GamepadInput::Vibration(size_t index, float left, float right)
 {
 	if (!index_check(index))return;
 	//未接続

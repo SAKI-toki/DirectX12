@@ -2,11 +2,13 @@
 * @file device.cpp
 * @brief デバイスクラスの関数定義
 * @author 石山　悠
-* @date 2019/02/08
+* @date 2019/03/11
 */
 #include "device.h"
 #include "../common/message_box.h"
 #include "../common/window_size.h"
+
+#pragma region public
 
 /**
 * @brief デバイスの初期化
@@ -35,6 +37,26 @@ HRESULT Device::InitDevice(HWND hwnd)
 	if (FAILED(hr))return hr;
 	hr = CreateDepthStencilBuffer();
 	if (FAILED(hr))return hr;
+	CreateScissorRectViewPort();
+
+	return hr;
+}
+
+/**
+* @brief 描画するときに必要なコマンドをセットする
+* @param com_command_list セットするコマンドリスト
+* @return 成功したかどうか
+*/
+HRESULT Device::BeginSceneSet(ComPtr<ID3D12GraphicsCommandList>& com_command_list)
+{
+	HRESULT hr = S_OK;
+
+	com_command_list->SetGraphicsRootSignature(root_signature.Get());
+
+	com_command_list->RSSetViewports(1, &viewport);
+	com_command_list->RSSetScissorRects(1, &scissor_rect);
+
+	com_command_list->OMSetRenderTargets(1, &rtv_handle[rtv_index], true, &dsv_handle);
 
 	return hr;
 }
@@ -47,18 +69,17 @@ HRESULT Device::BeginScene()
 {
 	HRESULT hr = S_OK;
 
-	static constexpr float clear_color[4] = { 0.0f,0.0f,0.0f,1.0f };
-
-	command_list->SetGraphicsRootSignature(root_signature.Get());
-
-	command_list->RSSetViewports(1, &viewport);
-	command_list->RSSetScissorRects(1, &scissor_rect);
-
-	SetResourceBarrier(D3D12_RESOURCE_STATE_PRESENT, 
+	SetResourceBarrier(D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET, render_targets[rtv_index].Get(), command_list);
+
+	static constexpr float clear_color[4] = { 0.0f,0.0f,0.0f,1.0f };
 	command_list->ClearDepthStencilView(dsv_handle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 	command_list->ClearRenderTargetView(rtv_handle[rtv_index], clear_color, 0, nullptr);
-	command_list->OMSetRenderTargets(1, &rtv_handle[rtv_index], true, &dsv_handle);
+
+	hr = BeginSceneSet(command_list);
+	if (FAILED(hr))return hr;
+	hr = ExecuteCommand(command_list, command_allocator, nullptr);
+	if (FAILED(hr))return hr;
 
 	return hr;
 }
@@ -103,7 +124,11 @@ HRESULT Device::Present()
 /**
 * @brief リソースバリアの設定
 */
-void Device::SetResourceBarrier(D3D12_RESOURCE_STATES before, D3D12_RESOURCE_STATES after, ID3D12Resource* resource, ComPtr<ID3D12GraphicsCommandList>& barrier_command_list)
+void Device::SetResourceBarrier(
+	D3D12_RESOURCE_STATES before, 
+	D3D12_RESOURCE_STATES after, 
+	ID3D12Resource* resource, 
+	ComPtr<ID3D12GraphicsCommandList>& barrier_command_list)
 {
 	D3D12_RESOURCE_BARRIER resource_barrier{};
 
@@ -162,6 +187,38 @@ HRESULT Device::ExecuteCommand(
 
 	return hr;
 }
+
+
+/**
+* @brief デバイスのゲッタ
+* @return デバイス
+*/
+ComPtr<ID3D12Device>& Device::GetDevice()
+{
+	return (device);
+}
+
+/**
+* @brief コマンドリストのゲッタ
+* @return コマンドリスト
+*/
+ComPtr<ID3D12GraphicsCommandList>& Device::GetCommandList()
+{
+	return (command_list);
+}
+
+/**
+* @brief ルートシグネチャのゲッタ
+* @return ルートシグネチャ
+*/
+ComPtr<ID3D12RootSignature>& Device::GetRootSignature()
+{
+	return (root_signature);
+}
+
+#pragma endregion
+
+#pragma region private
 
 /**
 * @brief Factoryの作成
@@ -317,7 +374,8 @@ HRESULT Device::CreateCommandAllocator()
 HRESULT Device::CreateCommandList()
 {
 	HRESULT hr = S_OK;
-	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, command_allocator.Get(), nullptr, IID_PPV_ARGS(&command_list));
+	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, command_allocator.Get(), 
+		nullptr, IID_PPV_ARGS(&command_list));
 	if (FAILED(hr))
 	{
 		Comment(L"コマンドリストの作成に失敗", L"device.cpp/Device::CreateCommandList");
@@ -493,6 +551,15 @@ HRESULT Device::CreateDepthStencilBuffer()
 }
 
 /**
+* @brief シザー矩形とビューポートの作成
+*/
+void Device::CreateScissorRectViewPort()
+{
+	scissor_rect = { 0,0,static_cast<LONG>(WINDOW_WIDTH),static_cast<LONG>(WINDOW_HEIGHT) };
+	viewport = { 0.0f,0.0f,WINDOW_WIDTH,WINDOW_HEIGHT,0.0f,1.0f };
+}
+
+/**
 * @brief 同期をとる
 * @return 成功したかどうか
 */
@@ -520,29 +587,4 @@ HRESULT Device::WaitForPreviousFrame()
 	return hr;
 }
 
-/**
-* @brief デバイスのゲッタ
-* @return デバイス
-*/
-ComPtr<ID3D12Device>& Device::GetDevice()
-{
-	return (device);
-}
-
-/**
-* @brief コマンドリストのゲッタ
-* @return コマンドリスト
-*/
-ComPtr<ID3D12GraphicsCommandList>& Device::GetCommandList()
-{
-	return (command_list);
-}
-
-/**
-* @brief ルートシグネチャのゲッタ
-* @return ルートシグネチャ
-*/
-ComPtr<ID3D12RootSignature>& Device::GetRootSignature()
-{
-	return (root_signature);
-}
+#pragma endregion

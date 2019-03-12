@@ -7,7 +7,6 @@
 #pragma once
 #include "../common/d3d12.h"
 #include "../common/alias.h"
-#include "../common/window_size.h"
 #include <saki/singleton.h>
 
 class Device :public saki::singleton<Device>
@@ -30,7 +29,7 @@ class Device :public saki::singleton<Device>
 	HRESULT CreateCommandQueue();
 	//swap_chain
 	ComPtr<IDXGISwapChain3> swap_chain;
-	HRESULT CreateSwapChain(HWND);
+	HRESULT CreateSwapChain(HWND hwnd);
 	//command_allocator
 	ComPtr<ID3D12CommandAllocator> command_allocator;
 	HRESULT CreateCommandAllocator();
@@ -51,25 +50,27 @@ class Device :public saki::singleton<Device>
 	D3D12_CPU_DESCRIPTOR_HANDLE dsv_handle;
 	HRESULT CreateDepthStencilBuffer();
 
-	D3D12_RECT scissor_rect
-	{ 0,0,static_cast<LONG>(WINDOW_WIDTH),static_cast<LONG>(WINDOW_HEIGHT) };
-	D3D12_VIEWPORT viewport
-	{ 0.0f,0.0f,WINDOW_WIDTH,WINDOW_HEIGHT,0.0f,1.0f };
+	D3D12_RECT scissor_rect;
+	D3D12_VIEWPORT viewport;
+	void CreateScissorRectViewPort();
 
 	HRESULT WaitForPreviousFrame();
 public:
-	HRESULT InitDevice(HWND);
+	HRESULT InitDevice(HWND hwnd);
+	HRESULT BeginSceneSet(ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 	HRESULT BeginScene();
 	HRESULT EndScene();
 	HRESULT Present();
 	//リソースバリア
 	void SetResourceBarrier
 	(D3D12_RESOURCE_STATES before, D3D12_RESOURCE_STATES after,
-		ID3D12Resource* resource, ComPtr<ID3D12GraphicsCommandList>&);
+		ID3D12Resource* resource, ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 
 	//コマンドの実行
 	HRESULT ExecuteCommand
-	(ComPtr<ID3D12GraphicsCommandList>&, ComPtr<ID3D12CommandAllocator>&, ID3D12PipelineState*);
+	(ComPtr<ID3D12GraphicsCommandList>& com_command_list, 
+		ComPtr<ID3D12CommandAllocator>& com_command_allocator, 
+		ID3D12PipelineState* p_pipeline);
 
 	//ゲッタ
 	ComPtr<ID3D12Device>& GetDevice();

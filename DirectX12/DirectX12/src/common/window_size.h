@@ -5,9 +5,7 @@
 * @date 2019/03/06
 */
 #pragma once
-namespace
-{
 	//定数定義
-	inline constexpr int WINDOW_WIDTH = 1920;//ウィンドウの幅
-	inline constexpr int WINDOW_HEIGHT = 1080;//ウィンドウの高さ
-}
+constexpr int WINDOW_SIZE = 120;//ウィンドウサイズ(16:9を維持しやすくするため)
+constexpr int WINDOW_WIDTH = 16 * WINDOW_SIZE;//ウィンドウの幅
+constexpr int WINDOW_HEIGHT = 9 * WINDOW_SIZE;//ウィンドウの高さ

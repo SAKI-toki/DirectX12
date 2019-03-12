@@ -13,6 +13,6 @@ class Obj
 public:
 	HRESULT Init(const std::wstring& model_path,
 		const std::wstring& texture_path);
-	HRESULT UpdateTransform(const Transform&);
-	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>&);
+	HRESULT UpdateTransform(const Transform& transform);
+	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 };

@@ -7,12 +7,20 @@
 #include "shader_manager.h"
 #include "../../common/message_box.h"
 
-HRESULT ShaderManager::LoadShader(const std::wstring& path, 
+/**
+* @brief シェーダーの読み込み
+* @param key キー
+* @param path シェーダーのパス
+* @param entry エントリー
+* @param target ターゲット
+* @return 成功したかどうか
+*/
+HRESULT ShaderManager::LoadShader(const std::wstring& key, const std::wstring& path,
 	const std::string& entry, const std::string& target)
 {
 	HRESULT hr = S_OK;
 
-	auto itr = shader_data_map.find(path);
+	auto itr = shader_data_map.find(key);
 	//既に読み込んでいる場合
 	if (itr != std::end(shader_data_map)) { return hr; }
 	
@@ -30,11 +38,16 @@ HRESULT ShaderManager::LoadShader(const std::wstring& path,
 			L"shader_manager.cpp/ShaderManager::LoadShader");
 		return hr;
 	}
-	shader_data_map.insert(std::make_pair(path, blob));
+	shader_data_map.insert(std::make_pair(key, blob));
 	return hr;
 }
 
-ComPtr<ID3DBlob>& ShaderManager::GetShader(const std::wstring& path)
+/**
+* @brief シェーダーのゲッタ
+* @param key キー
+* @return シェーダー
+*/
+ComPtr<ID3DBlob>& ShaderManager::GetShader(const std::wstring& key)
 {
-	return (shader_data_map.find(path)->second);
+	return (shader_data_map.find(key)->second);
 }

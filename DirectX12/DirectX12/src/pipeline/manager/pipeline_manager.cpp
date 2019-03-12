@@ -28,14 +28,16 @@ HRESULT PipelineManager::CreatePipeline(
 		compile_flg, 0, vertex_shader.GetAddressOf(), nullptr);
 	if (FAILED(hr))
 	{
-		Comment(L"頂点シェーダーのコンパイルに失敗", L"pipeline_manager.cpp/PipelineManager::CreatePipeline");
+		Comment(L"頂点シェーダーのコンパイルに失敗", 
+			L"pipeline_manager.cpp/PipelineManager::CreatePipeline");
 		return hr;
 	}
 	hr = D3DCompileFromFile(pixel_shader_path, nullptr, nullptr, "ps", "ps_5_0",
 		compile_flg, 0, pixel_shader.GetAddressOf(), nullptr);
 	if (FAILED(hr))
 	{
-		Comment(L"ピクセルシェーダーのコンパイルに失敗", L"pipeline_manager.cpp/PipelineManager::CreatePipeline");
+		Comment(L"ピクセルシェーダーのコンパイルに失敗", 
+			L"pipeline_manager.cpp/PipelineManager::CreatePipeline");
 		return hr;
 	}
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipeline_state_desc{};

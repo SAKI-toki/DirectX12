@@ -51,8 +51,7 @@ class GamepadInput :public saki::singleton<GamepadInput>
 	* @param u1,u2 ”ä‚×‚é‘ÎÛ
 	* @return ˆø”2‚Æ“™‚µ‚¢‚©‚Ç‚¤‚©
 	*/
-	template<typename U1, typename U2>
-	bool perfect_and(const U1 u1, const U2 u2)const
+	bool perfect_and(const WORD u1, const WORD u2)const
 	{
 		return (u1&u2) == u2;
 	}
@@ -68,7 +67,7 @@ class GamepadInput :public saki::singleton<GamepadInput>
 public:
 	GamepadInput();
 	void Update();
-	void Vibration(size_t index, float, float);
+	void Vibration(size_t index, float left, float right);
 
 	///--ƒQƒbƒ^--
 	/**

@@ -29,7 +29,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	if (FAILED(hr))return 0;
 	hr = KeyboardInput::getinstance()->KeyboardInit(Main::getinstance()->GetHwnd());
 	if (FAILED(hr))return 0;
-	Camera::getinstance()->Init();
 	hr = SceneManager::getinstance()->Init();
 	if (FAILED(hr))return 0;
 	//メッセージループ
@@ -61,12 +60,26 @@ bool Main::InitWindow(HINSTANCE hInst, int nCmdShow)
 	hinst = hInst;
 	hwnd = CreateWindowEx(WS_EX_ACCEPTFILES, APP_NAME.c_str(), APP_NAME.c_str(),
 		WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
-		0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, hinst, 0);
+		0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+		0, 0, hinst, 0);
 
 	if (!hwnd)
 	{
 		Comment(L"ウィンドウ生成に失敗", L"main.cpp/Main::InitWindow");
 		return false;
+	}
+	//画面の中心の持ってくる
+	{
+		HWND hDeskWnd;
+		RECT deskrc, rc;
+		int x, y;
+
+		hDeskWnd = GetDesktopWindow();
+		GetWindowRect(hDeskWnd, (LPRECT)&deskrc);
+		GetWindowRect(hwnd, (LPRECT)&rc);
+		x = (deskrc.right - (rc.right - rc.left)) / 2;
+		y = (deskrc.bottom - (rc.bottom - rc.top)) / 2;
+		SetWindowPos(hwnd, HWND_TOP, x, y, (rc.right - rc.left), (rc.bottom - rc.top), SWP_SHOWWINDOW);
 	}
 
 	ShowWindow(hwnd, nCmdShow);

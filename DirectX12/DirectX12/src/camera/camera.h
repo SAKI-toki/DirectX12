@@ -29,13 +29,13 @@ class Camera :public saki::singleton<Camera>
 	//çsóÒÇÃçXêV
 	void MatrixUpdate();
 public:
-	void Init();
+	Camera();
 	void Update();
 	Matrix GetView()const;
 	Matrix GetProjection()const;
 	Matrix GetViewMulProjection()const;
 	Vector GetPos()const;
-	void SetPos(const Vector&);
+	void SetPos(const Vector& camera_pos);
 	Vector GetLookAt()const;
-	void SetLookAt(const Vector&);
+	void SetLookAt(const Vector& camera_look_at);
 };

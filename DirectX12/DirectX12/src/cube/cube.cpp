@@ -16,7 +16,7 @@
 * @param path テクスチャのパス
 * @return 成功したかどうか
 */
-HRESULT Cube::Init(const std::wstring& path)
+HRESULT Cube::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeline)
 {
 	HRESULT hr = S_OK;
 
@@ -27,10 +27,13 @@ HRESULT Cube::Init(const std::wstring& path)
 
 	hr = texture.LoadTexture(path);
 	if (FAILED(hr))return hr;
-	hr = pipeline.CreatePipeline("cube",
-		L"resources/shader/SimpleShader3D.hlsl", 
-		L"resources/shader/SimpleShader3D.hlsl", true, false);
+	hr = bundle.Init(pipeline);
 	if (FAILED(hr))return hr;
+	hr = SetBundle();
+	if (FAILED(hr))return hr;
+	hr = bundle.Close();
+	if (FAILED(hr))return hr;
+
 
 	return hr;
 }
@@ -75,20 +78,9 @@ HRESULT Cube::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
 
-	//定数バッファをセット
-	command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
-
 	//テクスチャをセット
 	texture.SetTexture(command_list);
-	//パイプラインのセット
-	pipeline.SetPipeline(command_list);
-
-	command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	command_list->IASetVertexBuffers(0, 1, &vertex_buffer_view);
-	command_list->IASetIndexBuffer(&index_buffer_view);
-
-	//描画
-	command_list->DrawIndexedInstanced(36, 1, 0, 0, 0);
+	bundle.SetExecuteCommandList(command_list);
 
 	return hr;
 }
@@ -228,5 +220,25 @@ HRESULT Cube::CreateCube()
 		index_buffer->Unmap(0, nullptr);
 		ib = nullptr;
 	}
+	return hr;
+}
+
+HRESULT Cube::SetBundle()
+{
+	HRESULT hr = S_OK;
+
+	decltype(auto) bundle_command_list = bundle.GetCommandList();
+
+	bundle_command_list->SetGraphicsRootSignature(Device::getinstance()->GetRootSignature().Get());
+
+	//定数バッファをセット
+	bundle_command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
+
+	bundle_command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	bundle_command_list->IASetVertexBuffers(0, 1, &vertex_buffer_view);
+	bundle_command_list->IASetIndexBuffer(&index_buffer_view);
+
+	//描画
+	bundle_command_list->DrawIndexedInstanced(36, 1, 0, 0, 0);
 	return hr;
 }

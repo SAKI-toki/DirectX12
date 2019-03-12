@@ -45,9 +45,6 @@
     <ClInclude Include="src\texture\texture.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\light\directional\directional_light.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\sprite\sprite.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -100,6 +97,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\command_list\Bundle\bundle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cube\command_list\cube_command_list.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -171,6 +171,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\command_list\Bundle\bundle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cube\command_list\cube_command_list.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

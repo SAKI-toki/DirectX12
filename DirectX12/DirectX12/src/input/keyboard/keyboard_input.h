@@ -25,11 +25,11 @@ class KeyboardInput :public saki::singleton<KeyboardInput>
 
 	void Destroy();
 public:
-	HRESULT KeyboardInit(HWND);
+	HRESULT KeyboardInit(HWND hwnd);
 	HRESULT Update();
-	bool GetKey(int);
-	bool GetKeyDown(int);
-	bool GetKeyUp(int);
+	bool GetKey(int key);
+	bool GetKeyDown(int key);
+	bool GetKeyUp(int key);
 	/**
 	* @brief デストラクタ
 	*/

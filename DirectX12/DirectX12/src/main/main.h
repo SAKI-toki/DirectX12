@@ -21,8 +21,8 @@ class Main :public saki::singleton<Main>
 	HRESULT Update();
 	HRESULT Render();
 public:
-	bool InitWindow(HINSTANCE, int);
-	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+	bool InitWindow(HINSTANCE hInst, int nCmdShow);
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void MessageLoop();
 	HWND GetHwnd();
 };

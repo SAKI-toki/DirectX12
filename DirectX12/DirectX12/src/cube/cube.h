@@ -9,6 +9,7 @@
 #include "../common/alias.h"
 #include "../texture/texture.h"
 #include "../pipeline/pipeline.h"
+#include "../command_list/Bundle/bundle.h"
 
 /**
 * @brief キューブクラス
@@ -39,10 +40,10 @@ class Cube
 	HRESULT CreateBuffer();
 	HRESULT CreateCube();
 	Texture texture;
-	Pipeline pipeline;
-
+	Bundle bundle;
+	HRESULT SetBundle();
 public:
-	HRESULT Init(const std::wstring&);
-	HRESULT UpdateTransform(const Transform&);
-	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>&);
+	HRESULT Init(const std::wstring&,ComPtr<ID3D12PipelineState>& com_pipeline);
+	HRESULT UpdateTransform(const Transform& transform);
+	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 };
