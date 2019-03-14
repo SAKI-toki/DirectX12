@@ -21,9 +21,7 @@ class Camera :public saki::singleton<Camera>
 	//行列
 	Matrix view, projection, view_mul_projection;
 	//各要素
-	Vector pos = { 0.0f,0.0f,-10.0f },
-		lookat = { 0.0f,0.0f,0.0f },
-		up = { 0.0f,1.0f,0.0f };
+	Vector pos, lookat, up;
 	//行列
 	static constexpr float fov = saki::to_radian(60.0f);
 	//行列の更新

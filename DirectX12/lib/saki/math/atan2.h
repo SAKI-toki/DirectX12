@@ -91,10 +91,13 @@ namespace saki
 	/**
 	* @brief Œ^‚ð‚»‚ë‚¦‚é
 	*/
-	template<typename T1, typename T2>
+	template<typename T1, typename T2,
+		typename saki::enable_if_nullptr_t<
+		std::is_arithmetic_v<T1>&&std::is_arithmetic_v<T2>> = nullptr>
 	constexpr auto atan2(T1 y, T2 x)
 	{
-		return saki::atan2(static_cast<decltype(y * x)>(y), static_cast<decltype(y * x)>(x));
+		using type = std::common_type_t<T1, T2>;
+		return saki::atan2(static_cast<type>(y), static_cast<type>(x));
 	}
 }
 #endif //SAKI_MATH_ATAN2_2019_01_06

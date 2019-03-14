@@ -34,15 +34,18 @@ namespace saki
 		}
 		StringType str;
 		size_t index = 0;
-		if (x < 0)
+		if constexpr (std::is_signed_v<Integer>)
 		{
-			str[index++] = '-';
-			x = saki::abs(x);
+			if (x < 0)
+			{
+				str[index++] = '-';
+				x = saki::abs(x);
+			}
 		}
 		size_t digit = saki::digit_count(x);
 		for (size_t i = digit; i > 0; --i)
 		{
-			auto pow10 = saki::details::pow_n(10, i - 1);
+			auto pow10 = saki::details::pow_n(Integer(10), i - 1);
 			auto digit_n = x / pow10;
 			str[index++] = static_cast<T>('0' + digit_n);
 			x -= digit_n * pow10;

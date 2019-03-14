@@ -1,6 +1,7 @@
 cbuffer cbTansMatrix : register(b0)
 {
 	float4x4 WVP;
+	float4 col;
 };
 
 Texture2D<float4> tex0 : register(t0);
@@ -33,5 +34,5 @@ PS_INPUT vs(VS_INPUT input)
 
 float4 ps(PS_INPUT input) : SV_TARGET
 {
-	return tex0.Sample(samp0, input.UV);
+	return tex0.Sample(samp0, input.UV) * col;
 }

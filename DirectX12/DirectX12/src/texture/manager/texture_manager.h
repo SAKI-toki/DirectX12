@@ -16,6 +16,7 @@
 */
 class TextureManager :public saki::singleton<TextureManager>
 {
+	friend class Texture;
 	/**
 	* @brief テクスチャの情報構造体
 	*/
@@ -26,9 +27,9 @@ class TextureManager :public saki::singleton<TextureManager>
 		ComPtr<ID3D12DescriptorHeap> dh_texture;
 	};
 	std::unordered_map<std::wstring, TextureData> texture_data_map;
-	friend class Texture;
-	HRESULT LoadTexture(const std::wstring&);
-	void SetTexture(const std::wstring&, ComPtr<ID3D12GraphicsCommandList>&);
-	int GetWidth(const std::wstring&);
-	int GetHeight(const std::wstring&);
+	HRESULT LoadTexture(const std::wstring& path);
+	void SetTexture(const std::wstring& key, 
+		ComPtr<ID3D12GraphicsCommandList>& com_command_list);
+	int GetWidth(const std::wstring& key);
+	int GetHeight(const std::wstring& key);
 };

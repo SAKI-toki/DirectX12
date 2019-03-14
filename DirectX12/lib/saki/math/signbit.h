@@ -18,7 +18,7 @@ namespace saki
 	* @return •‰”‚©‚Ç‚¤‚©
 	*/
 	template<typename T>
-	bool signbit(T x)
+	constexpr bool signbit(T x)
 	{
 		return x < static_cast<T>(0);
 	}

@@ -4,7 +4,8 @@
 #include "../../common/message_box.h"
 
 HRESULT Obj::Init(const std::wstring& model_path,
-	const std::wstring& texture_path)
+	const std::wstring& texture_path,
+	ComPtr<ID3D12PipelineState>& pipeline)
 {
 	HRESULT hr = S_OK;
 
@@ -14,8 +15,13 @@ HRESULT Obj::Init(const std::wstring& model_path,
 	if (FAILED(hr))return hr;
 	hr = texture.LoadTexture(texture_path);
 	if (FAILED(hr))return hr;
-	hr = pipeline.CreatePipeline("obj", L"resources/shader/SimpleShader3D.hlsl",
-		L"resources/shader/SimpleShader3D.hlsl", true, false);
+	hr = bundle.Init(pipeline);
+	if (FAILED(hr))return hr;
+	hr = SetBundle();
+	if (FAILED(hr))return hr;
+	hr = bundle.Close();
+	if (FAILED(hr))return hr;
+	hr = UpdateTransform({});
 	if (FAILED(hr))return hr;
 
 	return hr;
@@ -39,7 +45,8 @@ HRESULT Obj::UpdateTransform(const Transform& transform)
 	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
 	if (FAILED(hr))
 	{
-		Comment(L"定数バッファのMapに失敗", L"obj.cpp/Obj::UpdateTransform");
+		Comment(L"定数バッファのMapに失敗", 
+			L"obj.cpp/Obj::UpdateTransform");
 		return hr;
 	}
 	*buf = mat;
@@ -53,16 +60,9 @@ HRESULT Obj::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
 
-	//定数バッファをセット
-	command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
-
 	//テクスチャをセット
 	texture.SetTexture(command_list);
-	//パイプラインのセット
-	pipeline.SetPipeline(command_list);
-	//モデルの描画
-	model.SetObjModel(command_list);
-
+	bundle.SetExecuteCommandList(command_list);
 
 	return hr;
 }
@@ -97,6 +97,22 @@ HRESULT Obj::CreateBuffer()
 		Comment(L"定数バッファ用のリソースとヒープの作成に失敗", L"obj.cpp/Obj::CreateBuffer");
 		return hr;
 	}
+
+	return hr;
+}
+
+HRESULT Obj::SetBundle()
+{
+	HRESULT hr = S_OK;
+
+	decltype(auto) bundle_command_list = bundle.GetCommandList();
+
+	bundle_command_list->SetGraphicsRootSignature(Device::getinstance()->GetRootSignature().Get());
+	//定数バッファをセット
+	bundle_command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
+
+	//モデルの描画
+	model.SetObjModel(bundle_command_list);
 
 	return hr;
 }

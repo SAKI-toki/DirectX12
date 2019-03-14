@@ -8,6 +8,9 @@
 #ifndef SAKI_CLOCK_CLOCK_2018_12_04
 #define SAKI_CLOCK_CLOCK_2018_12_04
 #include <chrono>
+#include <type_traits>
+#include <saki/type_traits/enable_if_nullptr.h>
+
 namespace saki
 {
 	/**
@@ -35,7 +38,8 @@ namespace saki
 		* @param duration ‚Ç‚Ì’PˆÊ‚Å•Ô‚·‚©
 		* return ŽžŠÔ
 		*/
-		template<typename T = double>
+		template<typename T = double,
+			typename saki::enable_if_nullptr_t<std::is_arithmetic_v<T>> = nullptr>
 		T end(DURATION duration = DURATION::MILLISECOND)
 		{
 			auto elapsed_time = std::chrono::duration_cast<std::chrono::nanoseconds>
@@ -73,7 +77,8 @@ namespace saki
 		* @param duration ‚Ç‚Ì’PˆÊ‚Å•Ô‚·‚©
 		* return ŽžŠÔ
 		*/
-		template<typename T = double>
+		template<typename T = double,
+			typename saki::enable_if_nullptr_t<std::is_arithmetic_v<T>> = nullptr>
 		T end_and_start(DURATION duration = DURATION::MILLISECOND)
 		{
 			auto t = end<T>(duration);

@@ -8,7 +8,6 @@
 #include "../common/d3d12.h"
 #include "../common/alias.h"
 #include "../texture/texture.h"
-#include "../pipeline/pipeline.h"
 #include "../command_list/Bundle/bundle.h"
 
 /**
@@ -43,7 +42,7 @@ class Cube
 	Bundle bundle;
 	HRESULT SetBundle();
 public:
-	HRESULT Init(const std::wstring&,ComPtr<ID3D12PipelineState>& com_pipeline);
+	HRESULT Init(const std::wstring& tex_path, ComPtr<ID3D12PipelineState>& com_pipeline);
 	HRESULT UpdateTransform(const Transform& transform);
 	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 };

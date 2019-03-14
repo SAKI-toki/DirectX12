@@ -23,7 +23,7 @@ namespace saki
 		template<typename T1, typename T2, typename Func>
 		constexpr auto matrix_matrix_some_operator(const matrix<T1>& m1, const matrix<T2>& m2, const Func& f)
 		{
-			return matrix<decltype(std::declval<T1>() * std::declval<T2>())>
+			return matrix<std::common_type_t<T1, T2>>
 			{
 				f(m1[0][0], m2[0][0]), f(m1[0][1], m2[0][1]),
 					f(m1[0][2], m2[0][2]), f(m1[0][3], m2[0][3]),
@@ -41,7 +41,7 @@ namespace saki
 		template<typename T1, typename T2, typename Func>
 		constexpr auto matrix_scalar_some_operator(const matrix<T1>& m, const T2& scalar, const Func& f)
 		{
-			return matrix<decltype(std::declval<T1>() * std::declval<T2>())>
+			return matrix<std::common_type_t<T1, T2>>
 			{
 				f(m[0][0], scalar), f(m[0][1], scalar),
 					f(m[0][2], scalar), f(m[0][3], scalar),
@@ -92,7 +92,7 @@ namespace saki
 	template<typename T1, typename T2>
 	constexpr auto operator*(const matrix<T1>& m1, const matrix<T2>& m2)
 	{
-		using m_type = decltype(std::declval<T1>() * std::declval<T2>());
+		using m_type = std::common_type_t<T1, T2>;
 		matrix<m_type> mat;
 		for (int i = 0; i < 4; ++i)
 		{

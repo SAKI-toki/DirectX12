@@ -11,7 +11,8 @@
 */
 void Time::UpdateTime()
 {
-	elapsed_time = my_clock.end_and_start<float>(saki::clock::DURATION::SECOND);
+	elapsed_time_not_scale = my_clock.end_and_start<float>(saki::clock::DURATION::SECOND);
+	elapsed_time = elapsed_time_not_scale * time_scale;
 }
 
 /**
@@ -20,7 +21,7 @@ void Time::UpdateTime()
 */
 float Time::GetElapsedTime()
 {
-	return elapsed_time * time_scale;
+	return elapsed_time;
 }
 
 /**
@@ -29,7 +30,7 @@ float Time::GetElapsedTime()
 */
 float Time::GetElapsedTimeNotScale()
 {
-	return elapsed_time;
+	return elapsed_time_not_scale;
 }
 
 /**

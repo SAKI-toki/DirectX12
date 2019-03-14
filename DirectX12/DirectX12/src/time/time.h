@@ -15,10 +15,13 @@ class Time :public saki::singleton<Time>
 {
 	//時間を測る
 	saki::clock my_clock;
-	//経過時間
+	//経過時間(スケール反映)
 	float elapsed_time = 0.0f;
+	//経過時間(スケール反映なし)
+	float elapsed_time_not_scale = 0.0f;
 	//時間のスケール
 	float time_scale = 1.0f;
+
 public:
 	//時間の更新
 	//毎フレーム呼ぶこと

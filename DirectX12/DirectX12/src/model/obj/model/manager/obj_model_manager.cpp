@@ -18,7 +18,8 @@ HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 	std::ifstream ifs(path, std::ios_base::binary);
 	if (ifs.fail())
 	{
-		Comment(L"モデルのパスが違います", L"obj_model_manager.cpp/ObjModelManager::LoadObjModel");
+		Comment(L"モデルのパスが違います", 
+			L"obj_model_manager.cpp/ObjModelManager::LoadObjModel");
 		return E_FAIL;
 	}
 	ifs.read(reinterpret_cast<char*>(&pos_num), sizeof(pos_num));
@@ -84,7 +85,8 @@ HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&obj_data.vertex_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", 
+			L"obj_model_manager.cpp/ObjModelManager::LoadObjModel");
 		return hr;
 	}
 	obj_data.vertex_buffer_view.BufferLocation = obj_data.vertex_buffer->GetGPUVirtualAddress();
@@ -97,7 +99,8 @@ HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&obj_data.index_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗", 
+			L"obj_model_manager.cpp/ObjModelManager::LoadObjModel");
 		return hr;
 	}
 
@@ -112,13 +115,16 @@ HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 		if (FAILED(hr))
 		{
 			delete[](vb);
-			Comment(L"頂点バッファのMapに失敗", L"obj_manager.cpp/ObjManager::LoadModel");
+			Comment(L"頂点バッファのMapに失敗", 
+				L"obj_manager.cpp/ObjModelManager::LoadModel");
 			return hr;
 		}
 
 		for (unsigned int i = 0; i < index_num; ++i)
 		{
-			vb[i] = Vertex3D{ pos_list[index_list[i].x],nor_list[index_list[i].y] ,uv_list[index_list[i].z] };
+			vb[i] = Vertex3D{ pos_list[index_list[i].x],
+				nor_list[index_list[i].y] ,
+				uv_list[index_list[i].z] };
 		}
 
 		obj_data.vertex_buffer->Unmap(0, nullptr);
@@ -130,7 +136,8 @@ HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 		hr = obj_data.index_buffer->Map(0, nullptr, (void**)&ib);
 		if (FAILED(hr))
 		{
-			Comment(L"インデックスバッファのMapに失敗", L"obj_manager.cpp/ObjManager::LoadModel");
+			Comment(L"インデックスバッファのMapに失敗", 
+				L"obj_manager.cpp/ObjModelManager::LoadModel");
 			return hr;
 		}
 		for (unsigned int i = 0; i < index_num; ++i)
@@ -146,7 +153,8 @@ HRESULT ObjModelManager::LoadObjModel(const std::wstring& path)
 	return hr;
 }
 
-void ObjModelManager::SetObjModel(const std::wstring& path, ComPtr<ID3D12GraphicsCommandList>& command_list)
+void ObjModelManager::SetObjModel(const std::wstring& path,
+	ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	auto itr = obj_data_map.find(path);
 

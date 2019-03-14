@@ -34,10 +34,10 @@ namespace saki
 		*/
 		constexpr matrix() :
 			m(
-				saki::array<value_type, 4>(1, 0, 0, 0),
-				saki::array<value_type, 4>(0, 1, 0, 0),
-				saki::array<value_type, 4>(0, 0, 1, 0),
-				saki::array<value_type, 4>(0, 0, 0, 1)
+				saki::array<value_type, 4>(value_type(1), value_type(0), value_type(0), value_type(0)),
+				saki::array<value_type, 4>(value_type(0), value_type(1), value_type(0), value_type(0)),
+				saki::array<value_type, 4>(value_type(0), value_type(0), value_type(1), value_type(0)),
+				saki::array<value_type, 4>(value_type(0), value_type(0), value_type(0), value_type(1))
 			)
 		{}
 		/**

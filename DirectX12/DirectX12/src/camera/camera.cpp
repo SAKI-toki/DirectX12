@@ -12,7 +12,10 @@
 /**
 * @brief カメラのコンストラクタ
 */
-Camera::Camera()
+Camera::Camera() :
+	pos({ 0.0f,0.0f,-10.0f }),
+	lookat({ 0.0f,0.0f,0.0f }),
+	up({ 0.0f,1.0f,0.0f })
 {
 	MatrixUpdate();
 }
@@ -101,6 +104,8 @@ void Camera::MatrixUpdate()
 	projection = DirectX::XMMatrixPerspectiveFovLH(
 		fov, static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT),
 		NEAR_Z, FAR_Z);
+	//projection = DirectX::XMMatrixOrthographicLH(
+	//	static_cast<float>(WINDOW_WIDTH), static_cast<float>(WINDOW_HEIGHT), NEAR_Z, FAR_Z);
 	view_mul_projection = view * projection;
 }
 

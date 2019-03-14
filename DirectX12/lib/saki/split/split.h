@@ -46,13 +46,13 @@ namespace saki
 		if constexpr (std::is_same_v<Container<std::string, std::allocator<std::string>>,
 			std::vector<std::string, std::allocator<std::string>>>)
 		{
-			return str_list;
+			return std::move(str_list);
 		}
 		//Œ^‚ªstd::list‚Ì‚æ‚¤‚É•Ê‚ÌŒ^‚È‚ç‚»‚ê‚É•ÏŠ·‚µ‚Ä‚©‚ç•Ô‚·
 		else
 		{
 			Container<std::string, std::allocator<std::string>> return_str_list(std::begin(str_list), std::end(str_list));
-			return return_str_list;
+			return std::move(return_str_list);
 		}
 	}
 

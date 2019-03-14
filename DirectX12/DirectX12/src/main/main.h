@@ -20,6 +20,7 @@ class Main :public saki::singleton<Main>
 	HINSTANCE hinst;
 	HRESULT Update();
 	HRESULT Render();
+	void DisplayFps();
 public:
 	bool InitWindow(HINSTANCE hInst, int nCmdShow);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

@@ -33,12 +33,6 @@
     <ClInclude Include="src\input\keyboard\keyboard_input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\pipeline\pipeline.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pipeline\manager\pipeline_manager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\texture\manager\texture_manager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -102,6 +96,12 @@
     <ClInclude Include="src\cube\command_list\cube_command_list.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\sprite\command_list\sprite_command_list.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sphere\command_list\sphere_command_list.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main\main.cpp">
@@ -120,12 +120,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\input\keyboard\keyboard_input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pipeline\pipeline.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pipeline\manager\pipeline_manager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\texture\manager\texture_manager.cpp">
@@ -174,6 +168,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\cube\command_list\cube_command_list.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\command_list\sprite_command_list.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sphere\command_list\sphere_command_list.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

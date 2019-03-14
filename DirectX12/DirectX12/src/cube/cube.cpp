@@ -10,10 +10,12 @@
 #include "../common/message_box.h"
 #include <vector>
 
+#pragma region public
+
 /**
 * @brief キューブの初期化
-* @param key テクスチャのキー
 * @param path テクスチャのパス
+* @param pipeline 描画するパイプライン
 * @return 成功したかどうか
 */
 HRESULT Cube::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeline)
@@ -24,7 +26,6 @@ HRESULT Cube::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeli
 	if (FAILED(hr))return hr;
 	hr = CreateCube();
 	if (FAILED(hr))return hr;
-
 	hr = texture.LoadTexture(path);
 	if (FAILED(hr))return hr;
 	hr = bundle.Init(pipeline);
@@ -33,7 +34,8 @@ HRESULT Cube::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeli
 	if (FAILED(hr))return hr;
 	hr = bundle.Close();
 	if (FAILED(hr))return hr;
-
+	hr = UpdateTransform({});
+	if (FAILED(hr))return hr;
 
 	return hr;
 }
@@ -84,6 +86,10 @@ HRESULT Cube::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 
 	return hr;
 }
+
+#pragma endregion
+
+#pragma region private
 
 /**
 * @brief バッファの作成
@@ -223,6 +229,10 @@ HRESULT Cube::CreateCube()
 	return hr;
 }
 
+/**
+* @brief バンドルにコマンドをセットする
+* @return 成功したかどうか
+*/
 HRESULT Cube::SetBundle()
 {
 	HRESULT hr = S_OK;
@@ -242,3 +252,5 @@ HRESULT Cube::SetBundle()
 	bundle_command_list->DrawIndexedInstanced(36, 1, 0, 0, 0);
 	return hr;
 }
+
+#pragma endregion

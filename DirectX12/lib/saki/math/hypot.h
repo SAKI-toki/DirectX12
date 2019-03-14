@@ -61,10 +61,14 @@ namespace saki
 	/**
 	* @brief Œ^‚ªˆá‚¤ê‡‚Í‚»‚ë‚¦‚é
 	*/
-	template<typename T1, typename T2>
+	template<typename T1, typename T2,
+		typename saki::enable_if_nullptr_t<
+		std::is_arithmetic_v<T1>&&
+		std::is_arithmetic_v<T2>> = nullptr>
 	constexpr auto hypot(T1 x, T2 y)
 	{
-		return saki::hypot(static_cast<decltype(x * y)>(x), static_cast<decltype(x * y)>(y));
+		using type = std::common_type_t<T1, T2>;
+		return saki::hypot(static_cast<type>(x), static_cast<type>(y));
 	}
 
 	///------3ˆø”--------
@@ -135,12 +139,17 @@ namespace saki
 	/**
 	*@brief Œ^‚ªˆá‚¤ê‡‚Í‚»‚ë‚¦‚é
 	*/
-	template<typename T1, typename T2, typename T3>
+	template<typename T1, typename T2, typename T3,
+		typename saki::enable_if_nullptr_t<
+		std::is_arithmetic_v<T1>&&
+		std::is_arithmetic_v<T2>&&
+		std::is_arithmetic_v<T3>> = nullptr>
 	constexpr auto hypot(T1 x, T2 y, T3 z)
 	{
-		return saki::hypot(static_cast<decltype(x * y * z)>(x), 
-			static_cast<decltype(x * y * z)>(y), 
-			static_cast<decltype(x * y * z)>(z));
+		using type = std::common_type_t<T1, T2, T3>;
+		return saki::hypot(static_cast<type>(x),
+			static_cast<type>(y),
+			static_cast<type>(z));
 	}
 }
 #endif //SAKI_MATH_HYPOT_2019_01_08

@@ -3,7 +3,7 @@
 
 class ObjModel
 {
-	std::wstring path;
+	std::wstring key;
 public:
 	HRESULT LoadObjModel(const std::wstring&);
 	void SetObjModel(ComPtr<ID3D12GraphicsCommandList>&);

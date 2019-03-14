@@ -31,7 +31,7 @@ namespace saki
 	constexpr bool is_even(T x)
 	{
 		if (saki::isnan(x))return false;
-		return x == saki::isinf(x) ||
+		return saki::isinf(x) ||
 			saki::fmod(((x > 0) ? x : -x), 2) == static_cast<T>(0);
 	}
 }

@@ -9,7 +9,13 @@
 #include "../camera/camera.h"
 #include "../common/message_box.h"
 
-HRESULT Sprite::Init(const std::wstring& path)
+/**
+* @brief スプライトの初期化
+* @param path テクスチャのパス
+* @param pipeline 描画するパイプライン
+* @return 成功したかどうか
+*/
+HRESULT Sprite::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeline)
 {
 	HRESULT hr = S_OK;
 
@@ -19,14 +25,23 @@ HRESULT Sprite::Init(const std::wstring& path)
 	if (FAILED(hr))return hr;
 	hr = CreatePlane();
 	if (FAILED(hr))return hr;
-	hr = pipeline.CreatePipeline("sprite",
-		L"resources/shader/SimpleShader2D.hlsl",
-		L"resources/shader/SimpleShader2D.hlsl", false, false);
+	hr = bundle.Init(pipeline);
+	if (FAILED(hr))return hr;
+	hr = SetBundle();
+	if (FAILED(hr))return hr;
+	hr = bundle.Close();
+	if (FAILED(hr))return hr;
+	hr = UpdateTransform({});
+	if (FAILED(hr))return hr;
+	hr = UpdateColor({ 1.0f,1.0f,1.0f,1.0f });
 	if (FAILED(hr))return hr;
 
 	return hr;
 }
 
+/**
+* @brief Transformの更新
+*/
 HRESULT Sprite::UpdateTransform(const Transform& transform)
 {
 	HRESULT hr = S_OK;
@@ -39,10 +54,8 @@ HRESULT Sprite::UpdateTransform(const Transform& transform)
 	auto pos = transform.get_pos();
 	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
 	world = world * scale_mat * rot_mat * pos_mat;
-
-	Matrix mat = DirectX::XMMatrixTranspose(
-		world * Camera::getinstance()->GetViewMulProjection());
-	Matrix *buf{};
+	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
+	SpriteConstant *buf{};
 	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
 	if (FAILED(hr))
 	{
@@ -50,7 +63,29 @@ HRESULT Sprite::UpdateTransform(const Transform& transform)
 			L"sprite.cpp/Sprite::UpdateTransform");
 		return hr;
 	}
-	*buf = mat;
+	buf->m = mat;
+	constant_buffer->Unmap(0, nullptr);
+	buf = nullptr;
+
+	return hr;
+}
+
+/**
+* @brief Colorの更新
+*/
+HRESULT Sprite::UpdateColor(const Float4& color)
+{
+	HRESULT hr = S_OK;
+
+	SpriteConstant *buf{};
+	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
+	if (FAILED(hr))
+	{
+		Comment(L"定数バッファのMapに失敗",
+			L"sprite.cpp/Sprite::UpdateColor");
+		return hr;
+	}
+	buf->col = color;
 	constant_buffer->Unmap(0, nullptr);
 	buf = nullptr;
 
@@ -61,20 +96,9 @@ HRESULT Sprite::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
 
-	//定数バッファをセット
-	command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
-
 	//テクスチャをセット
 	texture.SetTexture(command_list);
-
-	//パイプラインのセット
-	pipeline.SetPipeline(command_list);
-
-	command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	command_list->IASetVertexBuffers(0, 1, &vertex_buffer_view);
-
-	//描画
-	command_list->DrawInstanced(4, 1, 0, 0);
+	command_list->ExecuteBundle(bundle.GetCommandList().Get());
 
 	return hr;
 }
@@ -155,5 +179,28 @@ HRESULT Sprite::CreatePlane()
 	vertex_buffer->Unmap(0, nullptr);
 	vb = nullptr;
 
+	return hr;
+}
+
+/**
+* @brief バンドルにコマンドをセットする
+* @return 成功したかどうか
+*/
+HRESULT Sprite::SetBundle()
+{
+	HRESULT hr = S_OK;
+
+	decltype(auto) bundle_command_list = bundle.GetCommandList();
+
+	bundle_command_list->SetGraphicsRootSignature(Device::getinstance()->GetRootSignature().Get());
+
+	//定数バッファをセット
+	bundle_command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
+
+	bundle_command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	bundle_command_list->IASetVertexBuffers(0, 1, &vertex_buffer_view);
+
+	//描画
+	bundle_command_list->DrawInstanced(4, 1, 0, 0);
 	return hr;
 }

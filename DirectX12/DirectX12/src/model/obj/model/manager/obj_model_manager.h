@@ -24,6 +24,6 @@ class ObjModelManager :public saki::singleton<ObjModelManager>
 	};
 	std::unordered_map<std::wstring, ObjModelData> obj_data_map;
 	HRESULT LoadObjModel(const std::wstring& path);
-	void SetObjModel(const std::wstring& path,
+	void SetObjModel(const std::wstring& key,
 		ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 };

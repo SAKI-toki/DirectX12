@@ -12,6 +12,8 @@
 #define SAKI_RANDOM_RANDOM_2018_11_26
 #include <random>
 #include <cassert> //for assert
+#include <type_traits>
+#include <saki/type_traits/enable_if_nullptr.h>
 namespace saki
 {
 	/**
@@ -20,7 +22,8 @@ namespace saki
 	* @param random_max 最大値
 	* @details 最大値を含むランダムな値を返す
 	*/
-	template<typename T>
+	template<typename T,
+		typename saki::enable_if_nullptr_t<std::is_arithmetic_v<T>> = nullptr>
 	T random(const T random_min, const T random_max)
 	{
 		assert(random_min <= random_max);
@@ -36,6 +39,15 @@ namespace saki
 			std::uniform_real_distribution<T> rnd(random_min, random_max);
 			return rnd(mt);
 		}
+	}
+	template<typename T1, typename T2,
+		typename saki::enable_if_nullptr_t<
+		std::is_arithmetic_v<T1>&&
+		std::is_arithmetic_v<T2>> = nullptr>
+	auto random(const T1 random_min, const T2 random_max)
+	{
+		using type = std::common_type_t<T1, T2>;
+		return random(static_cast<type>(random_min), static_cast<type>(random_max));
 	}
 }
 #endif //SAKI_RANDOM_RANDOM_2018_11_26

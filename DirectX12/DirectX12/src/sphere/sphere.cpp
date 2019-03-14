@@ -1,26 +1,50 @@
+/**
+* @file sphere.cpp
+* @brief スフィアクラスの関数定義
+* @author 石山　悠
+* @date 2019/03/12
+*/
 #include "sphere.h"
 #include "../camera/camera.h"
 #include "../device/device.h"
 #include "../common/message_box.h"
 #include <saki/math.h>
 
-HRESULT Sphere::Init(Float4 color)
+#pragma region public
+
+/**
+* @brief スフィアの初期化
+* @param path テクスチャのパス
+* @param pipeline 描画するパイプライン
+* @return 成功したかどうか
+*/
+HRESULT Sphere::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeline)
 {
 	HRESULT hr = S_OK;
 
-	hr = pipeline.CreatePipeline("SingleColor3D", L"resources/shader/SingleColor3D.hlsl",
-		L"resources/shader/SingleColor3D.hlsl", true, true);
-	if (FAILED(hr))return hr;
 	hr = CreateBuffer();
 	if (FAILED(hr))return hr;
 	hr = CreateSphere();
 	if (FAILED(hr))return hr;
-	hr = UpdateColor(color);
+	hr = texture.LoadTexture(path);
+	if (FAILED(hr))return hr;
+	hr = bundle.Init(pipeline);
+	if (FAILED(hr))return hr;
+	hr = SetBundle();
+	if (FAILED(hr))return hr;
+	hr = bundle.Close();
+	if (FAILED(hr))return hr;
+	hr = UpdateTransform({});
 	if (FAILED(hr))return hr;
 
 	return hr;
 }
 
+/**
+* @brief Transformの更新
+* @param transform 新しいTransform
+* @return 成功したかどうか
+*/
 HRESULT Sphere::UpdateTransform(const Transform& transform)
 {
 	HRESULT hr = S_OK;
@@ -47,44 +71,30 @@ HRESULT Sphere::UpdateTransform(const Transform& transform)
 	return hr;
 }
 
-HRESULT Sphere::UpdateColor(const Float4& color)
-{
-	HRESULT hr = S_OK;
-
-	SphereConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
-	if (FAILED(hr))
-	{
-		Comment(L"定数バッファのMapに失敗", L"sphere.cpp/Sphere::UpdateConstantBuffer");
-		return hr;
-	}
-	buf->col = color;
-	constant_buffer->Unmap(0, nullptr);
-	buf = nullptr;
-
-	return hr;
-}
-
+/**
+* @brief スフィアの描画
+* @param command_list 命令を送るコマンドリスト
+* @return 成功したかどうか
+*/
 HRESULT Sphere::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
 
-	//定数バッファをセット
-	command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
-
-	//パイプラインのセット
-	pipeline.SetPipeline(command_list);
-
-	command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	command_list->IASetVertexBuffers(0, 1, &vertex_buffer_view);
-	command_list->IASetIndexBuffer(&index_buffer_view);
-
-	//描画
-	command_list->DrawIndexedInstanced((VERT_NUM - 1) * ARC_NUM * 6, 1, 0, 0, 0);
+	//テクスチャをセット
+	texture.SetTexture(command_list);
+	bundle.SetExecuteCommandList(command_list);
 
 	return hr;
 }
 
+#pragma endregion
+
+#pragma region private
+
+/**
+* @brief バッファの作成
+* @return 成功したかどうか
+*/
 HRESULT Sphere::CreateBuffer()
 {
 	HRESULT hr = S_OK;
@@ -113,7 +123,7 @@ HRESULT Sphere::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constant_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"定数バッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"定数バッファ用のリソースとヒープの作成に失敗", L"sphere.cpp/Cube::CreateBuffer");
 		return hr;
 	}
 
@@ -124,7 +134,7 @@ HRESULT Sphere::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertex_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", L"sphere.cpp/Cube::CreateBuffer");
 		return hr;
 	}
 	vertex_buffer_view.BufferLocation = vertex_buffer->GetGPUVirtualAddress();
@@ -149,6 +159,10 @@ HRESULT Sphere::CreateBuffer()
 	return hr;
 }
 
+/**
+* @brief スフィアの作成
+* @return 成功したかどうか
+*/
 HRESULT Sphere::CreateSphere()
 {
 	HRESULT hr = S_OK;
@@ -172,6 +186,7 @@ HRESULT Sphere::CreateSphere()
 			{
 				vb[i * VERT_NUM + j].pos = { sinf(t) * cosf(phi), cosf(t), sinf(t) * sinf(phi) };
 				vb[i * VERT_NUM + j].nor = vb[i * VERT_NUM + j].pos;//半径1の球なので、座標がそのまま法線として使える
+				vb[i * VERT_NUM + j].uv = { i / (float)(ARC_NUM - 1), j / (float)(VERT_NUM - 1) };
 				t += td;
 			}
 
@@ -208,3 +223,30 @@ HRESULT Sphere::CreateSphere()
 	}
 	return hr;
 }
+
+/**
+* @brief バンドルにコマンドをセットする
+* @return 成功したかどうか
+*/
+HRESULT Sphere::SetBundle()
+{
+	HRESULT hr = S_OK;
+
+	decltype(auto) bundle_command_list = bundle.GetCommandList();
+
+	bundle_command_list->SetGraphicsRootSignature(Device::getinstance()->GetRootSignature().Get());
+
+	//定数バッファをセット
+	bundle_command_list->SetGraphicsRootConstantBufferView(0, constant_buffer->GetGPUVirtualAddress());
+
+	bundle_command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	bundle_command_list->IASetVertexBuffers(0, 1, &vertex_buffer_view);
+	bundle_command_list->IASetIndexBuffer(&index_buffer_view);
+
+	//描画
+	bundle_command_list->DrawIndexedInstanced((VERT_NUM - 1) * ARC_NUM * 6, 1, 0, 0, 0);
+
+	return hr;
+}
+
+#pragma endregion

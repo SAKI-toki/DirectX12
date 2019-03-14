@@ -12,6 +12,8 @@
 #include "../time/time.h"
 #include "../common/message_box.h"
 #include "../scene/manager/scene_manager.h"
+#include <sstream>
+#include <iomanip>
 
 /**
 * @brief エントリー関数
@@ -38,6 +40,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 
 /**
 * @brief ウィンドウの初期化
+* @param hInst インスタンスハンドル
+* @param nCmdShow コマンド
+* @return 成功したかどうか
 */
 bool Main::InitWindow(HINSTANCE hInst, int nCmdShow)
 {
@@ -122,16 +127,8 @@ void Main::MessageLoop()
 	while (WM_QUIT != msg.message)
 	{
 		Time::getinstance()->UpdateTime();
-		//fpsの表示
 #ifdef _DEBUG
-		static UINT update_count = 0;
-		if (++update_count > 100)
-		{
-			WCHAR fps[256];
-			swprintf_s(fps, L"%4.3f", 1.0f / Time::getinstance()->GetElapsedTimeNotScale());
-			SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)fps);
-			update_count = 0;
-		}
+		DisplayFps();
 #endif
 
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
@@ -153,6 +150,7 @@ void Main::MessageLoop()
 
 /**
 * @brief ウィンドウハンドラの取得
+* @return ウィンドウハンドラ
 */
 HWND Main::GetHwnd()
 {
@@ -161,6 +159,7 @@ HWND Main::GetHwnd()
 
 /**
 * @brief 全体の更新
+* @return 成功したかどうか
 */
 HRESULT Main::Update()
 {
@@ -182,6 +181,7 @@ HRESULT Main::Update()
 
 /**
 * @brief 全体の描画
+* @return 成功したかどうか
 */
 HRESULT Main::Render()
 {
@@ -203,4 +203,27 @@ HRESULT Main::Render()
 	if (FAILED(hr))return hr;
 
 	return hr;
+}
+
+/**
+* @brief fpsの表示
+*/
+void Main::DisplayFps()
+{
+	//ここだけで完結させるために静的にする
+	static UINT update_count = 0;
+	static constexpr double update_delay = 1.0;
+	static double sum_time = 0;
+	sum_time += Time::getinstance()->GetElapsedTimeNotScale();
+	++update_count;
+	//一定時間経過したら更新
+	if (sum_time > update_delay)
+	{
+		std::wstringstream fps;
+		fps << "FPS:" << std::fixed << std::setprecision(2) << 1.0f / (sum_time / update_count);
+		//FPSをタイトルにする
+		SendMessage(hwnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(fps.str().c_str()));
+		update_count = 0;
+		sum_time = 0;
+	}
 }

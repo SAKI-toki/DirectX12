@@ -23,7 +23,8 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 		std::ifstream ifs(path,  std::ios_base::binary);
 		if (ifs.fail())
 		{
-			Comment(L"テクスチャのパスが違います", L"texture_manager.cpp/TextureManager::LoadTexture");
+			Comment(L"テクスチャのパスが違います", 
+				L"texture_manager.cpp/TextureManager::LoadTexture");
 			return E_FAIL;
 		}
 		ifs.read((char*)&texture_data.width, sizeof(texture_data.width));
@@ -57,7 +58,8 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 		nullptr, IID_PPV_ARGS(&texture_data.texture));
 	if (FAILED(hr))
 	{
-		Comment(L"テクスチャ用のリソースとヒープの作成に失敗", L"texture_manager.cpp/TextureManager::LoadTexture");
+		Comment(L"テクスチャ用のリソースとヒープの作成に失敗", 
+			L"texture_manager.cpp/TextureManager::LoadTexture");
 		return hr;
 	}
 
@@ -70,7 +72,8 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 	(&descriptor_heap_desc, IID_PPV_ARGS(&texture_data.dh_texture));
 	if (FAILED(hr))
 	{
-		Comment(L"テクスチャ用のデスクリプタヒープの作成に失敗", L"texture_manager.cpp/TextureManager::LoadTexture");
+		Comment(L"テクスチャ用のデスクリプタヒープの作成に失敗",
+			L"texture_manager.cpp/TextureManager::LoadTexture");
 		return hr;
 	}
 	D3D12_CPU_DESCRIPTOR_HANDLE handle_srv{};
@@ -91,22 +94,31 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 		0, &box, &img[0], static_cast<UINT>(4 * texture_data.width), static_cast<UINT>(4 * texture_data.width * texture_data.height));
 	if (FAILED(hr))
 	{
-		Comment(L"サブリソースへの書き込みに失敗", L"texture_manager.cpp/TextureManager::LoadTexture");
+		Comment(L"サブリソースへの書き込みに失敗", 
+			L"texture_manager.cpp/TextureManager::LoadTexture");
 		return E_FAIL;
 	}
 	texture_data_map.insert(std::make_pair(path, texture_data));
 	return hr;
 }
 
-void TextureManager::SetTexture(const std::wstring& path, ComPtr<ID3D12GraphicsCommandList>& command_list)
+void TextureManager::SetTexture(const std::wstring& path, 
+	ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	auto itr = texture_data_map.find(path);
 
-	Device::getinstance()->SetResourceBarrier(D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_GENERIC_READ, itr->second.texture.Get(),command_list);
+	Device::getinstance()->SetResourceBarrier(
+		D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_GENERIC_READ, 
+		itr->second.texture.Get(),command_list);
+	
 	ID3D12DescriptorHeap* ppHeaps[] = { itr->second.dh_texture.Get() };
 	command_list->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	command_list->SetGraphicsRootDescriptorTable(1, itr->second.dh_texture->GetGPUDescriptorHandleForHeapStart());
-	Device::getinstance()->SetResourceBarrier(D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON, itr->second.texture.Get(), command_list);
+	command_list->SetGraphicsRootDescriptorTable(1, 
+		itr->second.dh_texture->GetGPUDescriptorHandleForHeapStart());
+
+	Device::getinstance()->SetResourceBarrier(
+		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON, 
+		itr->second.texture.Get(), command_list);
 }
 
 int TextureManager::GetWidth(const std::wstring& path)

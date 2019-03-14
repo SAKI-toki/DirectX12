@@ -9,6 +9,7 @@
 #define SAKI_STRING_BASE_STRING_BASE_2019_01_22
 #include <cstddef>
 #include <ostream>
+#include <utility>
 #include <saki/macro/type_macro.h>
 #include <saki/array/array.h>
 #include <saki/type_traits/enable_if_nullptr.h>
@@ -99,14 +100,6 @@ namespace saki
 		template<typename TT, size_t N>
 		friend std::ostream& operator<<(std::ostream&, const string_base<TT, N>&);
 	};
-	/**
-	* @brief óvëfêî0
-	*/
-	template<typename T>
-	class string_base<T, 0>
-	{
-		static_assert(true);
-	};
 
 	/**
 	* @brief stringÇÃèoóÕ
@@ -124,6 +117,63 @@ namespace saki
 			os << '\0';
 		}
 		return os;
+	}
+
+	template<typename T,size_t N>
+	constexpr bool operator==(const saki::string_base<T, N>& str1, const char* str2)
+	{
+		for (std::size_t i = 0; i < N; ++i)
+		{
+			if (str1[i] == '\0'&&str2[i] == '\0')
+			{
+				return true;
+			}
+			if (str1[i] != '\0'&&str2[i] == '\0')
+			{
+				return false;
+			}
+			if (str1[i] == '\0'&&str2[i] != '\0')
+			{
+				return false;
+			}
+			if (str1[i] != str2[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	template<typename T, size_t N>
+	constexpr bool operator!=(const saki::string_base<T, N>& str1, const char* str2)
+	{
+		return !(str1 == str2);
+	}
+	template<typename T, size_t N>
+	constexpr bool operator==(const char* str1, const saki::string_base<T, N>& str2)
+	{
+		return str2 == str1;
+	}
+	template<typename T, size_t N>
+	constexpr bool operator!=(const char* str1, const saki::string_base<T, N>& str2)
+	{
+		return str2 != str1;
+	}
+	template<typename T,size_t N>
+	constexpr bool operator==(const saki::string_base<T, N>& str1, const saki::string_base<T, N>& str2)
+	{
+		for (size_t i = 0; i < N; ++i)
+		{
+			if (str1[i] != str2[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	template<typename T, size_t N>
+	constexpr bool operator!=(const saki::string_base<T, N>& str1, const saki::string_base<T, N>& str2)
+	{
+		return !(str1 == str2);
 	}
 }
 #endif //SAKI_STRING_BASE_STRING_BASE_2019_01_22

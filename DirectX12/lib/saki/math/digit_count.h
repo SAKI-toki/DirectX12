@@ -29,7 +29,10 @@ namespace saki
 		{
 			if (saki::isnan(x) || saki::isinf(x))return 0;
 		}
-		x = saki::abs(x);
+		if (std::is_signed_v<T>)
+		{
+			x = saki::abs(x);
+		}
 		if (x < 1)return 1;
 		size_t count = 0;
 		while (x >= 1)
