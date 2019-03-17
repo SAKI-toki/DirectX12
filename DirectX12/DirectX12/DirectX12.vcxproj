@@ -163,9 +163,9 @@
     <ClInclude Include="src\input\gamepad\gamepad_input.h" />
     <ClInclude Include="src\input\keyboard\keyboard_input.h" />
     <ClInclude Include="src\main\main.h" />
-    <ClInclude Include="src\model\obj\model\manager\obj_model_manager.h" />
-    <ClInclude Include="src\model\obj\model\obj_model.h" />
-    <ClInclude Include="src\model\obj\obj.h" />
+    <ClInclude Include="src\model\static\command_list\static_model_command_list.h" />
+    <ClInclude Include="src\model\static\manager\static_model_manager.h" />
+    <ClInclude Include="src\model\static\static_model.h" />
     <ClInclude Include="src\scene\base\scene_base.h" />
     <ClInclude Include="src\scene\main\game\game_scene.h" />
     <ClInclude Include="src\scene\main\title\title_scene.h" />
@@ -190,9 +190,9 @@
     <ClCompile Include="src\input\gamepad\gamepad_input.cpp" />
     <ClCompile Include="src\input\keyboard\keyboard_input.cpp" />
     <ClCompile Include="src\main\main.cpp" />
-    <ClCompile Include="src\model\obj\model\manager\obj_model_manager.cpp" />
-    <ClCompile Include="src\model\obj\model\obj_model.cpp" />
-    <ClCompile Include="src\model\obj\obj.cpp" />
+    <ClCompile Include="src\model\static\command_list\static_model_command_list.cpp" />
+    <ClCompile Include="src\model\static\manager\static_model_manager.cpp" />
+    <ClCompile Include="src\model\static\static_model.cpp" />
     <ClCompile Include="src\scene\main\game\game_scene.cpp" />
     <ClCompile Include="src\scene\main\title\title_scene.cpp" />
     <ClCompile Include="src\scene\manager\scene_manager.cpp" />

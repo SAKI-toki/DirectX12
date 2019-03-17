@@ -106,6 +106,7 @@ void TextureManager::SetTexture(const std::wstring& path,
 	ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	auto itr = texture_data_map.find(path);
+	if (itr == texture_data_map.end())throw 0;
 
 	Device::getinstance()->SetResourceBarrier(
 		D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_GENERIC_READ, 
@@ -124,10 +125,14 @@ void TextureManager::SetTexture(const std::wstring& path,
 int TextureManager::GetWidth(const std::wstring& path)
 {
 	auto itr = texture_data_map.find(path);
+	if (itr == texture_data_map.end())throw 0;
+
 	return itr->second.width;
 }
 int TextureManager::GetHeight(const std::wstring& path)
 {
 	auto itr = texture_data_map.find(path);
+	if (itr == texture_data_map.end())throw 0;
+
 	return itr->second.height;
 }

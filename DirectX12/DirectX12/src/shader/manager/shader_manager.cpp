@@ -49,5 +49,7 @@ HRESULT ShaderManager::LoadShader(const std::wstring& key, const std::wstring& p
 */
 ComPtr<ID3DBlob>& ShaderManager::GetShader(const std::wstring& key)
 {
-	return (shader_data_map.find(key)->second);
+	auto itr = shader_data_map.find(key);
+	if (itr == shader_data_map.end())throw 0;
+	return (itr->second);
 }

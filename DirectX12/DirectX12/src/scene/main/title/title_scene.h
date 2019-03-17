@@ -1,43 +1,18 @@
 #pragma once
 #include "../../base/scene_base.h"
-#include "../../../cube/cube.h"
-#include "../../../cube/command_list/cube_command_list.h"
-#include "../../../sprite/sprite.h"
-#include "../../../sprite/command_list/sprite_command_list.h"
-#include "../../../sphere/sphere.h"
-#include "../../../sphere/command_list/sphere_command_list.h"
+#include "../../../model/static/static_model.h"
+#include "../../../model/static/command_list/static_model_command_list.h"
 #include <vector>
 
 class TitleScene :public SceneBase
 {
-	CubeCommandList cube_command_list;
-	struct Cubes
+	StaticModelCommandList sm_command_list;
+	struct SM_STRUCT
 	{
-		Cube cube;
+		StaticModel model;
 		Transform transform;
 	};
-	std::vector<Cubes> cubes;
-	HRESULT GenerateCube();
-	void DeleteCube();
-	SpriteCommandList sprite_command_list;
-	struct Sprites
-	{
-		Sprite sprite;
-		Transform transform;
-	};
-	std::vector<Sprites> sprites;
-	HRESULT GenerateSprite();
-	void DeleteSprite();
-	SphereCommandList sphere_command_list;
-	struct Spheres
-	{
-		Sphere sphere;
-		Transform transform;
-	};
-	std::vector<Spheres> spheres;
-	HRESULT GenerateSphere();
-	void DeleteSphere();
-	int NNN = 1;
+	std::vector<SM_STRUCT> sm_list;
 public:
 	HRESULT Init()override;
 	ScenePtrType Update(ScenePtrType, HRESULT&)override;
