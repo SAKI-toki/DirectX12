@@ -162,6 +162,7 @@
     <ClInclude Include="src\device\device.h" />
     <ClInclude Include="src\input\gamepad\gamepad_input.h" />
     <ClInclude Include="src\input\keyboard\keyboard_input.h" />
+    <ClInclude Include="src\light\directional\directional_light.h" />
     <ClInclude Include="src\main\main.h" />
     <ClInclude Include="src\model\static\command_list\static_model_command_list.h" />
     <ClInclude Include="src\model\static\manager\static_model_manager.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\sprite\sprite.h" />
     <ClInclude Include="src\texture\manager\texture_manager.h" />
     <ClInclude Include="src\texture\texture.h" />
+    <ClInclude Include="src\text_ui\text_ui.h" />
     <ClInclude Include="src\time\time.h" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,7 @@
     <ClCompile Include="src\device\device.cpp" />
     <ClCompile Include="src\input\gamepad\gamepad_input.cpp" />
     <ClCompile Include="src\input\keyboard\keyboard_input.cpp" />
+    <ClCompile Include="src\light\directional\directional_light.cpp" />
     <ClCompile Include="src\main\main.cpp" />
     <ClCompile Include="src\model\static\command_list\static_model_command_list.cpp" />
     <ClCompile Include="src\model\static\manager\static_model_manager.cpp" />
@@ -204,6 +207,7 @@
     <ClCompile Include="src\sprite\sprite.cpp" />
     <ClCompile Include="src\texture\manager\texture_manager.cpp" />
     <ClCompile Include="src\texture\texture.cpp" />
+    <ClCompile Include="src\text_ui\text_ui.cpp" />
     <ClCompile Include="src\time\time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

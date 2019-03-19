@@ -1,6 +1,11 @@
 #include "fbx.h"
 #include <fstream>
 
+/**
+* @brief FBXのコンバート
+* @param path コンバートするFBXのパス
+* @return 成功したかどうか
+*/
 bool ConvertFbx(const std::string& path)
 {
 	FbxManager* fbx_manager = FbxManager::Create();
@@ -36,15 +41,17 @@ bool ConvertFbx(const std::string& path)
 		FbxAxisSystem scene_axis = fbx_scene->GetGlobalSettings().GetAxisSystem();
 		if (scene_axis != FbxAxisSystem::DirectX)
 		{
+			std::cout << "座標系をDirectXに変換 : ";
 			FbxAxisSystem::DirectX.ConvertScene(fbx_scene);
-			std::cout << "座標系をDirectXに変換" << std::endl;
+			std::cout << "完了" << std::endl;
 		}
 	}
 	//三角化
 	{
+		std::cout << "三角化 : ";
 		FbxGeometryConverter geometryConverter(fbx_manager);
 		geometryConverter.Triangulate(fbx_scene, true);
-		std::cout << "三角化完了" << std::endl;
+		std::cout << "完了" << std::endl;
 	}
 	//ノードを巡る
 	std::cout << "ノードをめぐり、メッシュのみ読み込みます" << std::endl;
@@ -60,23 +67,43 @@ bool ConvertFbx(const std::string& path)
 	return OutputFile(path, fbx_data);
 }
 
-void RecursiveNode(FbxNode* node, std::vector<FbxData>& fbx_data)
+/**
+* @brief ノードをめぐる
+* @param parent_node 親ノード
+* @param fbx_data fbxのデータのリスト
+*/
+void RecursiveNode(FbxNode* parent_node, std::vector<FbxData>& fbx_data)
 {
-	auto attribute = node->GetNodeAttribute();
+	auto attribute = parent_node->GetNodeAttribute();
 	if (attribute != nullptr&&
-		node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
+		parent_node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
 	{
-		fbx_data.push_back(LoadMesh(node->GetMesh()));
+		std::cout << parent_node->GetName() << "をコンバート : ";
+		fbx_data.push_back({});
+		if (LoadMesh(parent_node->GetMesh(), *(fbx_data.end() - 1)))
+		{
+			std::cout << "成功" << std::endl;
+		}
+		else
+		{
+			std::cout << "失敗" << std::endl;
+			throw 0;
+		}
 	}
-	for (int i = 0; i < node->GetChildCount(); ++i)
+	for (int i = 0; i < parent_node->GetChildCount(); ++i)
 	{
-		RecursiveNode(node->GetChild(i), fbx_data);
+		RecursiveNode(parent_node->GetChild(i), fbx_data);
 	}
 }
 
-FbxData LoadMesh(FbxMesh* mesh)
+/**
+* @brief メッシュの読み込み
+* @param mesh 読み込むメッシュ
+* @param fbx_data fbxのデータのリスト
+* @return 成功したかどうか
+*/
+bool LoadMesh(FbxMesh* mesh, FbxData& fbx_data)
 {
-	FbxData fbx_data;
 	int polygon_num = mesh->GetPolygonCount();
 	int polygon_vertex_num = mesh->GetPolygonVertexCount();
 	int* index_array = mesh->GetPolygonVertices();
@@ -96,9 +123,15 @@ FbxData LoadMesh(FbxMesh* mesh)
 		}
 	}
 	fbx_data.vertex_num = polygon_num * 3;
-	return fbx_data;
+	return true;
 }
 
+/**
+* @brief コンバートした情報をファイルに出力
+* @param path パス
+* @param fbx_data fbxのデータのリスト
+* @return 成功したかどうか
+*/
 bool OutputFile(const std::string& path, std::vector<FbxData>& fbx_data)
 {
 	std::ofstream ofs(

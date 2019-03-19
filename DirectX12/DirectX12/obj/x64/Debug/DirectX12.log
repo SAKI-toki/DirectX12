@@ -1,7 +1,2 @@
-﻿  static_model_manager.cpp
-  static_model.cpp
-  title_scene.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  scene_manager.cpp
-  コードを生成中...
+﻿  title_scene.cpp
   DirectX12.vcxproj -> C:\Users\tokir\Documents\GitHub\DirectX12\DirectX12\DirectX12\bin\x64\Debug\DirectX12.exe

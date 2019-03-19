@@ -1,3 +1,9 @@
+/**
+* @file fbx.h
+* @brief fbxをコンバートする関数や構造体の宣言
+* @author 石山　悠
+* @date 2019/03/18
+*/
 #pragma once
 #include <fbxsdk.h>
 #include <string>
@@ -6,12 +12,18 @@
 #include <array>
 #include <saki/vector.h>
 
+/**
+* @brief 頂点情報
+*/
 struct VertexData
 {
 	saki::vector3<float> pos;
 	saki::vector3<float> nor;
 };
 
+/**
+* @brief FBXのデータ
+*/
 struct FbxData
 {
 	std::vector<VertexData> vertex;
@@ -20,5 +32,5 @@ struct FbxData
 
 bool ConvertFbx(const std::string& path);
 void RecursiveNode(FbxNode* node, std::vector<FbxData>& fbx_data);
-FbxData LoadMesh(FbxMesh* mesh);
+bool LoadMesh(FbxMesh* mesh, FbxData& fbx_data);
 bool OutputFile(const std::string& path, std::vector<FbxData>& fbx_data);

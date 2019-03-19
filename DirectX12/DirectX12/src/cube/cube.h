@@ -30,6 +30,8 @@ class Cube
 	struct CubeConstant
 	{
 		Matrix m;
+		Matrix world;
+		Float4 light;
 	};
 	ComPtr<ID3D12Resource> vertex_buffer;
 	D3D12_VERTEX_BUFFER_VIEW vertex_buffer_view;

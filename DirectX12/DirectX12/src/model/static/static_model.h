@@ -19,6 +19,8 @@ class StaticModel
 	struct StaticModelConstant
 	{
 		Matrix m;
+		Matrix world;
+		Float4 light;
 		Float4 col;
 	};
 	//ƒ‚ƒfƒ‹‚ÌƒL[

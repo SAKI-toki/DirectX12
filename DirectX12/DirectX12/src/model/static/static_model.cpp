@@ -8,6 +8,7 @@
 #include "../../common/message_box.h"
 #include "../../camera/camera.h"
 #include "../../device/device.h"
+#include "../../light/directional/directional_light.h"
 
 #pragma region public
 
@@ -69,6 +70,7 @@ HRESULT StaticModel::UpdateTransform(const Transform& transform)
 		return hr;
 	}
 	buf->m = mat;
+	buf->world = DirectX::XMMatrixTranspose(world);
 	constant_buffer->Unmap(0, nullptr);
 	buf = nullptr;
 
@@ -109,6 +111,17 @@ HRESULT StaticModel::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 
 	HRESULT hr = S_OK;
 
+	StaticModelConstant *buf{};
+	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
+	if (FAILED(hr))
+	{
+		Comment(L"定数バッファのMapに失敗",
+			L"static_model.cpp/StaticModel::Draw");
+		return hr;
+	}
+	buf->light = DirectionalLight::getinstance()->GetVector();
+	constant_buffer->Unmap(0, nullptr);
+	buf = nullptr;
 	bundle.SetExecuteCommandList(command_list);
 
 	return hr;

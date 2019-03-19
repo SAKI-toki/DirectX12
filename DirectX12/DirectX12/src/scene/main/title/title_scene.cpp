@@ -5,9 +5,10 @@
 * @date 2019/03/13
 */
 #include "title_scene.h"
-#include "../../../device/device.h"
-#include <saki/random.h>
-#include "../../../input/keyboard/keyboard_input.h"
+#include "../../../text_ui/text_ui.h"
+#include "../../../time/time.h"
+#include <string>
+#include <sstream>
 
 #pragma region public
 
@@ -18,9 +19,6 @@
 HRESULT TitleScene::Init()
 {
 	HRESULT hr = S_OK;
-
-	hr = sm_command_list.Init();
-	if (FAILED(hr))return hr;
 
 	return hr;
 }
@@ -33,42 +31,18 @@ HRESULT TitleScene::Init()
 */
 ScenePtrType TitleScene::Update(ScenePtrType scene_ptr, HRESULT& hr)
 {
-	if (KeyboardInput::getinstance()->GetKeyDown(DIK_1))
-	{
-		sm_list.push_back({});
-		hr = (sm_list.end() - 1)->model.Init(
-			L"resources/model/Dragon.sakimdl",
-			sm_command_list.GetPipeline());
-		if (FAILED(hr))return scene_ptr;
-		(sm_list.end() - 1)->transform.set_pos(
-			{ saki::random(-5.0f, 5.0f), saki::random(-5.0f, 5.0f), saki::random(-5.0f, 5.0f) });
-		(sm_list.end() - 1)->model.UpdateColor(
-			{ saki::random(0.0f, 1.0f), saki::random(0.0f, 1.0f), saki::random(0.0f, 1.0f)
-			,1.0f });
-		(sm_list.end() - 1)->transform.set_scale({ 0.1f, 0.1f, 0.1f });
-
-	}
-	if (KeyboardInput::getinstance()->GetKeyDown(DIK_2))
-	{
-		if (sm_list.size() > 0)
-		{
-			auto itr = sm_list.begin();
-			itr += saki::random(0, sm_list.size() - 1);
-			sm_list.erase(itr);
-		}
-	}
-
-	for (auto&& sm : sm_list)
-	{
-		auto rot = sm.transform.get_rot();
-		rot.x += 0.01f;
-		rot.y += 0.02f;
-		rot.z += 0.03f;
-		sm.transform.set_rot(rot);
-		hr = sm.model.UpdateTransform(sm.transform);
-		if (FAILED(hr))return scene_ptr;
-	}
-
+	static float time = 0.0f;
+	time += Time::getinstance()->GetElapsedTime();
+	auto x = std::cos(time) * 1100;
+	auto y = std::sin(time*0.7f) * 400 + 450;
+	UINT32 r = static_cast<UINT32>(std::abs(std::sin(time*1.7f) * 255/2 - 255 / 2));
+	UINT32 g = static_cast<UINT32>(std::abs(std::cos(time*2.7f) * 255));
+	//色(ブラッシュ)
+	auto color = TextUi::getinstance()->CreateTextBrush((r << 16) + (g << 8) + 255);
+	//フォーマット
+	auto format = TextUi::getinstance()->CreateTextFormat(1.0f,
+		DWRITE_FONT_WEIGHT_BOLD, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, DWRITE_TEXT_ALIGNMENT_CENTER);
+	TextUi::getinstance()->DrawStringColorFormat(L" SAKI chan SakiCppLibrary", { x,y }, color, format);
 	return scene_ptr;
 }
 
@@ -79,16 +53,6 @@ ScenePtrType TitleScene::Update(ScenePtrType scene_ptr, HRESULT& hr)
 HRESULT TitleScene::Render()
 {
 	HRESULT hr = S_OK;
-
-	hr = sm_command_list.BeginScene();
-	if (FAILED(hr))return hr;
-	for (auto&& sm : sm_list)
-	{
-		hr = sm.model.Draw(sm_command_list.GetCommandList());
-		if (FAILED(hr))return hr;
-	}
-	hr = sm_command_list.Execute();
-	if (FAILED(hr))return hr;
 
 	return hr;
 }

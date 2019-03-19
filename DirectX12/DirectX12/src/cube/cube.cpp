@@ -8,6 +8,7 @@
 #include "../device/device.h"
 #include "../camera/camera.h"
 #include "../common/message_box.h"
+#include "../light/directional/directional_light.h"
 #include <vector>
 
 #pragma region public
@@ -65,6 +66,7 @@ HRESULT Cube::UpdateTransform(const Transform& transform)
 		return hr;
 	}
 	buf->m = mat;
+	buf->world = DirectX::XMMatrixTranspose(world);
 	constant_buffer->Unmap(0, nullptr);
 	buf = nullptr;
 
@@ -79,6 +81,18 @@ HRESULT Cube::UpdateTransform(const Transform& transform)
 HRESULT Cube::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
+
+	CubeConstant *buf{};
+	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
+	if (FAILED(hr))
+	{
+		Comment(L"定数バッファのMapに失敗", 
+			L"cube.cpp/Cube::Draw");
+		return hr;
+	}
+	buf->light = DirectionalLight::getinstance()->GetVector();
+	constant_buffer->Unmap(0, nullptr);
+	buf = nullptr;
 
 	//テクスチャをセット
 	texture.SetTexture(command_list);
@@ -123,7 +137,8 @@ HRESULT Cube::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constant_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"定数バッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"定数バッファ用のリソースとヒープの作成に失敗", 
+			L"cube.cpp/Cube::CreateBuffer");
 		return hr;
 	}
 
@@ -134,7 +149,8 @@ HRESULT Cube::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertex_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", 
+			L"cube.cpp/Cube::CreateBuffer");
 		return hr;
 	}
 	vertex_buffer_view.BufferLocation = vertex_buffer->GetGPUVirtualAddress();
@@ -148,7 +164,8 @@ HRESULT Cube::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&index_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗", L"cube.cpp/Cube::CreateBuffer");
+		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗", 
+			L"cube.cpp/Cube::CreateBuffer");
 		return hr;
 	}
 

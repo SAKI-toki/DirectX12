@@ -7,6 +7,7 @@
 #include "device.h"
 #include "../common/message_box.h"
 #include "../common/window_size.h"
+#include "../text_ui/text_ui.h"
 
 #pragma region public
 
@@ -38,6 +39,8 @@ HRESULT Device::InitDevice(HWND hwnd)
 	hr = CreateDepthStencilBuffer();
 	if (FAILED(hr))return hr;
 	CreateScissorRectViewPort();
+	hr = TextUi::getinstance()->Init(FrameNum, device, command_queue, render_targets);
+	if (FAILED(hr))return hr;
 
 	return hr;
 }
@@ -91,6 +94,9 @@ HRESULT Device::BeginScene()
 HRESULT Device::EndScene()
 {
 	HRESULT hr = S_OK;
+
+	hr = TextUi::getinstance()->Render(rtv_index);
+	if (FAILED(hr))return hr;
 
 	SetResourceBarrier(D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PRESENT, render_targets[rtv_index].Get(), command_list);

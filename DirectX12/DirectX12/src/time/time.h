@@ -5,6 +5,7 @@
 * @date 2019/03/05
 */
 #pragma once
+#include "../common/alias.h"
 #include <saki/clock.h>
 #include <saki/singleton.h>
 
@@ -34,4 +35,6 @@ public:
 	void SetTimeScale(float);
 	//スケールのゲッタ
 	float GetTimeScale();
+	//FPSの描画
+	void DrawFps(const Vec2& pos);
 };
