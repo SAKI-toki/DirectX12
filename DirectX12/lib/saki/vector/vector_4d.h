@@ -45,13 +45,6 @@ namespace saki
 		constexpr vector4(const_reference _x, const_reference _y, const_reference _z, const_reference _w) :
 			x(_x), y(_y), z(_z), w(_w)
 		{}
-		/**
-		* @brief 生配列からの初期化
-		* @param pointer 配列のポインタ
-		*/
-		explicit constexpr vector4(const_pointer const pointer) :
-			x(*pointer), y(*(pointer + 1)), z(*(pointer + 2)), w(*(pointer + 3))
-		{}
 		//デフォルトを使用
 		//デフォルトではメンバ変数のコピー、ムーブを行う
 		vector4(const vector4<value_type>&) = default;

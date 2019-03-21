@@ -17,23 +17,28 @@ class Camera :public saki::singleton<Camera>
 	//近い距離
 	static constexpr float NEAR_Z = 0.1f;
 	//遠い距離
-	static constexpr float FAR_Z = 100.0f;
+	static constexpr float FAR_Z = 10000.0f;
+	//視野
+	static constexpr float fov = saki::to_radian(60.0f);
 	//行列
 	Matrix view, projection, view_mul_projection;
-	//各要素
-	Vector pos, lookat, up;
-	//行列
-	static constexpr float fov = saki::to_radian(60.0f);
+	//位置,向きベクトル
+	Vec3 pos, forward_vector;
 	//行列の更新
 	void MatrixUpdate();
+	//Z軸回転
+	float rot_z;
 public:
 	Camera();
 	void Update();
 	Matrix GetView()const;
 	Matrix GetProjection()const;
 	Matrix GetViewMulProjection()const;
-	Vector GetPos()const;
-	void SetPos(const Vector& camera_pos);
-	Vector GetLookAt()const;
-	void SetLookAt(const Vector& camera_look_at);
+	Vec3 GetForward()const;
+	void SetForward(const Vec3& camera_forward);
+	void LookAt(const Vec3& look_at);
+	Vec3 GetPos()const;
+	void SetPos(const Vec3& camera_pos);
+	float GetRotZ()const;
+	void SetRotZ(const float camera_rot_z);
 };

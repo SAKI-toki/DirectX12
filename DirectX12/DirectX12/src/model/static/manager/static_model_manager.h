@@ -28,7 +28,7 @@ class StaticModelManager :public saki::singleton<StaticModelManager>
 	/**
 	* @brief ƒ‚ƒfƒ‹î•ñ
 	*/
-	struct ModelData
+	struct MeshData
 	{
 		unsigned int index_num;
 		ComPtr<ID3D12Resource> vertex_buffer;
@@ -36,7 +36,7 @@ class StaticModelManager :public saki::singleton<StaticModelManager>
 		ComPtr<ID3D12Resource> index_buffer;
 		D3D12_INDEX_BUFFER_VIEW index_buffer_view;
 	};
-	std::unordered_map<std::wstring, std::vector<ModelData>> model_data_map;
+	std::unordered_map<std::wstring, std::vector<MeshData>> model_data_map;
 	HRESULT LoadModel(const std::wstring&);
 	void SetModel(const std::wstring& key,
 		ComPtr<ID3D12GraphicsCommandList>& com_command_list);

@@ -31,7 +31,7 @@ HRESULT StaticModelManager::LoadModel(const std::wstring& path)
 	}
 	unsigned int mesh_num;
 	ifs.read(reinterpret_cast<char*>(&mesh_num), sizeof(mesh_num));
-	std::vector<ModelData> model_data_list(mesh_num);
+	std::vector<MeshData> mesh_data_list(mesh_num);
 	for (unsigned int mesh_n = 0; mesh_n < mesh_num; ++mesh_n)
 	{
 		//各情報の数
@@ -40,7 +40,7 @@ HRESULT StaticModelManager::LoadModel(const std::wstring& path)
 		//各情報のリスト
 		std::vector<Float3> pos_list(index_num);
 		std::vector<Float3> nor_list(index_num);
-		model_data_list[mesh_n].index_num = index_num;
+		mesh_data_list[mesh_n].index_num = index_num;
 		{
 			//頂点
 			for (unsigned int i = 0; i < index_num; ++i)
@@ -78,21 +78,22 @@ HRESULT StaticModelManager::LoadModel(const std::wstring& path)
 
 		hr = Device::getinstance()->GetDevice()->CreateCommittedResource
 		(&heap_properties, D3D12_HEAP_FLAG_NONE, &resource_desc,
-			D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&model_data_list[mesh_n].vertex_buffer));
+			D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&mesh_data_list[mesh_n].vertex_buffer));
 		if (FAILED(hr))
 		{
 			Comment(L"頂点バッファ用のリソースとヒープの作成に失敗",
 				L"static_model_manager.cpp/StaticModelManager::LoadModel");
 			return hr;
 		}
-		model_data_list[mesh_n].vertex_buffer_view.BufferLocation = model_data_list[mesh_n].vertex_buffer->GetGPUVirtualAddress();
-		model_data_list[mesh_n].vertex_buffer_view.StrideInBytes = sizeof(Vertex3D);
-		model_data_list[mesh_n].vertex_buffer_view.SizeInBytes = sizeof(Vertex3D) * index_num;
+		mesh_data_list[mesh_n].vertex_buffer_view.BufferLocation = 
+			mesh_data_list[mesh_n].vertex_buffer->GetGPUVirtualAddress();
+		mesh_data_list[mesh_n].vertex_buffer_view.StrideInBytes = sizeof(Vertex3D);
+		mesh_data_list[mesh_n].vertex_buffer_view.SizeInBytes = sizeof(Vertex3D) * index_num;
 
-		resource_desc.Width = sizeof(UINT32) * model_data_list[mesh_n].index_num;
+		resource_desc.Width = sizeof(UINT32) * mesh_data_list[mesh_n].index_num;
 		hr = Device::getinstance()->GetDevice()->CreateCommittedResource
 		(&heap_properties, D3D12_HEAP_FLAG_NONE, &resource_desc,
-			D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&model_data_list[mesh_n].index_buffer));
+			D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&mesh_data_list[mesh_n].index_buffer));
 		if (FAILED(hr))
 		{
 			Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗",
@@ -100,14 +101,16 @@ HRESULT StaticModelManager::LoadModel(const std::wstring& path)
 			return hr;
 		}
 
-		model_data_list[mesh_n].index_buffer_view.BufferLocation = model_data_list[mesh_n].index_buffer->GetGPUVirtualAddress();
-		model_data_list[mesh_n].index_buffer_view.SizeInBytes = sizeof(UINT32) * model_data_list[mesh_n].index_num;
-		model_data_list[mesh_n].index_buffer_view.Format = DXGI_FORMAT_R32_UINT;
+		mesh_data_list[mesh_n].index_buffer_view.BufferLocation = 
+			mesh_data_list[mesh_n].index_buffer->GetGPUVirtualAddress();
+		mesh_data_list[mesh_n].index_buffer_view.SizeInBytes = 
+			sizeof(UINT32) * mesh_data_list[mesh_n].index_num;
+		mesh_data_list[mesh_n].index_buffer_view.Format = DXGI_FORMAT_R32_UINT;
 
 		//頂点
 		{
 			Vertex3D *vb{};
-			hr = model_data_list[mesh_n].vertex_buffer->Map(0, nullptr, (void**)&vb);
+			hr = mesh_data_list[mesh_n].vertex_buffer->Map(0, nullptr, (void**)&vb);
 			if (FAILED(hr))
 			{
 				delete[](vb);
@@ -121,13 +124,13 @@ HRESULT StaticModelManager::LoadModel(const std::wstring& path)
 				vb[i] = Vertex3D{ pos_list[i],nor_list[i] };
 			}
 
-			model_data_list[mesh_n].vertex_buffer->Unmap(0, nullptr);
+			mesh_data_list[mesh_n].vertex_buffer->Unmap(0, nullptr);
 			vb = nullptr;
 		}
 		//インデックス
 		{
 			unsigned int *ib{};
-			hr = model_data_list[mesh_n].index_buffer->Map(0, nullptr, (void**)&ib);
+			hr = mesh_data_list[mesh_n].index_buffer->Map(0, nullptr, (void**)&ib);
 			if (FAILED(hr))
 			{
 				Comment(L"インデックスバッファのMapに失敗",
@@ -138,12 +141,12 @@ HRESULT StaticModelManager::LoadModel(const std::wstring& path)
 			{
 				ib[i] = i;
 			}
-			model_data_list[mesh_n].index_buffer->Unmap(0, nullptr);
+			mesh_data_list[mesh_n].index_buffer->Unmap(0, nullptr);
 			ib = nullptr;
 		}
 
 	}
-	model_data_map.insert(std::make_pair(path, model_data_list));
+	model_data_map.insert(std::make_pair(path, mesh_data_list));
 
 	return hr;
 }

@@ -14,7 +14,7 @@ bool ConvertFbx(const std::string& path)
 	{
 		FbxImporter* fbx_importer = FbxImporter::Create(fbx_manager, "imp");
 		FbxString file_path(path.c_str());
-		std::cout << "FbxImporterの初期化に";
+		std::cout << "FbxImporterの初期化 : ";
 		if (fbx_importer->Initialize(file_path.Buffer(), -1, fbx_manager->GetIOSettings()))
 		{
 			std::cout << "成功" << std::endl;
@@ -24,7 +24,7 @@ bool ConvertFbx(const std::string& path)
 			std::cout << "失敗" << std::endl;
 			return false;
 		}
-		std::cout << "FbxのImportに";
+		std::cout << "FbxのImport : ";
 		if (fbx_importer->Import(fbx_scene))
 		{
 			std::cout << "成功" << std::endl;
@@ -80,7 +80,7 @@ void RecursiveNode(FbxNode* parent_node, std::vector<FbxData>& fbx_data)
 	{
 		std::cout << parent_node->GetName() << "をコンバート : ";
 		fbx_data.push_back({});
-		if (LoadMesh(parent_node->GetMesh(), *(fbx_data.end() - 1)))
+		if (LoadMesh(parent_node->GetMesh(), *(fbx_data.rbegin())))
 		{
 			std::cout << "成功" << std::endl;
 		}
@@ -102,20 +102,19 @@ void RecursiveNode(FbxNode* parent_node, std::vector<FbxData>& fbx_data)
 * @param fbx_data fbxのデータのリスト
 * @return 成功したかどうか
 */
+#include <iomanip>
 bool LoadMesh(FbxMesh* mesh, FbxData& fbx_data)
 {
 	int polygon_num = mesh->GetPolygonCount();
-	int polygon_vertex_num = mesh->GetPolygonVertexCount();
-	int* index_array = mesh->GetPolygonVertices();
 	FbxVector4 pos, nor;
 	fbx_data.vertex.resize(polygon_num * 3);
 	for (int i = 0; i < polygon_num; ++i)
 	{
+		//三角化しているためポリゴンの頂点数は3固定
 		for (int j = 0; j < 3; ++j)
 		{
 			pos = mesh->GetControlPointAt(mesh->GetPolygonVertex(i, j));
 			mesh->GetPolygonVertexNormal(i, j, nor);
-
 			fbx_data.vertex[i * 3 + j].pos =
 			{ static_cast<float>(pos[0]),static_cast<float>(pos[1]),static_cast<float>(pos[2]) };
 			fbx_data.vertex[i * 3 + j].nor =

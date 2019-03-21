@@ -43,13 +43,6 @@ namespace saki
 		constexpr vector3(const_reference _x, const_reference _y, const_reference _z) :
 			x(_x), y(_y), z(_z)
 		{}
-		/**
-		* @brief 生配列からの初期化
-		* @param pointer 配列のポインタ
-		*/
-		explicit constexpr vector3(const_pointer const pointer) :
-			x(*pointer), y(*(pointer + 1)), z(*(pointer + 2))
-		{}
 		//デフォルトを使用
 		//デフォルトではメンバ変数のコピー、ムーブを行う
 		vector3(const vector3<value_type>&) = default;

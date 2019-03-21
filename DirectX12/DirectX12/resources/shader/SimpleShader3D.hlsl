@@ -36,7 +36,7 @@ PS_INPUT vs(VS_INPUT input)
 	nor = mul(input.Normal, (float3x3)World);
 	nor = normalize(nor);
 	output.col2 = dot(nor, L);
-	output.col2 = output.col2 * 0.5 + 0.5;
+	//output.col2 = output.col2 * 0.5 + 0.5;
 
 	return output;
 }

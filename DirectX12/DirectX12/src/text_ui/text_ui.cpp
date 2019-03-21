@@ -169,8 +169,7 @@ ComPtr<IDWriteTextFormat> TextUi::CreateTextFormat(
 
 	hr = dwrite_factory->CreateTextFormat(
 		L"Arial", nullptr, font_weight,font_style,font_stretch,
-		WINDOW_HEIGHT* font_size / 30.0f, L"en-us", &text_format
-	);
+		WINDOW_HEIGHT * font_size / 30.0f, L"en-us", &text_format);
 	if (FAILED(hr))
 	{
 		Comment(L"テキストフォーマットの作成に失敗",

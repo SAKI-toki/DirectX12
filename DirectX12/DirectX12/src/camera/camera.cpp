@@ -6,6 +6,8 @@
 */
 #include "camera.h"
 #include "../common/window_size.h"
+#include <cmath>
+#include <saki/math/pi.h>
 
 #pragma region public
 
@@ -13,9 +15,9 @@
 * @brief カメラのコンストラクタ
 */
 Camera::Camera() :
-	pos({ 0.0f,0.0f,-10.0f }),
-	lookat({ 0.0f,0.0f,0.0f }),
-	up({ 0.0f,1.0f,0.0f })
+	pos({ 0.0f,0.0f,0.0f }),
+	forward_vector({ 0.0f,0.0f,1.0f }),
+	rot_z(0.0f)
 {
 	MatrixUpdate();
 }
@@ -56,10 +58,42 @@ Matrix Camera::GetViewMulProjection()const
 }
 
 /**
+* @brief 向きベクトルのゲッタ
+* @return 向きベクトル
+*/
+Vec3 Camera::GetForward()const
+{
+	return forward_vector;
+}
+
+/**
+* @brief 向きベクトルのセッタ
+* @param camera_forward_vector 新しい向きベクトル
+*/
+void Camera::SetForward(const Vec3& camera_forward_vector)
+{
+	//向きが0,0,0の場合は何も処理しない
+	if (camera_forward_vector == Vec3{})return;
+	forward_vector = camera_forward_vector;
+	forward_vector.normalize();
+}
+
+/**
+* @brief 見たい位置から向きベクトルをセットする
+* @param look_at 見たい位置
+*/
+void Camera::LookAt(const Vec3& look_at)
+{
+	//見たい位置とカメラの位置が同じ場合は何も処理しない
+	if (look_at == pos)return;
+	Camera::getinstance()->SetForward(look_at - pos);
+}
+
+/**
 * @brief 位置のゲッタ
 * @return 位置
 */
-Vector Camera::GetPos()const
+Vec3 Camera::GetPos()const
 {
 	return pos;
 }
@@ -68,27 +102,27 @@ Vector Camera::GetPos()const
 * @brief 位置のセッタ
 * @param _pos 新しいカメラの位置
 */
-void Camera::SetPos(const Vector& _pos)
+void Camera::SetPos(const Vec3& camera_pos)
 {
-	pos = _pos;
+	pos = camera_pos;
 }
 
 /**
-* @brief 注視点のゲッタ
-* @return 注視点
+* @brief カメラのz軸回転のゲッタ
+* @return カメラのz軸回転
 */
-Vector Camera::GetLookAt()const
+float Camera::GetRotZ()const
 {
-	return lookat;
+	return rot_z;
 }
 
 /**
-* @brief 注視点のセッタ
-* @param _lookat 新しい注視点
+* @brief カメラのz軸回転のセッタ
+* @param camera_rot_z 新しいカメラのz軸回転
 */
-void Camera::SetLookAt(const Vector& _lookat)
+void Camera::SetRotZ(const float camera_rot_z)
 {
-	lookat = _lookat;
+	rot_z = camera_rot_z;
 }
 
 #pragma endregion
@@ -100,13 +134,19 @@ void Camera::SetLookAt(const Vector& _lookat)
 */
 void Camera::MatrixUpdate()
 {
-	view = DirectX::XMMatrixLookAtLH(pos, lookat, up);
+	Vector vec_pos{ pos.x,pos.y,pos.z };
+	Vector vec_look_at = DirectX::XMVectorAdd(vec_pos, { forward_vector.x, forward_vector.y, forward_vector.z });
+	//ビュー行列
+	view = DirectX::XMMatrixLookAtLH(vec_pos, vec_look_at, { 0.0f,1.0f,0.0f });
+	//プロジェクション行列
 	projection = DirectX::XMMatrixPerspectiveFovLH(
 		fov, static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT),
 		NEAR_Z, FAR_Z);
+	//2D用のプロジェクション
 	//projection = DirectX::XMMatrixOrthographicLH(
 	//	static_cast<float>(WINDOW_WIDTH), static_cast<float>(WINDOW_HEIGHT), NEAR_Z, FAR_Z);
-	view_mul_projection = view * projection;
+	//ビューとプロジェクション行列をかける(Z軸回転を考慮)
+	view_mul_projection = view * DirectX::XMMatrixRotationRollPitchYaw(0, 0, rot_z) * projection;
 }
 
 #pragma endregion

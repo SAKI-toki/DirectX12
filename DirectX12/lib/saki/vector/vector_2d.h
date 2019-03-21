@@ -42,13 +42,6 @@ namespace saki
 		constexpr vector2(const_reference _x, const_reference _y) :
 			x(_x), y(_y)
 		{}
-		/**
-		* @brief 生配列からの初期化
-		* @param pointer 配列のポインタ
-		*/
-		explicit constexpr vector2(const_pointer const pointer) :
-			x(*pointer), y(*(pointer + 1))
-		{}
 		//デフォルトを使用
 		//デフォルトではメンバ変数のコピー、ムーブを行う
 		vector2(const vector2<value_type>&) = default;
@@ -240,7 +233,7 @@ namespace saki
 	template<typename U = double, typename T1, typename T2>
 	constexpr U dot(const saki::vector2<T1>& v1, const saki::vector2<T2>& v2)
 	{
-		return static_cast<U>(v1.x*v2.x + v1.y*v2.y);
+		return static_cast<U>(v1.x * v2.x + v1.y * v2.y);
 	}
 	/**
 	* @brief 外積

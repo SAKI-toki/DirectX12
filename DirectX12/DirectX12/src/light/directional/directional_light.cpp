@@ -1,7 +1,7 @@
 #include "directional_light.h"
 
 DirectionalLight::DirectionalLight() :
-	vector(0.0f, 40.0f, -70.0f, 1.0f)
+	vector(0.0f, 5.0f, -10.0f, 0.0f)
 {}
 
 
