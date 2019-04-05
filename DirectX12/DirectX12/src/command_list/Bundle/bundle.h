@@ -7,17 +7,20 @@
 #pragma once
 #include "../../common/d3d12.h"
 #include "../../common/alias.h"
+#include <memory>
 
 /**
 * @brief バンドルクラス
 */
 class Bundle
 {
-	ComPtr<ID3D12CommandAllocator> command_allocator;
-	ComPtr<ID3D12GraphicsCommandList> command_list;
-	HRESULT CreateCommandAllocator();
-	HRESULT CreateCommandList(ComPtr<ID3D12PipelineState>& com_pipeline);
+	class Impl;
+	std::unique_ptr<Impl> pimpl;
 public:
+	Bundle();
+	~Bundle()noexcept;
+	Bundle(Bundle&&)noexcept;
+	Bundle& operator=(Bundle&&)noexcept;
 	HRESULT Init(ComPtr<ID3D12PipelineState>& com_pipeline);
 	HRESULT Close();
 	void SetExecuteCommandList(ComPtr<ID3D12GraphicsCommandList>& execute_command_list);

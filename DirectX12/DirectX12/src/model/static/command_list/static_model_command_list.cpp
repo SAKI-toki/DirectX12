@@ -1,11 +1,23 @@
+/**
+* @file static_model_command_list.h
+* @brief アニメーションなしのモデルのコマンドリストクラスのメンバ関数を定義
+* @author 石山　悠
+* @date 2019/02/08
+*/
 #include "static_model_command_list.h"
 #include "../../../common/message_box.h"
 #include "../../../device/device.h"
+#include "../../../shader/shader.h"
 
+/**
+* @brief アニメーションなしのモデル用のパイプラインを作成
+* @return 成功したかどうか
+*/
 HRESULT StaticModelCommandList::CreatePipeline()
 {
 	HRESULT hr = S_OK;
 
+	Shader vertex_shader, pixel_shader;
 	//頂点シェーダー
 	hr = vertex_shader.LoadShader(L"resources/shader/SingleColor3D.hlsl", "vs", "vs_5_0");
 	if (FAILED(hr))return hr;
@@ -20,7 +32,6 @@ HRESULT StaticModelCommandList::CreatePipeline()
 	pipeline_state_desc.PS.pShaderBytecode = pixel_shader.GetShader()->GetBufferPointer();
 	pipeline_state_desc.PS.BytecodeLength = pixel_shader.GetShader()->GetBufferSize();
 
-
 	//サンプル系の設定
 	pipeline_state_desc.SampleDesc.Count = 1;
 	pipeline_state_desc.SampleDesc.Quality = 0;
@@ -33,10 +44,8 @@ HRESULT StaticModelCommandList::CreatePipeline()
 	//三角形に設定
 	pipeline_state_desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
-
 	//ルートシグネチャ
 	pipeline_state_desc.pRootSignature = Device::getinstance()->GetRootSignature().Get();
-
 
 	//ラスタライザステートの設定
 	pipeline_state_desc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
@@ -49,7 +58,6 @@ HRESULT StaticModelCommandList::CreatePipeline()
 	pipeline_state_desc.RasterizerState.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
 	pipeline_state_desc.RasterizerState.AntialiasedLineEnable = FALSE;
 	pipeline_state_desc.RasterizerState.MultisampleEnable = FALSE;
-
 
 	//ブレンドステートの設定
 	for (int i = 0; i < _countof(pipeline_state_desc.BlendState.RenderTarget); ++i)
@@ -67,7 +75,6 @@ HRESULT StaticModelCommandList::CreatePipeline()
 	}
 	pipeline_state_desc.BlendState.AlphaToCoverageEnable = FALSE;
 	pipeline_state_desc.BlendState.IndependentBlendEnable = FALSE;
-
 
 	//デプスステンシルステートの設定
 	pipeline_state_desc.DepthStencilState.DepthEnable = TRUE;

@@ -4,31 +4,33 @@
   cube_command_list.cpp
   cube.cpp
   device.cpp
+  entry.cpp
   gamepad_input.cpp
   keyboard_input.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  directional_light.cpp
   main.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  obj_model_manager.cpp
-  obj_model.cpp
-  obj.cpp
+  static_model_command_list.cpp
+  static_model_manager.cpp
+  static_model.cpp
   game_scene.cpp
   title_scene.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   scene_manager.cpp
   shader_manager.cpp
   shader.cpp
+  sound_manager.cpp
+  コンパイル中...
+  sound.cpp
   sphere_command_list.cpp
   sphere.cpp
   sprite_command_list.cpp
-  コンパイル中...
   sprite.cpp
   texture_manager.cpp
   texture.cpp
+  text_ui.cpp
   time.cpp
   コード生成しています。
-  1774 of 1781 functions (99.6%) were compiled, the rest were copied from previous compilation.
-    1189 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 2241 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   DirectX12.vcxproj -> C:\Users\tokir\Documents\GitHub\DirectX12\DirectX12\DirectX12\bin\x64\Release\DirectX12.exe

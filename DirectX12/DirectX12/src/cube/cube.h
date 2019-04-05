@@ -7,44 +7,21 @@
 #pragma once
 #include "../common/d3d12.h"
 #include "../common/alias.h"
-#include "../texture/texture.h"
-#include "../command_list/Bundle/bundle.h"
+#include <memory>
+#include <string>
 
 /**
 * @brief キューブクラス
 */
 class Cube
 {
-	/**
-	* @brief 頂点の構造体
-	*/
-	struct Vertex3D
-	{
-		Float3 pos;
-		Float3 nor;
-		Float2 uv;
-	};
-	/**
-	* @brief キューブ用の定数構造体
-	*/
-	struct CubeConstant
-	{
-		Matrix m;
-		Matrix world;
-		Float4 light;
-	};
-	ComPtr<ID3D12Resource> vertex_buffer;
-	D3D12_VERTEX_BUFFER_VIEW vertex_buffer_view;
-	ComPtr<ID3D12Resource> index_buffer;
-	D3D12_INDEX_BUFFER_VIEW index_buffer_view;
-	ComPtr<ID3D12Resource> constant_buffer;
-	HRESULT CreateBuffer();
-	HRESULT CreateCube();
-	Texture texture;
-	Bundle bundle;
-	HRESULT SetBundle();
+	class Impl;
+	std::unique_ptr<Impl> pimpl;
 public:
+	Cube();
+	~Cube()noexcept;
+	Cube& operator=(Cube&&)noexcept;
+	Cube(Cube&&)noexcept;
 	HRESULT Init(const std::wstring& tex_path, ComPtr<ID3D12PipelineState>& com_pipeline);
-	HRESULT UpdateTransform(const Transform& transform);
-	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>& com_command_list);
+	HRESULT Draw(const Transform& transform, ComPtr<ID3D12GraphicsCommandList>& com_command_list);
 };

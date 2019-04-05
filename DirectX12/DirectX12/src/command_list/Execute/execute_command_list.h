@@ -7,22 +7,24 @@
 #pragma once
 #include "../../common/d3d12.h"
 #include "../../common/alias.h"
+#include <memory>
 
 /**
 * @brief 実行用のコマンドリスト
 */
 class ExecuteCommandList
 {
-	ComPtr<ID3D12CommandAllocator> command_allocator;
-	ComPtr<ID3D12GraphicsCommandList> command_list;
-	ComPtr<ID3D12PipelineState> pipeline;
-	HRESULT CreateCommandAllocator();
-	HRESULT CreateCommandList();
+	class Impl;
+	std::unique_ptr<Impl> pimpl;
 protected:
 	//継承し、そのオブジェクトにあったパイプラインを作成する
-	//シェーダーも継承先で定義し作成する
 	virtual HRESULT CreatePipeline() = 0;
 public:
+	ExecuteCommandList();
+	virtual ~ExecuteCommandList()noexcept;
+	ExecuteCommandList(ExecuteCommandList&&)noexcept;
+	ExecuteCommandList& operator=(ExecuteCommandList&&)noexcept;
+
 	HRESULT Init();
 	HRESULT BeginScene();
 	HRESULT Execute();
@@ -30,5 +32,4 @@ public:
 	ComPtr<ID3D12GraphicsCommandList>& GetCommandList();
 	ComPtr<ID3D12PipelineState>& GetPipeline();
 
-	virtual ~ExecuteCommandList() {}
 };

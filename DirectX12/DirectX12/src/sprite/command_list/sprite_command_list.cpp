@@ -7,6 +7,7 @@
 #include "sprite_command_list.h"
 #include "../../device/device.h"
 #include "../../common/message_box.h"
+#include "../../shader/shader.h"
 
 /**
 * @brief キューブ用のパイプラインを作成
@@ -16,6 +17,7 @@ HRESULT SpriteCommandList::CreatePipeline()
 {
 	HRESULT hr = S_OK;
 
+	Shader vertex_shader, pixel_shader;
 	//頂点シェーダー
 	hr = vertex_shader.LoadShader(L"resources/shader/SimpleShader2D.hlsl", "vs", "vs_5_0");
 	if (FAILED(hr))return hr;

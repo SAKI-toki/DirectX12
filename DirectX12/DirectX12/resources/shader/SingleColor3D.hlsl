@@ -1,8 +1,8 @@
+#include "constant_buffer/Light.hlsl"
 cbuffer cbMatrix : register(b0)
 {
 	float4x4 WVP;
 	float4x4 World;
-	float4 Light;
 	float4 Color;
 };
 
@@ -19,7 +19,6 @@ struct PS_INPUT
 	float4 col2 : COL2;
 };
 
-
 PS_INPUT vs(VS_INPUT input)
 {
 	PS_INPUT output;
@@ -32,11 +31,10 @@ PS_INPUT vs(VS_INPUT input)
 	nor = mul(input.Normal, (float3x3)World);
 	nor = normalize(nor);
 	output.col2 = dot(nor, L);
-	//output.col2 = output.col2 * 0.5 + 0.5;
+	output.col2 = output.col2 * 0.9 + 0.1;
 
 	return output;
 }
-
 
 float4 ps(PS_INPUT input) : SV_TARGET
 {

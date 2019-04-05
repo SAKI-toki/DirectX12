@@ -1,8 +1,65 @@
+/**
+* @file text_ui.cpp
+* @brief テキストクラスの関数定義
+* @author 石山　悠
+* @date 2019/03/18
+*/
 #include "text_ui.h"
 #include "../common/message_box.h"
 #include "../common/window_size.h"
+#include <vector>
+
+/**
+* @brief テキストクラスのpimplイディオム
+*/
+class TextUi::Impl
+{
+public:
+	/**
+	* @brief テキスト情報構造体
+	*/
+	struct TextBlock
+	{
+		std::wstring text;
+		D2D1_RECT_F layout;
+		bool use_custom_color;
+		ComPtr<ID2D1SolidColorBrush> custom_text_brush;
+		bool use_custom_format;
+		ComPtr<IDWriteTextFormat> custom_text_format;
+	};
+	//d3dデバイス
+	ComPtr<ID3D11DeviceContext> d3d11_device_context;
+	ComPtr<ID3D11On12Device> d3d11_on_12_device;
+	HRESULT CreateD3DDevice(ComPtr<ID3D12Device>& d3d12_device,
+		ComPtr<ID3D12CommandQueue>& command_queue);
+	//d2dデバイス
+	ComPtr<IDWriteFactory> dwrite_factory;
+	ComPtr<ID2D1Factory3> d2d_factory;
+	ComPtr<ID2D1Device2> d2d1_device;
+	ComPtr<ID2D1DeviceContext2> d2d1_device_context;
+	HRESULT CreateD2DDevice();
+	//レンダーターゲット
+	std::vector<ComPtr<ID3D11Resource>> wrapped_render_targets;
+	std::vector<ComPtr<ID2D1Bitmap1>> d2d_render_targets;
+	HRESULT CreateWrappedRenderTargets(ComPtr<ID3D12Resource>* render_targets);
+	//テキストデバイス
+	ComPtr<ID2D1SolidColorBrush> default_text_brush;
+	ComPtr<IDWriteTextFormat> default_text_format;
+	//描画するテキストの情報を格納
+	std::vector<TextBlock> text_blocks;
+};
 
 #pragma region public
+
+/**
+* @brief テキストクラスのコンストラクタ
+*/
+TextUi::TextUi() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタのデフォルト指定
+TextUi::~TextUi()noexcept = default;
 
 /**
 * @brief テキストUIの初期化
@@ -19,16 +76,16 @@ HRESULT TextUi::Init(UINT frame_count,
 {
 	HRESULT hr = S_OK;
 
-	wrapped_render_targets.resize(frame_count);
-	d2d_render_targets.resize(frame_count);
-	hr = CreateD3DDevice(d3d12_device, command_queue);
+	pimpl->wrapped_render_targets.resize(frame_count);
+	pimpl->d2d_render_targets.resize(frame_count);
+	hr = pimpl->CreateD3DDevice(d3d12_device, command_queue);
 	if (FAILED(hr))return hr;
-	hr = CreateD2DDevice();
+	hr = pimpl->CreateD2DDevice();
 	if (FAILED(hr))return hr;
-	hr = CreateWrappedRenderTargets(render_targets);
+	hr = pimpl->CreateWrappedRenderTargets(render_targets);
 	if (FAILED(hr))return hr;
-	default_text_brush = CreateTextBrush(0xffffff);
-	default_text_format = CreateTextFormat();
+	pimpl->default_text_brush = CreateTextBrush(0xffffff);
+	pimpl->default_text_format = CreateTextFormat();
 
 	return hr;
 }
@@ -42,29 +99,33 @@ HRESULT TextUi::Render(UINT frame_index)
 {
 	HRESULT hr = S_OK;
 
-	ID3D11Resource* resources[] = { wrapped_render_targets[frame_index].Get() };
-	d2d1_device_context->SetTarget(d2d_render_targets[frame_index].Get());
-	d3d11_on_12_device->AcquireWrappedResources(resources, _countof(resources));
-	d2d1_device_context->BeginDraw();
-	for (auto&& text_block : text_blocks)
+	ID3D11Resource* resources[] = { pimpl->wrapped_render_targets[frame_index].Get() };
+	pimpl->d2d1_device_context->SetTarget(pimpl->d2d_render_targets[frame_index].Get());
+	pimpl->d3d11_on_12_device->AcquireWrappedResources(resources, _countof(resources));
+	pimpl->d2d1_device_context->BeginDraw();
+	for (auto&& text_block : pimpl->text_blocks)
 	{
-		d2d1_device_context->DrawTextW(
+		pimpl->d2d1_device_context->DrawTextW(
 			text_block.text.c_str(),
 			static_cast<UINT>(text_block.text.length()),
-			(text_block.use_custom_format ? text_block.custom_text_format.Get() : default_text_format.Get()), 
+			(text_block.use_custom_format ? 
+				text_block.custom_text_format.Get() : 
+				pimpl->default_text_format.Get()),
 			text_block.layout,
-			(text_block.use_custom_color ? text_block.custom_text_brush.Get() : default_text_brush.Get()));
+			(text_block.use_custom_color ? 
+				text_block.custom_text_brush.Get() : 
+				pimpl->default_text_brush.Get()));
 	}
-	hr = d2d1_device_context->EndDraw();
+	hr = pimpl->d2d1_device_context->EndDraw();
 	if (FAILED(hr))
 	{
 		Comment(L"ドローの終了時にエラー発生",
 			L"text_ui.cpp/TextUi::Render");
 		return hr;
 	}
-	d3d11_on_12_device->ReleaseWrappedResources(resources, _countof(resources));
-	d3d11_device_context->Flush();
-	text_blocks.clear();
+	pimpl->d3d11_on_12_device->ReleaseWrappedResources(resources, _countof(resources));
+	pimpl->d3d11_device_context->Flush();
+	pimpl->text_blocks.clear();
 
 	return hr;
 }
@@ -77,7 +138,7 @@ HRESULT TextUi::Render(UINT frame_index)
 */
 void TextUi::DrawString(const std::wstring& text, const Vec2& pos)
 {
-	text_blocks.push_back({ text
+	pimpl->text_blocks.push_back({ text
 		,D2D1::RectF(pos.x,pos.y,static_cast<float>(WINDOW_WIDTH),static_cast<float>(WINDOW_HEIGHT)),
 		false,{},false,{} });
 }
@@ -91,7 +152,7 @@ void TextUi::DrawString(const std::wstring& text, const Vec2& pos)
 */
 void TextUi::DrawStringColor(const std::wstring& text, const Vec2& pos, const ComPtr<ID2D1SolidColorBrush>& text_brush)
 {
-	text_blocks.push_back({ text
+	pimpl->text_blocks.push_back({ text
 		,D2D1::RectF(pos.x,pos.y,static_cast<float>(WINDOW_WIDTH),static_cast<float>(WINDOW_HEIGHT)),
 		true,text_brush,false,{} });
 }
@@ -106,7 +167,7 @@ void TextUi::DrawStringColor(const std::wstring& text, const Vec2& pos, const Co
 void TextUi::DrawStringFormat(const std::wstring& text, const Vec2& pos,
 	const ComPtr<IDWriteTextFormat>& text_format)
 {
-	text_blocks.push_back({ text
+	pimpl->text_blocks.push_back({ text
 		,D2D1::RectF(pos.x,pos.y,static_cast<float>(WINDOW_WIDTH),static_cast<float>(WINDOW_HEIGHT)),
 		false,{},true,text_format });
 }
@@ -122,7 +183,7 @@ void TextUi::DrawStringFormat(const std::wstring& text, const Vec2& pos,
 void TextUi::DrawStringColorFormat(const std::wstring& text, const Vec2& pos,
 	const ComPtr<ID2D1SolidColorBrush>& text_brush, const ComPtr<IDWriteTextFormat>& text_format)
 {
-	text_blocks.push_back({ text
+	pimpl->text_blocks.push_back({ text
 		,D2D1::RectF(pos.x,pos.y,static_cast<float>(WINDOW_WIDTH),static_cast<float>(WINDOW_HEIGHT)),
 		true,text_brush,true,text_format });
 }
@@ -137,7 +198,7 @@ ComPtr<ID2D1SolidColorBrush> TextUi::CreateTextBrush(const UINT32 color)
 	ComPtr<ID2D1SolidColorBrush> text_brush;
 
 	HRESULT hr = S_OK;
-	hr = d2d1_device_context->CreateSolidColorBrush(D2D1::ColorF(color), &text_brush);
+	hr = pimpl->d2d1_device_context->CreateSolidColorBrush(D2D1::ColorF(color), &text_brush);
 	if (FAILED(hr))
 	{
 		Comment(L"ブラッシュの作成に失敗",
@@ -167,7 +228,7 @@ ComPtr<IDWriteTextFormat> TextUi::CreateTextFormat(
 	ComPtr<IDWriteTextFormat> text_format;
 	HRESULT hr = S_OK;
 
-	hr = dwrite_factory->CreateTextFormat(
+	hr = pimpl->dwrite_factory->CreateTextFormat(
 		L"Arial", nullptr, font_weight,font_style,font_stretch,
 		WINDOW_HEIGHT * font_size / 30.0f, L"en-us", &text_format);
 	if (FAILED(hr))
@@ -196,7 +257,7 @@ ComPtr<IDWriteTextFormat> TextUi::CreateTextFormat(
 
 #pragma endregion
 
-#pragma region private
+#pragma region pimpl
 
 /**
 * @brief D3Dデバイスの作成
@@ -204,7 +265,7 @@ ComPtr<IDWriteTextFormat> TextUi::CreateTextFormat(
 * @param command_queue コマンドキュー
 * @return 成功したかどうか
 */
-HRESULT TextUi::CreateD3DDevice(ComPtr<ID3D12Device>& d3d12_device,
+HRESULT TextUi::Impl::CreateD3DDevice(ComPtr<ID3D12Device>& d3d12_device,
 	ComPtr<ID3D12CommandQueue>& command_queue)
 {
 	HRESULT hr = S_OK;
@@ -269,7 +330,7 @@ HRESULT TextUi::CreateD3DDevice(ComPtr<ID3D12Device>& d3d12_device,
 * @brief D2Dデバイスの作成
 * @return 成功したかどうか
 */
-HRESULT TextUi::CreateD2DDevice()
+HRESULT TextUi::Impl::CreateD2DDevice()
 {
 	HRESULT hr = S_OK;
 	D2D1_FACTORY_OPTIONS d2d_factory_options{};
@@ -323,7 +384,7 @@ HRESULT TextUi::CreateD2DDevice()
 * @param render_targets ラッピングするレンダーターゲット
 * @return 成功したかどうか
 */
-HRESULT TextUi::CreateWrappedRenderTargets(ComPtr<ID3D12Resource>* render_targets)
+HRESULT TextUi::Impl::CreateWrappedRenderTargets(ComPtr<ID3D12Resource>* render_targets)
 {
 	HRESULT hr = S_OK;
 

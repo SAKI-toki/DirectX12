@@ -8,15 +8,51 @@
 #include "../../device/device.h"
 #include "../../common/message_box.h"
 #include <fstream>
+#include <unordered_map>
 
+/**
+* @brief テクスチャを管理するクラスのpimplイディオム
+*/
+class TextureManager::Impl
+{
+public:
+	/**
+	* @brief テクスチャの情報構造体
+	*/
+	struct TextureData
+	{
+		int width{}, height{};
+		ComPtr<ID3D12Resource> texture;
+		ComPtr<ID3D12DescriptorHeap> dh_texture;
+	};
+	std::unordered_map<std::wstring, TextureData> texture_data_map;
+};
+
+#pragma region public
+
+/**
+* @brief テクスチャを管理するクラスのコンストラクタ
+*/
+TextureManager::TextureManager() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタのデフォルト指定
+TextureManager::~TextureManager()noexcept = default;
+
+/**
+* @brief テクスチャの読み込み
+* @param path テクスチャのパス
+* @return 成功したかどうか
+*/
 HRESULT TextureManager::LoadTexture(const std::wstring& path)
 {
 	HRESULT hr = S_OK;
 
-	auto itr = texture_data_map.find(path);
+	auto itr = pimpl->texture_data_map.find(path);
 	//既に読み込んでいる場合
-	if (itr != std::end(texture_data_map)) { return hr; }
-	TextureData texture_data;
+	if (itr != std::end(pimpl->texture_data_map)) { return hr; }
+	TextureManager::Impl::TextureData texture_data;
 	std::vector<byte> img;
 	//独自ファイルの読み込み
 	{
@@ -27,10 +63,10 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 				L"texture_manager.cpp/TextureManager::LoadTexture");
 			return E_FAIL;
 		}
-		ifs.read((char*)&texture_data.width, sizeof(texture_data.width));
-		ifs.read((char*)&texture_data.height, sizeof(texture_data.height));
-		img.resize(texture_data.width * texture_data.height * 4);
-		ifs.read((char*)&img[0], img.size());
+		ifs.read(reinterpret_cast<char*>(&texture_data.width), sizeof(texture_data.width));
+		ifs.read(reinterpret_cast<char*>(&texture_data.height), sizeof(texture_data.height));
+		img.resize(static_cast<size_t>(texture_data.width) * static_cast<size_t>(texture_data.height) * static_cast<size_t>(4));
+		ifs.read(reinterpret_cast<char*>(&img[0]), img.size());
 		ifs.close();
 	}
 
@@ -64,7 +100,7 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 	}
 
 	D3D12_DESCRIPTOR_HEAP_DESC descriptor_heap_desc{};
-	descriptor_heap_desc.NumDescriptors = 1;
+	descriptor_heap_desc.NumDescriptors = 2;
 	descriptor_heap_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descriptor_heap_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	descriptor_heap_desc.NodeMask = 0;
@@ -98,15 +134,20 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 			L"texture_manager.cpp/TextureManager::LoadTexture");
 		return E_FAIL;
 	}
-	texture_data_map.insert(std::make_pair(path, texture_data));
+	pimpl->texture_data_map.insert(std::make_pair(path, texture_data));
 	return hr;
 }
 
-void TextureManager::SetTexture(const std::wstring& path, 
+/**
+* @brief テクスチャのセット
+* @param key キー
+* @param command_list セットするコマンドリスト
+*/
+void TextureManager::SetTexture(const std::wstring& key, 
 	ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
-	auto itr = texture_data_map.find(path);
-	if (itr == texture_data_map.end())throw 0;
+	auto itr = pimpl->texture_data_map.find(key);
+	if (itr == pimpl->texture_data_map.end())throw 0;
 
 	Device::getinstance()->SetResourceBarrier(
 		D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_GENERIC_READ, 
@@ -122,17 +163,30 @@ void TextureManager::SetTexture(const std::wstring& path,
 		itr->second.texture.Get(), command_list);
 }
 
-int TextureManager::GetWidth(const std::wstring& path)
+/**
+* @brief テクスチャの幅を取得
+* @param key キー
+* @param テクスチャの幅
+*/
+int TextureManager::GetWidth(const std::wstring& key)
 {
-	auto itr = texture_data_map.find(path);
-	if (itr == texture_data_map.end())throw 0;
+	auto itr = pimpl->texture_data_map.find(key);
+	if (itr == pimpl->texture_data_map.end())throw 0;
 
 	return itr->second.width;
 }
-int TextureManager::GetHeight(const std::wstring& path)
+
+/**
+* @brief テクスチャの高さを取得
+* @param key キー
+* @param テクスチャの高さ
+*/
+int TextureManager::GetHeight(const std::wstring& key)
 {
-	auto itr = texture_data_map.find(path);
-	if (itr == texture_data_map.end())throw 0;
+	auto itr = pimpl->texture_data_map.find(key);
+	if (itr == pimpl->texture_data_map.end())throw 0;
 
 	return itr->second.height;
 }
+
+#pragma endregion

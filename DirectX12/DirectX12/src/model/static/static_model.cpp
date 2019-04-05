@@ -10,7 +10,44 @@
 #include "../../device/device.h"
 #include "../../light/directional/directional_light.h"
 
+/**
+* @brief アニメーションなしモデルクラスのpimplイディオム
+*/
+class StaticModel::Impl
+{
+public:
+	/**
+	* @brief アニメーションなしモデルクラスの定数構造体
+	*/
+	struct StaticModelConstant
+	{
+		Matrix m;
+		Matrix world;
+		//Float4 light;
+		Float4 col;
+	};
+	//モデルのキー
+	std::wstring key;
+	ComPtr<ID3D12Resource> constant_buffer;
+	HRESULT CreateBuffer();
+	Bundle bundle;
+	HRESULT SetBundle();
+	HRESULT UpdateTransform(const Transform& transform);
+};
+
 #pragma region public
+
+/**
+* @brief アニメーションなしモデルクラスのコンストラクタ
+*/
+StaticModel::StaticModel() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタ、ムーブコンストラクタ、ムーブ代入演算子のデフォルト指定
+StaticModel::~StaticModel()noexcept = default;
+StaticModel::StaticModel(StaticModel&&)noexcept = default;
+StaticModel& StaticModel::operator=(StaticModel&&)noexcept = default;
 
 /**
 * @brief アニメーションなしモデルクラスの初期化
@@ -23,56 +60,21 @@ HRESULT StaticModel::Init(const std::wstring& model_path,
 {
 	HRESULT hr = S_OK;
 
-	key = model_path;
-	hr = CreateBuffer();
+	pimpl->key = model_path;
+	hr = pimpl->CreateBuffer();
 	if (FAILED(hr))return hr;
-	hr = StaticModelManager::getinstance()->LoadModel(key);
+	hr = StaticModelManager::getinstance()->LoadModel(pimpl->key);
 	if (FAILED(hr))return hr;
-	hr = bundle.Init(pipeline);
+	hr = pimpl->bundle.Init(pipeline);
 	if (FAILED(hr))return hr;
-	hr = SetBundle();
+	hr = pimpl->SetBundle();
 	if (FAILED(hr))return hr;
-	hr = bundle.Close();
+	hr = pimpl->bundle.Close();
 	if (FAILED(hr))return hr;
-	hr = UpdateTransform({});
+	hr = pimpl->UpdateTransform({});
 	if (FAILED(hr))return hr;
 	hr = UpdateColor({ 1.0f,1.0f, 1.0f, 1.0f });
 	if (FAILED(hr))return hr;
-
-	return hr;
-}
-
-/**
-* @brief Transformの更新
-* @param transform 新しいTransform
-* @return 成功したかどうか
-*/
-HRESULT StaticModel::UpdateTransform(const Transform& transform)
-{
-	HRESULT hr = S_OK;
-
-	auto world = DirectX::XMMatrixIdentity();
-	auto scale = transform.get_scale();
-	Matrix scale_mat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-	auto rot = transform.get_rot();
-	Matrix rot_mat = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
-	auto pos = transform.get_pos();
-	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
-	world = world * scale_mat * rot_mat * pos_mat;
-
-	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
-	StaticModelConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
-	if (FAILED(hr))
-	{
-		Comment(L"定数バッファのMapに失敗",
-			L"static_model.cpp/StaticModel::UpdateTransform");
-		return hr;
-	}
-	buf->m = mat;
-	buf->world = DirectX::XMMatrixTranspose(world);
-	constant_buffer->Unmap(0, nullptr);
-	buf = nullptr;
 
 	return hr;
 }
@@ -85,9 +87,9 @@ HRESULT StaticModel::UpdateTransform(const Transform& transform)
 HRESULT StaticModel::UpdateColor(const Float4& color)
 {
 	HRESULT hr = S_OK;
-	
-	StaticModelConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
+
+	StaticModel::Impl::StaticModelConstant* buf{};
+	hr = pimpl->constant_buffer->Map(0, nullptr, reinterpret_cast<void**>(&buf));
 	if (FAILED(hr))
 	{
 		Comment(L"定数バッファのMapに失敗",
@@ -95,7 +97,7 @@ HRESULT StaticModel::UpdateColor(const Float4& color)
 		return hr;
 	}
 	buf->col = color;
-	constant_buffer->Unmap(0, nullptr);
+	pimpl->constant_buffer->Unmap(0, nullptr);
 	buf = nullptr;
 
 	return hr;
@@ -103,28 +105,25 @@ HRESULT StaticModel::UpdateColor(const Float4& color)
 
 /**
 * @brief モデルの描画
+* @param transform 位置や回転、拡縮
 * @param command_list 命令を送るコマンドリスト
 * @return 成功したかどうか
 */
-HRESULT StaticModel::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
+HRESULT StaticModel::Draw(const Transform& transform, ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 
 	HRESULT hr = S_OK;
 
-	StaticModelConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
-	if (FAILED(hr))
-	{
-		Comment(L"定数バッファのMapに失敗",
-			L"static_model.cpp/StaticModel::Draw");
-		return hr;
-	}
-	buf->light = DirectionalLight::getinstance()->GetVector();
-	constant_buffer->Unmap(0, nullptr);
-	buf = nullptr;
-	bundle.SetExecuteCommandList(command_list);
+	hr = pimpl->UpdateTransform(transform);
+	if (FAILED(hr))return hr;
+	pimpl->bundle.SetExecuteCommandList(command_list);
 
 	return hr;
+}
+
+unsigned int StaticModel::GetPolygonNum()
+{
+	return StaticModelManager::getinstance()->GetPolygonNum(pimpl->key);
 }
 
 #pragma endregion
@@ -135,7 +134,7 @@ HRESULT StaticModel::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
 * @brief バッファの作成
 * @return 成功したかどうか
 */
-HRESULT StaticModel::CreateBuffer()
+HRESULT StaticModel::Impl::CreateBuffer()
 {
 	HRESULT hr = S_OK;
 
@@ -174,7 +173,7 @@ HRESULT StaticModel::CreateBuffer()
 * @brief バンドルにコマンドをセットする
 * @return 成功したかどうか
 */
-HRESULT StaticModel::SetBundle()
+HRESULT StaticModel::Impl::SetBundle()
 {
 	HRESULT hr = S_OK;
 
@@ -186,6 +185,41 @@ HRESULT StaticModel::SetBundle()
 
 	//モデルの描画
 	StaticModelManager::getinstance()->SetModel(key, bundle_command_list);
+
+	return hr;
+}
+
+/**
+* @brief Transformの更新
+* @param transform 新しいTransform
+* @return 成功したかどうか
+*/
+HRESULT StaticModel::Impl::UpdateTransform(const Transform& transform)
+{
+	HRESULT hr = S_OK;
+
+	auto world = DirectX::XMMatrixIdentity();
+	auto scale = transform.get_scale();
+	Matrix scale_mat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+	auto rot = transform.get_rot();
+	Matrix rot_mat = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
+	auto pos = transform.get_pos();
+	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
+	world = world * scale_mat * rot_mat * pos_mat;
+
+	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
+	StaticModelConstant* buf{};
+	hr = constant_buffer->Map(0, nullptr, reinterpret_cast<void**>(&buf));
+	if (FAILED(hr))
+	{
+		Comment(L"定数バッファのMapに失敗",
+			L"static_model.cpp/StaticModel::UpdateTransform");
+		return hr;
+	}
+	buf->m = mat;
+	buf->world = DirectX::XMMatrixTranspose(world);
+	constant_buffer->Unmap(0, nullptr);
+	buf = nullptr;
 
 	return hr;
 }

@@ -9,7 +9,32 @@
 #include "../../common/message_box.h"
 #include "../Bundle/bundle.h"
 
+/**
+* @brief 実行用コマンドリストのpimplイディオム
+*/
+class ExecuteCommandList::Impl
+{
+public:
+	ComPtr<ID3D12CommandAllocator> command_allocator;
+	ComPtr<ID3D12GraphicsCommandList> command_list;
+	ComPtr<ID3D12PipelineState> pipeline;
+	HRESULT CreateCommandAllocator();
+	HRESULT CreateCommandList();
+};
+
 #pragma region public
+
+/**
+* @brief 実行用コマンドリストのコンストラクタ
+*/
+ExecuteCommandList::ExecuteCommandList() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタ、ムーブコンストラクタ、ムーブ代入演算子のデフォルト指定
+ExecuteCommandList::~ExecuteCommandList()noexcept = default;
+ExecuteCommandList::ExecuteCommandList(ExecuteCommandList&&)noexcept = default;
+ExecuteCommandList& ExecuteCommandList::operator=(ExecuteCommandList&&)noexcept = default;
 
 /**
 * @brief 実行用コマンドリストの初期化
@@ -21,9 +46,11 @@ HRESULT ExecuteCommandList::Init()
 
 	hr = CreatePipeline();
 	if (FAILED(hr))return hr;
-	hr = CreateCommandAllocator();
+	hr = pimpl->CreateCommandAllocator();
 	if (FAILED(hr))return hr;
-	hr = CreateCommandList();
+	hr = pimpl->CreateCommandList();
+	if (FAILED(hr))return hr;
+	hr = Execute();
 	if (FAILED(hr))return hr;
 
 	return hr;
@@ -38,7 +65,7 @@ HRESULT ExecuteCommandList::BeginScene()
 	HRESULT hr = S_OK;
 
 	//描画開始時に必要なものをセットする
-	hr = Device::getinstance()->BeginSceneSet(command_list);
+	hr = Device::getinstance()->BeginSceneSet(pimpl->command_list);
 	if (FAILED(hr))return hr;
 
 	return hr;
@@ -52,7 +79,8 @@ HRESULT ExecuteCommandList::Execute()
 {
 	HRESULT hr = S_OK;
 
-	hr = Device::getinstance()->ExecuteCommand(command_list, command_allocator, pipeline.Get());
+	hr = Device::getinstance()->ExecuteCommand(
+		pimpl->command_list, pimpl->command_allocator, pimpl->pipeline.Get());
 	if (FAILED(hr))return hr;
 
 	return hr;
@@ -64,7 +92,7 @@ HRESULT ExecuteCommandList::Execute()
 */
 ComPtr<ID3D12GraphicsCommandList>& ExecuteCommandList::GetCommandList()
 {
-	return (command_list);
+	return (pimpl->command_list);
 }
 
 /**
@@ -73,18 +101,18 @@ ComPtr<ID3D12GraphicsCommandList>& ExecuteCommandList::GetCommandList()
 */
 ComPtr<ID3D12PipelineState>& ExecuteCommandList::GetPipeline()
 {
-	return (pipeline);
+	return (pimpl->pipeline);
 }
 
 #pragma endregion
 
-#pragma region private
+#pragma region pimpl
 
 /**
 * @brief 実行用のコマンドアロケーターの作成
 * @return 成功したかどうか
 */
-HRESULT ExecuteCommandList::CreateCommandAllocator()
+HRESULT ExecuteCommandList::Impl::CreateCommandAllocator()
 {
 	HRESULT hr = S_OK;
 
@@ -105,7 +133,7 @@ HRESULT ExecuteCommandList::CreateCommandAllocator()
 * @brief 実行用のコマンドリストの作成
 * @return 成功したかどうか
 */
-HRESULT ExecuteCommandList::CreateCommandList()
+HRESULT ExecuteCommandList::Impl::CreateCommandList()
 {
 	HRESULT hr = S_OK;
 
@@ -119,8 +147,6 @@ HRESULT ExecuteCommandList::CreateCommandList()
 			L"command_list.cpp/CommandList::CreateCommandList");
 		return hr;
 	}
-	hr = Execute();
-	if (FAILED(hr))return hr;
 
 	return hr;
 }

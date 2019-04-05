@@ -6,17 +6,46 @@
 */
 #include "time.h"
 #include "../text_ui/text_ui.h"
+#include <saki/clock.h>
 #include <string>
 #include <sstream>
 #include <iomanip>
+
+/**
+* @brief 時間を管理するクラスのpimplイディオム
+*/
+class Time::Impl
+{
+public:
+	//時間を測る
+	saki::clock my_clock;
+	//経過時間(スケール反映)
+	float elapsed_time = 0.0f;
+	//経過時間(スケール反映なし)
+	float elapsed_time_not_scale = 0.0f;
+	//時間のスケール
+	float time_scale = 1.0f;
+};
+
+#pragma region public
+
+/**
+* @brief 時間を管理するクラスのコンストラクタ
+*/
+Time::Time() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタのデフォルト指定
+Time::~Time()noexcept = default;
 
 /**
 * @brief 時間の更新、毎フレーム呼ぶ
 */
 void Time::UpdateTime()
 {
-	elapsed_time_not_scale = my_clock.end_and_start<float>(saki::clock::DURATION::SECOND);
-	elapsed_time = elapsed_time_not_scale * time_scale;
+	pimpl->elapsed_time_not_scale = pimpl->my_clock.end_and_start<float>(saki::clock::DURATION::SECOND);
+	pimpl->elapsed_time = pimpl->elapsed_time_not_scale * pimpl->time_scale;
 }
 
 /**
@@ -25,7 +54,7 @@ void Time::UpdateTime()
 */
 float Time::GetElapsedTime()
 {
-	return elapsed_time;
+	return pimpl->elapsed_time;
 }
 
 /**
@@ -34,7 +63,7 @@ float Time::GetElapsedTime()
 */
 float Time::GetElapsedTimeNotScale()
 {
-	return elapsed_time_not_scale;
+	return pimpl->elapsed_time_not_scale;
 }
 
 /**
@@ -43,7 +72,7 @@ float Time::GetElapsedTimeNotScale()
 */
 void Time::SetTimeScale(float scale)
 {
-	time_scale = scale;
+	pimpl->time_scale = scale;
 }
 
 /**
@@ -52,7 +81,7 @@ void Time::SetTimeScale(float scale)
 */
 float Time::GetTimeScale()
 {
-	return time_scale;
+	return pimpl->time_scale;
 }
 
 /**
@@ -80,3 +109,5 @@ void Time::DrawFps(const Vec2& pos)
 	}
 	TextUi::getinstance()->DrawString(fps, pos);
 }
+
+#pragma endregion

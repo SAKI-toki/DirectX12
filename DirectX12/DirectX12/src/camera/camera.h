@@ -7,29 +7,18 @@
 #pragma once
 #include "../common/alias.h"
 #include <saki/singleton.h>
-#include <saki/math/degree_radian_conversion.h>
+#include <memory>
 
 /**
 * @brief カメラクラス
 */
 class Camera :public saki::singleton<Camera>
 {
-	//近い距離
-	static constexpr float NEAR_Z = 0.1f;
-	//遠い距離
-	static constexpr float FAR_Z = 10000.0f;
-	//視野
-	static constexpr float fov = saki::to_radian(60.0f);
-	//行列
-	Matrix view, projection, view_mul_projection;
-	//位置,向きベクトル
-	Vec3 pos, forward_vector;
-	//行列の更新
-	void MatrixUpdate();
-	//Z軸回転
-	float rot_z;
+	class Impl;
+	std::unique_ptr<Impl> pimpl;
 public:
 	Camera();
+	~Camera()noexcept;
 	void Update();
 	Matrix GetView()const;
 	Matrix GetProjection()const;

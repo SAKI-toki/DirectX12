@@ -7,32 +7,23 @@
 #pragma once
 #include "manager/static_model_manager.h"
 #include "../../command_list/Bundle/bundle.h"
+#include <memory>
 
 /**
 * @brief アニメーションなしモデルクラス
 */
 class StaticModel
 {
-	/**
-	* @brief アニメーションなしモデルクラスの定数構造体
-	*/
-	struct StaticModelConstant
-	{
-		Matrix m;
-		Matrix world;
-		Float4 light;
-		Float4 col;
-	};
-	//モデルのキー
-	std::wstring key;
-	ComPtr<ID3D12Resource> constant_buffer;
-	HRESULT CreateBuffer();
-	Bundle bundle;
-	HRESULT SetBundle();
+	class Impl;
+	std::unique_ptr<Impl> pimpl;
 public:
+	StaticModel();
+	~StaticModel()noexcept;
+	StaticModel(StaticModel&&)noexcept;
+	StaticModel& operator=(StaticModel&&)noexcept;
 	HRESULT Init(const std::wstring& model_path,
 		ComPtr<ID3D12PipelineState>& com_pipeline);
-	HRESULT UpdateTransform(const Transform& transform);
 	HRESULT UpdateColor(const Float4& color);
-	HRESULT Draw(ComPtr<ID3D12GraphicsCommandList>& com_command_list);
+	HRESULT Draw(const Transform& transform, ComPtr<ID3D12GraphicsCommandList>& com_command_list);
+	unsigned int GetPolygonNum();
 };

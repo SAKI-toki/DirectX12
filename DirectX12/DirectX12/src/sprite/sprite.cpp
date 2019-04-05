@@ -8,6 +8,55 @@
 #include "../device/device.h"
 #include "../camera/camera.h"
 #include "../common/message_box.h"
+#include "../texture/texture.h"
+#include "../command_list/Bundle/bundle.h"
+
+/**
+* @brief スプライトのpimplイディオム
+*/
+class Sprite::Impl
+{
+public:
+	/**
+	* @brief 頂点情報
+	*/
+	struct Vertex2D
+	{
+		Float3 pos;
+		Float2 uv;
+	};
+	/**
+	* @brief 定数バッファに送る情報
+	*/
+	struct SpriteConstant
+	{
+		Matrix m;
+		Float4 col;
+	};
+	ComPtr<ID3D12Resource> vertex_buffer;
+	D3D12_VERTEX_BUFFER_VIEW vertex_buffer_view;
+	ComPtr<ID3D12Resource> constant_buffer;
+	HRESULT CreateBuffer();
+	HRESULT CreatePlane();
+	Texture texture;
+	Bundle bundle;
+	HRESULT SetBundle();
+	HRESULT UpdateTransform(const Transform& transform);
+};
+
+#pragma region public
+
+/**
+* @brief スプライトのコンストラクタ
+*/
+Sprite::Sprite() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタ、ムーブコンストラクタ、ムーブ代入演算子のデフォルト指定
+Sprite::~Sprite()noexcept = default;
+Sprite::Sprite(Sprite&&)noexcept = default;
+Sprite& Sprite::operator=(Sprite&&)noexcept = default;
 
 /**
 * @brief スプライトの初期化
@@ -19,19 +68,19 @@ HRESULT Sprite::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipe
 {
 	HRESULT hr = S_OK;
 
-	hr = CreateBuffer();
+	hr = pimpl->CreateBuffer();
 	if (FAILED(hr))return hr;
-	hr = texture.LoadTexture(path);
+	hr = pimpl->texture.LoadTexture(path);
 	if (FAILED(hr))return hr;
-	hr = CreatePlane();
+	hr = pimpl->CreatePlane();
 	if (FAILED(hr))return hr;
-	hr = bundle.Init(pipeline);
+	hr = pimpl->bundle.Init(pipeline);
 	if (FAILED(hr))return hr;
-	hr = SetBundle();
+	hr = pimpl->SetBundle();
 	if (FAILED(hr))return hr;
-	hr = bundle.Close();
+	hr = pimpl->bundle.Close();
 	if (FAILED(hr))return hr;
-	hr = UpdateTransform({});
+	hr = pimpl->UpdateTransform({});
 	if (FAILED(hr))return hr;
 	hr = UpdateColor({ 1.0f,1.0f,1.0f,1.0f });
 	if (FAILED(hr))return hr;
@@ -40,45 +89,15 @@ HRESULT Sprite::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipe
 }
 
 /**
-* @brief Transformの更新
-*/
-HRESULT Sprite::UpdateTransform(const Transform& transform)
-{
-	HRESULT hr = S_OK;
-
-	auto world = DirectX::XMMatrixIdentity();
-	auto scale = transform.get_scale();
-	Matrix scale_mat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-	auto rot = transform.get_rot();
-	Matrix rot_mat = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
-	auto pos = transform.get_pos();
-	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
-	world = world * scale_mat * rot_mat * pos_mat;
-	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
-	SpriteConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
-	if (FAILED(hr))
-	{
-		Comment(L"定数バッファのMapに失敗",
-			L"sprite.cpp/Sprite::UpdateTransform");
-		return hr;
-	}
-	buf->m = mat;
-	constant_buffer->Unmap(0, nullptr);
-	buf = nullptr;
-
-	return hr;
-}
-
-/**
 * @brief Colorの更新
+* @return 成功したかどうか
 */
 HRESULT Sprite::UpdateColor(const Float4& color)
 {
 	HRESULT hr = S_OK;
 
-	SpriteConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
+	Sprite::Impl::SpriteConstant *buf{};
+	hr = pimpl->constant_buffer->Map(0, nullptr, reinterpret_cast<void**>(&buf));
 	if (FAILED(hr))
 	{
 		Comment(L"定数バッファのMapに失敗",
@@ -86,24 +105,40 @@ HRESULT Sprite::UpdateColor(const Float4& color)
 		return hr;
 	}
 	buf->col = color;
-	constant_buffer->Unmap(0, nullptr);
+	pimpl->constant_buffer->Unmap(0, nullptr);
 	buf = nullptr;
 
 	return hr;
 }
 
-HRESULT Sprite::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
+/**
+* @brief スプライトの描画
+* @param transform 位置や回転、拡縮
+* @param command_list 命令を送るコマンドリスト
+* @return 成功したかどうか
+*/
+HRESULT Sprite::Draw(const Transform& transform, ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
 
+	hr = pimpl->UpdateTransform(transform);
+	if (FAILED(hr))return hr;
 	//テクスチャをセット
-	texture.SetTexture(command_list);
-	command_list->ExecuteBundle(bundle.GetCommandList().Get());
+	pimpl->texture.SetTexture(command_list);
+	command_list->ExecuteBundle(pimpl->bundle.GetCommandList().Get());
 
 	return hr;
 }
 
-HRESULT Sprite::CreateBuffer()
+#pragma endregion
+
+#pragma region private
+
+/**
+* @brief バッファの作成
+* @return 成功したかどうか
+*/
+HRESULT Sprite::Impl::CreateBuffer()
 {
 	HRESULT hr = S_OK;
 
@@ -152,7 +187,11 @@ HRESULT Sprite::CreateBuffer()
 	return hr;
 }
 
-HRESULT Sprite::CreatePlane()
+/**
+* @brief 板の作成
+* @return 成功したかどうか
+*/
+HRESULT Sprite::Impl::CreatePlane()
 {
 	HRESULT hr = S_OK;
 
@@ -165,7 +204,7 @@ HRESULT Sprite::CreatePlane()
 		return E_FAIL;
 	}
 	Vertex2D *vb{};
-	hr = vertex_buffer->Map(0, nullptr, (void**)&vb);
+	hr = vertex_buffer->Map(0, nullptr, reinterpret_cast<void**>(&vb));
 	if (FAILED(hr))
 	{
 		delete[](vb);
@@ -186,7 +225,7 @@ HRESULT Sprite::CreatePlane()
 * @brief バンドルにコマンドをセットする
 * @return 成功したかどうか
 */
-HRESULT Sprite::SetBundle()
+HRESULT Sprite::Impl::SetBundle()
 {
 	HRESULT hr = S_OK;
 
@@ -204,3 +243,36 @@ HRESULT Sprite::SetBundle()
 	bundle_command_list->DrawInstanced(4, 1, 0, 0);
 	return hr;
 }
+
+/**
+* @brief Transformの更新
+*/
+HRESULT Sprite::Impl::UpdateTransform(const Transform& transform)
+{
+	HRESULT hr = S_OK;
+
+	auto world = DirectX::XMMatrixIdentity();
+	auto scale = transform.get_scale();
+	Matrix scale_mat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+	auto rot = transform.get_rot();
+	Matrix rot_mat = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
+	auto pos = transform.get_pos();
+	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
+	world = world * scale_mat * rot_mat * pos_mat;
+	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
+	SpriteConstant *buf{};
+	hr = constant_buffer->Map(0, nullptr, reinterpret_cast<void**>(&buf));
+	if (FAILED(hr))
+	{
+		Comment(L"定数バッファのMapに失敗",
+			L"sprite.cpp/Sprite::UpdateTransform");
+		return hr;
+	}
+	buf->m = mat;
+	constant_buffer->Unmap(0, nullptr);
+	buf = nullptr;
+
+	return hr;
+}
+
+#pragma endregion

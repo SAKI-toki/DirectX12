@@ -9,7 +9,31 @@
 #include "../../common/message_box.h"
 #include "../Execute/execute_command_list.h"
 
+/**
+* @brief バンドルのpimplイディオム
+*/
+class Bundle::Impl
+{
+public:
+	ComPtr<ID3D12CommandAllocator> command_allocator;
+	ComPtr<ID3D12GraphicsCommandList> command_list;
+	HRESULT CreateCommandAllocator();
+	HRESULT CreateCommandList(ComPtr<ID3D12PipelineState>& com_pipeline);
+};
+
 #pragma region public
+
+/**
+* @brief バンドルのコンストラクタ
+*/
+Bundle::Bundle() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタ、ムーブコンストラクタ、ムーブ代入演算子のデフォルト指定
+Bundle::~Bundle()noexcept = default;
+Bundle::Bundle(Bundle&&)noexcept = default;
+Bundle& Bundle::operator=(Bundle&&)noexcept = default;
 
 /**
 * @brief バンドルの初期化
@@ -20,9 +44,9 @@ HRESULT Bundle::Init(ComPtr<ID3D12PipelineState>& pipeline)
 {
 	HRESULT hr = S_OK;
 
-	hr = CreateCommandAllocator();
+	hr = pimpl->CreateCommandAllocator();
 	if (FAILED(hr))return hr;
-	hr = CreateCommandList(pipeline);
+	hr = pimpl->CreateCommandList(pipeline);
 	if (FAILED(hr))return hr;
 
 	return hr;
@@ -36,7 +60,7 @@ HRESULT Bundle::Close()
 {
 	HRESULT hr = S_OK;
 
-	hr = command_list->Close();
+	hr = pimpl->command_list->Close();
 	if (FAILED(hr))
 	{
 		Comment(L"バンドル用のコマンドリストのCloseに失敗",
@@ -54,7 +78,7 @@ HRESULT Bundle::Close()
 */
 void Bundle::SetExecuteCommandList(ComPtr<ID3D12GraphicsCommandList>& execute_command_list)
 {
-	execute_command_list->ExecuteBundle(command_list.Get());
+	execute_command_list->ExecuteBundle(pimpl->command_list.Get());
 }
 
 /**
@@ -63,18 +87,18 @@ void Bundle::SetExecuteCommandList(ComPtr<ID3D12GraphicsCommandList>& execute_co
 */
 ComPtr<ID3D12GraphicsCommandList>& Bundle::GetCommandList()
 {
-	return (command_list);
+	return (pimpl->command_list);
 }
 
 #pragma endregion
 
-#pragma region private
+#pragma region pimpl
 
 /**
 * @brief バンドルのコマンドアロケーターの作成
 * @return 成功したかどうか
 */
-HRESULT Bundle::CreateCommandAllocator()
+HRESULT Bundle::Impl::CreateCommandAllocator()
 {
 	HRESULT hr = S_OK;
 
@@ -96,7 +120,7 @@ HRESULT Bundle::CreateCommandAllocator()
 * @brief バンドルのコマンドリストの作成
 * @return 成功したかどうか
 */
-HRESULT Bundle::CreateCommandList(ComPtr<ID3D12PipelineState>& pipeline)
+HRESULT Bundle::Impl::CreateCommandList(ComPtr<ID3D12PipelineState>& pipeline)
 {
 	HRESULT hr = S_OK;
 

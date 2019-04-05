@@ -5,13 +5,64 @@
 * @date 2019/02/08
 */
 #include "cube.h"
+#include "../texture/texture.h"
+#include "../command_list/Bundle/bundle.h"
 #include "../device/device.h"
 #include "../camera/camera.h"
 #include "../common/message_box.h"
 #include "../light/directional/directional_light.h"
-#include <vector>
+
+/**
+* @brief キューブのpimplイディオム
+*/
+class Cube::Impl
+{
+	/**
+	* @brief 頂点の構造体
+	*/
+	struct Vertex3D
+	{
+		Float3 pos;
+		Float3 nor;
+		Float2 uv;
+	};
+	/**
+	* @brief キューブ用の定数構造体
+	*/
+	struct CubeConstant
+	{
+		Matrix m;
+		Matrix world;
+		//Float4 light;
+	};
+	ComPtr<ID3D12Resource> vertex_buffer;
+	D3D12_VERTEX_BUFFER_VIEW vertex_buffer_view{};
+	ComPtr<ID3D12Resource> index_buffer;
+	D3D12_INDEX_BUFFER_VIEW index_buffer_view{};
+	ComPtr<ID3D12Resource> constant_buffer;
+	ComPtr<ID3D12Resource> shadow_map_constant_buffer;
+public:
+	Texture texture;
+	Bundle bundle;
+	HRESULT UpdateTransform(const Transform& transform);
+	HRESULT CreateBuffer();
+	HRESULT CreateCube();
+	HRESULT SetBundle();
+};
 
 #pragma region public
+
+/**
+* @brief コンストラクタ
+*/
+Cube::Cube() :
+	pimpl(new Impl{})
+{}
+
+//デストラクタ、ムーブコンストラクタ、ムーブ代入演算子のデフォルト指定
+Cube::~Cube()noexcept = default;
+Cube& Cube::operator=(Cube&&)noexcept = default;
+Cube::Cube(Cube&&)noexcept = default;
 
 /**
 * @brief キューブの初期化
@@ -23,93 +74,52 @@ HRESULT Cube::Init(const std::wstring& path, ComPtr<ID3D12PipelineState>& pipeli
 {
 	HRESULT hr = S_OK;
 
-	hr = CreateBuffer();
+	hr = pimpl->CreateBuffer();
 	if (FAILED(hr))return hr;
-	hr = CreateCube();
+	hr = pimpl->CreateCube();
 	if (FAILED(hr))return hr;
-	hr = texture.LoadTexture(path);
+	hr = pimpl->texture.LoadTexture(path);
 	if (FAILED(hr))return hr;
-	hr = bundle.Init(pipeline);
+	hr = pimpl->bundle.Init(pipeline);
 	if (FAILED(hr))return hr;
-	hr = SetBundle();
+	hr = pimpl->SetBundle();
 	if (FAILED(hr))return hr;
-	hr = bundle.Close();
+	hr = pimpl->bundle.Close();
 	if (FAILED(hr))return hr;
-	hr = UpdateTransform({});
+	hr = pimpl->UpdateTransform({});
 	if (FAILED(hr))return hr;
-
-	return hr;
-}
-
-/**
-* @brief Transformの更新
-* @param transform 新しいTransform
-* @return 成功したかどうか
-*/
-HRESULT Cube::UpdateTransform(const Transform& transform)
-{
-	HRESULT hr = S_OK;
-
-	auto scale = transform.get_scale();
-	Matrix scale_mat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-	auto rot = transform.get_rot();
-	Matrix rot_mat = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
-	auto pos = transform.get_pos();
-	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
-	Matrix world = scale_mat * rot_mat * pos_mat;
-	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
-	CubeConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
-	if (FAILED(hr))
-	{
-		Comment(L"定数バッファのMapに失敗", L"cube.cpp/Cube::UpdateTransform");
-		return hr;
-	}
-	buf->m = mat;
-	buf->world = DirectX::XMMatrixTranspose(world);
-	constant_buffer->Unmap(0, nullptr);
-	buf = nullptr;
 
 	return hr;
 }
 
 /**
 * @brief キューブの描画
+* @param transform 位置や回転、拡縮
 * @param command_list 命令を送るコマンドリスト
 * @return 成功したかどうか
 */
-HRESULT Cube::Draw(ComPtr<ID3D12GraphicsCommandList>& command_list)
+HRESULT Cube::Draw(const Transform& transform, ComPtr<ID3D12GraphicsCommandList>& command_list)
 {
 	HRESULT hr = S_OK;
 
-	CubeConstant *buf{};
-	hr = constant_buffer->Map(0, nullptr, (void**)&buf);
-	if (FAILED(hr))
-	{
-		Comment(L"定数バッファのMapに失敗", 
-			L"cube.cpp/Cube::Draw");
-		return hr;
-	}
-	buf->light = DirectionalLight::getinstance()->GetVector();
-	constant_buffer->Unmap(0, nullptr);
-	buf = nullptr;
-
+	hr = pimpl->UpdateTransform(transform);
+	if (FAILED(hr))return hr;
 	//テクスチャをセット
-	texture.SetTexture(command_list);
-	bundle.SetExecuteCommandList(command_list);
+	pimpl->texture.SetTexture(command_list);
+	pimpl->bundle.SetExecuteCommandList(command_list);
 
 	return hr;
 }
 
 #pragma endregion
 
-#pragma region private
+#pragma region pimpl
 
 /**
 * @brief バッファの作成
 * @return 成功したかどうか
 */
-HRESULT Cube::CreateBuffer()
+HRESULT Cube::Impl::CreateBuffer()
 {
 	HRESULT hr = S_OK;
 
@@ -137,7 +147,17 @@ HRESULT Cube::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constant_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"定数バッファ用のリソースとヒープの作成に失敗", 
+		Comment(L"定数バッファ用のリソースとヒープの作成に失敗",
+			L"cube.cpp/Cube::CreateBuffer");
+		return hr;
+	}
+
+	hr = Device::getinstance()->GetDevice()->CreateCommittedResource
+	(&heap_properties, D3D12_HEAP_FLAG_NONE, &resource_desc,
+		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&shadow_map_constant_buffer));
+	if (FAILED(hr))
+	{
+		Comment(L"シャドーマップの定数バッファ用のリソースとヒープの作成に失敗",
 			L"cube.cpp/Cube::CreateBuffer");
 		return hr;
 	}
@@ -149,7 +169,7 @@ HRESULT Cube::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertex_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗", 
+		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗",
 			L"cube.cpp/Cube::CreateBuffer");
 		return hr;
 	}
@@ -164,7 +184,7 @@ HRESULT Cube::CreateBuffer()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&index_buffer));
 	if (FAILED(hr))
 	{
-		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗", 
+		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗",
 			L"cube.cpp/Cube::CreateBuffer");
 		return hr;
 	}
@@ -180,17 +200,18 @@ HRESULT Cube::CreateBuffer()
 * @brief キューブの作成
 * @return 成功したかどうか
 */
-HRESULT Cube::CreateCube()
+HRESULT Cube::Impl::CreateCube()
 {
 	HRESULT hr = S_OK;
 	//頂点の設定
 	{
 		Vertex3D *vb{};
-		hr = vertex_buffer->Map(0, nullptr, (void**)&vb);
+		hr = vertex_buffer->Map(0, nullptr, reinterpret_cast<void**>(&vb));
 		if (FAILED(hr))
 		{
 			delete[](vb);
-			Comment(L"頂点バッファのMapに失敗", L"cube.cpp/Cube::CreateCube");
+			Comment(L"頂点バッファのMapに失敗",
+				L"cube.cpp/Cube::CreateCube");
 			return hr;
 		}
 		vb[0] = Vertex3D{ Float3{-0.5f,-0.5f,-0.5f},Float3{0.0f,0.0f,-1.0f},Float2{0,1} };
@@ -228,10 +249,11 @@ HRESULT Cube::CreateCube()
 	//インデックスの設定
 	{
 		WORD *ib{};
-		hr = index_buffer->Map(0, nullptr, (void**)&ib);
+		hr = index_buffer->Map(0, nullptr, reinterpret_cast<void**>(&ib));
 		if (FAILED(hr))
 		{
-			Comment(L"インデックスバッファのMapに失敗", L"cube.cpp/Cube::CreateCube");
+			Comment(L"インデックスバッファのMapに失敗",
+				L"cube.cpp/Cube::CreateCube");
 			return hr;
 		}
 		ib[0] = 0; ib[1] = 1; ib[2] = 2; ib[3] = 3; ib[4] = 2; ib[5] = 1;
@@ -250,7 +272,7 @@ HRESULT Cube::CreateCube()
 * @brief バンドルにコマンドをセットする
 * @return 成功したかどうか
 */
-HRESULT Cube::SetBundle()
+HRESULT Cube::Impl::SetBundle()
 {
 	HRESULT hr = S_OK;
 
@@ -267,6 +289,40 @@ HRESULT Cube::SetBundle()
 
 	//描画
 	bundle_command_list->DrawIndexedInstanced(36, 1, 0, 0, 0);
+
+	return hr;
+}
+
+/**
+* @brief Transformの更新
+* @param transform 新しいTransform
+* @return 成功したかどうか
+*/
+HRESULT Cube::Impl::UpdateTransform(const Transform& transform)
+{
+	HRESULT hr = S_OK;
+
+	auto scale = transform.get_scale();
+	Matrix scale_mat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+	auto rot = transform.get_rot();
+	Matrix rot_mat = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
+	auto pos = transform.get_pos();
+	Matrix pos_mat = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
+	Matrix world = scale_mat * rot_mat * pos_mat;
+	Matrix mat = DirectX::XMMatrixTranspose(world * Camera::getinstance()->GetViewMulProjection());
+	CubeConstant *buf{};
+	hr = constant_buffer->Map(0, nullptr, reinterpret_cast<void**>(&buf));
+	if (FAILED(hr))
+	{
+		Comment(L"定数バッファのMapに失敗",
+			L"cube.cpp/Cube::UpdateTransform");
+		return hr;
+	}
+	buf->m = mat;
+	buf->world = DirectX::XMMatrixTranspose(world);
+	constant_buffer->Unmap(0, nullptr);
+	buf = nullptr;
+
 	return hr;
 }
 

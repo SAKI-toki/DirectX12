@@ -1,8 +1,0 @@
-﻿  main.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  コード生成しています。
-  16 of 1111 functions ( 1.4%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    13 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  DirectX12.vcxproj -> C:\Users\tokir\Desktop\DirectX関係\DirectX12\DirectX12\bin\Win32\Release\DirectX12.exe

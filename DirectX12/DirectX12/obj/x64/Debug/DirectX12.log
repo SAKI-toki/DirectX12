@@ -1,11 +1,6 @@
-﻿  camera.cpp
-  cube.cpp
+﻿  device.cpp
   main.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  static_model.cpp
   title_scene.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  sphere.cpp
-  sprite.cpp
+  time.cpp
   コードを生成中...
   DirectX12.vcxproj -> C:\Users\tokir\Documents\GitHub\DirectX12\DirectX12\DirectX12\bin\x64\Debug\DirectX12.exe
