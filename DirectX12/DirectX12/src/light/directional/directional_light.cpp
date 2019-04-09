@@ -22,7 +22,7 @@ public:
 		//Matrix light_vp;
 	};
 	//ライトの位置
-	Vec3 light_pos{ 2.0f, 6.5f, -1.0f };
+	Vec3 light_pos{ 1.0f, 1.0f, 1.0f };
 	//ライトの定数バッファ
 	ComPtr<ID3D12Resource> constant_buffer;
 };

@@ -31,16 +31,16 @@ class Cube::Impl
 	*/
 	struct CubeConstant
 	{
-		Matrix m;
+		Matrix wvp;
 		Matrix world;
-		//Float4 light;
+		Matrix view;
+		Matrix projection;
 	};
 	ComPtr<ID3D12Resource> vertex_buffer;
 	D3D12_VERTEX_BUFFER_VIEW vertex_buffer_view{};
 	ComPtr<ID3D12Resource> index_buffer;
 	D3D12_INDEX_BUFFER_VIEW index_buffer_view{};
 	ComPtr<ID3D12Resource> constant_buffer;
-	ComPtr<ID3D12Resource> shadow_map_constant_buffer;
 public:
 	Texture texture;
 	Bundle bundle;
@@ -148,17 +148,7 @@ HRESULT Cube::Impl::CreateBuffer()
 	if (FAILED(hr))
 	{
 		Comment(L"定数バッファ用のリソースとヒープの作成に失敗",
-			L"cube.cpp/Cube::CreateBuffer");
-		return hr;
-	}
-
-	hr = Device::getinstance()->GetDevice()->CreateCommittedResource
-	(&heap_properties, D3D12_HEAP_FLAG_NONE, &resource_desc,
-		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&shadow_map_constant_buffer));
-	if (FAILED(hr))
-	{
-		Comment(L"シャドーマップの定数バッファ用のリソースとヒープの作成に失敗",
-			L"cube.cpp/Cube::CreateBuffer");
+			L"cube.cpp/Cube::Impl::CreateBuffer");
 		return hr;
 	}
 
@@ -170,7 +160,7 @@ HRESULT Cube::Impl::CreateBuffer()
 	if (FAILED(hr))
 	{
 		Comment(L"頂点バッファ用のリソースとヒープの作成に失敗",
-			L"cube.cpp/Cube::CreateBuffer");
+			L"cube.cpp/Cube::Impl::CreateBuffer");
 		return hr;
 	}
 	vertex_buffer_view.BufferLocation = vertex_buffer->GetGPUVirtualAddress();
@@ -185,7 +175,7 @@ HRESULT Cube::Impl::CreateBuffer()
 	if (FAILED(hr))
 	{
 		Comment(L"インデックスバッファ用のリソースとヒープの作成に失敗",
-			L"cube.cpp/Cube::CreateBuffer");
+			L"cube.cpp/Cube::Impl::CreateBuffer");
 		return hr;
 	}
 
@@ -211,7 +201,7 @@ HRESULT Cube::Impl::CreateCube()
 		{
 			delete[](vb);
 			Comment(L"頂点バッファのMapに失敗",
-				L"cube.cpp/Cube::CreateCube");
+				L"cube.cpp/Cube::Impl::CreateCube");
 			return hr;
 		}
 		vb[0] = Vertex3D{ Float3{-0.5f,-0.5f,-0.5f},Float3{0.0f,0.0f,-1.0f},Float2{0,1} };
@@ -253,7 +243,7 @@ HRESULT Cube::Impl::CreateCube()
 		if (FAILED(hr))
 		{
 			Comment(L"インデックスバッファのMapに失敗",
-				L"cube.cpp/Cube::CreateCube");
+				L"cube.cpp/Cube::Impl::CreateCube");
 			return hr;
 		}
 		ib[0] = 0; ib[1] = 1; ib[2] = 2; ib[3] = 3; ib[4] = 2; ib[5] = 1;
@@ -315,11 +305,13 @@ HRESULT Cube::Impl::UpdateTransform(const Transform& transform)
 	if (FAILED(hr))
 	{
 		Comment(L"定数バッファのMapに失敗",
-			L"cube.cpp/Cube::UpdateTransform");
+			L"cube.cpp/Cube::Impl::UpdateTransform");
 		return hr;
 	}
-	buf->m = mat;
+	buf->wvp = mat;
 	buf->world = DirectX::XMMatrixTranspose(world);
+	buf->view = DirectX::XMMatrixTranspose(Camera::getinstance()->GetView());
+	buf->projection = DirectX::XMMatrixTranspose(Camera::getinstance()->GetProjection());
 	constant_buffer->Unmap(0, nullptr);
 	buf = nullptr;
 

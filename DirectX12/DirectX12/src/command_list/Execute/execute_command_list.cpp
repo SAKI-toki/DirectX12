@@ -122,7 +122,7 @@ HRESULT ExecuteCommandList::Impl::CreateCommandAllocator()
 	if (FAILED(hr))
 	{
 		Comment(L"コマンドアロケーターの作成に失敗",
-			L"command_list.cpp/CommandList::CreateCommandAllocator");
+			L"execute_command_list.cpp/ExecuteCommandList::Impl::CreateCommandAllocator");
 		return hr;
 	}
 
@@ -144,7 +144,7 @@ HRESULT ExecuteCommandList::Impl::CreateCommandList()
 	if (FAILED(hr))
 	{
 		Comment(L"コマンドリストの作成に失敗",
-			L"command_list.cpp/CommandList::CreateCommandList");
+			L"execute_command_list.cpp/ExecuteCommandList::Impl::CreateCommandList");
 		return hr;
 	}
 

@@ -1,0 +1,503 @@
+﻿  main.cpp
+  png.cpp
+LINK : warning LNK4098: defaultlib 'LIBCMT' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
+  コード生成しています。
+  Previous IPDB not found, fall back to full compilation.
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1375): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1375) : 注: この行で比較を行ってインデックス 'best_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1375) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1357): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1351) : 注: この行で比較を行ってインデックス 'count' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1357) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(2240): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(2109) : 注: この行で比較を行ってインデックス 'pass' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(2248) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(235): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(211) : 注: この行で比較を行ってインデックス 'h' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(235) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(231): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(211) : 注: この行で比較を行ってインデックス 'h' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(231) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1683): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1665) : 注: この行で比較を行ってインデックス 'component' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1683) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3894): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3866) : 注: この行で比較を行ってインデックス 'value' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3894) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3554): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3553) : 注: この行で比較を行ってインデックス 'r' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3554) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3529): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3528) : 注: この行で比較を行ってインデックス 'r' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3529) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3494): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3493) : 注: この行で比較を行ってインデックス 'r' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(3494) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(90): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(84) : 注: この行で比較を行ってインデックス 'start' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(90) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(115): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(114) : 注: この行で比較を行ってインデックス 'req' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(115) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\trees.c(971): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\trees.c(962) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\trees.c(971) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(29): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(26) : 注: この行で比較を行ってインデックス 'uval' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(29) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(159): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(143) : 注: この行で比較を行ってインデックス 'add_elements' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(159) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(128): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(125) : 注: この行で比較を行ってインデックス 'nelements' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(128) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(46): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(45) : 注: この行で比較を行ってインデックス 'uval' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(46) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(2102): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(2102) : 注: この行で比較を行ってインデックス 'dist' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(2102) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1992): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1992) : 注: この行で比較を行ってインデックス 'dist' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1992) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1967): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1961) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1967) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1867): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1867) : 注: この行で比較を行ってインデックス 'dist' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1867) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1861): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1856) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1861) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(142): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(142) : 注: この行で比較を行ってインデックス 'num_checked' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(142) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(113): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(105) : 注: この行で比較を行ってインデックス 'items' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(113) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'num_bytes' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'num_bytes' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'jmp_buf_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'jmp_buf_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'lengthh' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'lengthh' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'lengthw' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'lengthw' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'new_size$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'new_size$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1448) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1448) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'buf_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'buf_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1000): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(770) : 注: この行で比較を行ってインデックス 'flush' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(1000) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(966): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(966) : 注: この行で比較を行ってインデックス 'beg' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(966) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(944): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(944) : 注: この行で比較を行ってインデックス 'beg' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(944) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(922): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(922) : 注: この行で比較を行ってインデックス 'beg' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\zlib-1.2.11\deflate.c(922) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'avail' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1515): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1506) : 注: この行で比較を行ってインデックス 'num_hist' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1515) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(185): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(182) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(185) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(202): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(794) : 注: この行で比較を行ってインデックス 'read_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(202) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(4106): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(4104) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(4106) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(4098): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(4096) : 注: この行で比較を行ってインデックス 'bound' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(4098) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(191): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(3184) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(191) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(756): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(633) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(756) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(741): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(633) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(741) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(633) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(633) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(679): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(633) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(679) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'buffer_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'buffer_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(649): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(633) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(649) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'units_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1549) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1549) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'purpose_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'purpose_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1549) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1553): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1549) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1553) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1550): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1549) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1550) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'entry_size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1155) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1155) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1170): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1155) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1170) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'name_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'name_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1166): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1155) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1166) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1164): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1155) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1164) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1163): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1155) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1163) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1712): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1712) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'key_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(133) : 注: この行で比較を行ってインデックス 'key_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(140) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1703): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1703) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1697): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1696) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1697) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1691): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1691) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1690): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1656) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1690) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1832): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1821) : 注: この行で比較を行ってインデックス 'total_len' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1832) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1365): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1357) : 注: この行で比較を行ってインデックス 'num_trans' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1365) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1053): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1052) : 注: この行で比較を行ってインデックス 'size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1053) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1006): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1005) : 注: この行で比較を行ってインデックス 'size' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1006) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(202): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2912) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(202) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2905): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2902) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2905) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2461): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2441) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2461) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2453): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2441) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2453) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2441): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2402) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2441) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(202): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2402) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(202) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2417): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2402) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2417) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2412): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2402) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2412) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2404): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2402) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2404) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2057): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2048) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2057) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2082): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2074) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2082) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2069): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2048) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2069) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2050): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2048) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2050) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(907): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(26) : 注: この行で比較を行ってインデックス 'uval' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(907) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1060): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(961) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1060) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1876): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1865) : 注: この行で比較を行ってインデックス 'channels' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1683) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1871): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1865) : 注: この行で比較を行ってインデックス 'channels' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1683) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1844): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1833) : 注: この行で比較を行ってインデックス 'channels' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1844) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1839): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1833) : 注: この行で比較を行ってインデックス 'channels' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1839) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'avail_in' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'avail_in' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス 'length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1081): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1075) : 注: この行で比較を行ってインデックス 'nentries$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1081) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1239): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1205) : 注: この行で比較を行ってインデックス 'num_unknowns$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(1239) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(811): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(797) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngset.c(811) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1597) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(41) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1597) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwio.c(37) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1614): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1597) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1614) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1608): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1597) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1608) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1605): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1597) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1605) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1604): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1597) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwutil.c(1604) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(397): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2972) : 注: この行で比較を行ってインデックス 'ret' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(397) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(395): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2972) : 注: この行で比較を行ってインデックス 'ret' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(395) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(506): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2972) : 注: この行で比較を行ってインデックス 'ret' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(506) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(501): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2972) : 注: この行で比較を行ってインデックス 'ret' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(501) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2973): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2972) : 注: この行で比較を行ってインデックス 'ret' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2973) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1740) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1809): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1740) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1809) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1753): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1740) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1753) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(222): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1740) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(222) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1740) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1742): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1740) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1742) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1733): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1717) : 注: この行で比較を行ってインデックス 'entry_start' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(1733) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2818): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2809) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2818) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2673): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2658) : 注: この行で比較を行ってインデックス 'length$GSCopy' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2673) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1147): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1130) : 注: この行で比較を行ってインデックス 'gAMA' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1147) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(521): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2358) : 注: この行で比較を行ってインデックス 'endptr' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(521) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(506): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2358) : 注: この行で比較を行ってインデックス 'endptr' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(506) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(501): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2358) : 注: この行で比較を行ってインデックス 'endptr' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(501) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2358) : 注: この行で比較を行ってインデックス 'endptr' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2358) : 注: この行で比較を行ってインデックス 'endptr' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(252) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(239) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2366): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2366) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2309): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2366) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2310): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2366) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2311): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2366) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(521): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(521) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(506): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(506) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(501): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngrutil.c(2302) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngerror.c(501) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2163): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2134) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2163) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2145): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2134) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2145) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2155): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2134) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2155) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2053): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2052) : 注: この行で比較を行ってインデックス 'temp' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2053) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2046): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2045) : 注: この行で比較を行ってインデックス 'temp' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(2046) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1974): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1973) : 注: この行で比較を行ってインデックス 'profile_length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1974) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1996): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1994) : 注: この行で比較を行ってインデックス 'profile_length' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\png.c(1996) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(95) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(83) : 注: この行で比較を行ってインデックス '' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngmem.c(91) : 注: この行に呼び出しを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1732): warning C5045: /Qspectre スイッチが
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1730) : 注: この行で比較を行ってインデックス 'row_end' の範囲を確認します
+  C:\Users\tokir\Downloads\libpng\lpng1636\pngwrite.c(1683) : 注: この行にメモリの読み込みを入力します に指定されている場合、コンパイラはメモリの読み込みに Spectre の軽減策を挿入します
+  All 689 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  コード生成が終了しました。
+  PngConverter.vcxproj -> C:\Users\tokir\Documents\GitHub\DirectX12\DirectX12\PngConverter\bin\Win32\Release\PngConverter.exe

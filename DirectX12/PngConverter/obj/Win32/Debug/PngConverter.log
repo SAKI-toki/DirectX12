@@ -1,4 +1,2 @@
-﻿  main.cpp
-  png.cpp
-  コードを生成中...
+﻿LINK : warning LNK4098: defaultlib 'LIBCMTD' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
   PngConverter.vcxproj -> C:\Users\tokir\Documents\GitHub\DirectX12\DirectX12\PngConverter\bin\Win32\Debug\PngConverter.exe

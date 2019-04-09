@@ -100,7 +100,7 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 	}
 
 	D3D12_DESCRIPTOR_HEAP_DESC descriptor_heap_desc{};
-	descriptor_heap_desc.NumDescriptors = 2;
+	descriptor_heap_desc.NumDescriptors = 1;
 	descriptor_heap_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descriptor_heap_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	descriptor_heap_desc.NodeMask = 0;
@@ -123,11 +123,14 @@ HRESULT TextureManager::LoadTexture(const std::wstring& path)
 	resource_view_desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
 	handle_srv = texture_data.dh_texture->GetCPUDescriptorHandleForHeapStart();
-	Device::getinstance()->GetDevice()->CreateShaderResourceView(texture_data.texture.Get(), &resource_view_desc, handle_srv);
+	Device::getinstance()->GetDevice()->CreateShaderResourceView(
+		texture_data.texture.Get(), &resource_view_desc, handle_srv);
 
-	D3D12_BOX box{ 0,0,0,static_cast<UINT>(texture_data.width),static_cast<UINT>(texture_data.height),1 };
+	D3D12_BOX box{ 0,0,0,static_cast<UINT>(texture_data.width),
+		static_cast<UINT>(texture_data.height),1 };
 	hr = texture_data.texture->WriteToSubresource(
-		0, &box, &img[0], static_cast<UINT>(4 * texture_data.width), static_cast<UINT>(4 * texture_data.width * texture_data.height));
+		0, &box, &img[0], static_cast<UINT>(4 * texture_data.width),
+		static_cast<UINT>(4 * texture_data.width * texture_data.height));
 	if (FAILED(hr))
 	{
 		Comment(L"サブリソースへの書き込みに失敗", 

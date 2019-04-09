@@ -107,6 +107,7 @@ HRESULT Device::InitDevice(HWND hwnd)
 		pimpl->FrameNum, pimpl->device, pimpl->command_queue, pimpl->render_targets);
 	if (FAILED(hr))return hr;
 
+
 	return hr;
 }
 
@@ -144,9 +145,10 @@ HRESULT Device::BeginScene()
 	SetResourceBarrier(D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET, pimpl->render_targets[pimpl->rtv_index].Get(), pimpl->command_list);
 
-	static constexpr float clear_color[4] = { 0.0f,0.0f,0.0f,1.0f };
+	static constexpr float clear_color[4] = { 0.7f,0.7f,0.7f,1.0f };
 	pimpl->command_list->ClearDepthStencilView(pimpl->dsv_handle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 	pimpl->command_list->ClearRenderTargetView(pimpl->rtv_handle[pimpl->rtv_index], clear_color, 0, nullptr);
+
 
 	hr = ExecuteCommand(pimpl->command_list, pimpl->command_allocator, nullptr);
 	if (FAILED(hr))return hr;
@@ -241,7 +243,7 @@ HRESULT Device::ExecuteCommand(
 			L"device.cpp/Device::ExecuteCommand");
 		return hr;
 	}
-	ID3D12CommandList *const command_lists = execute_command_list.Get();
+	ID3D12CommandList* const command_lists = execute_command_list.Get();
 	pimpl->command_queue->ExecuteCommandLists(1, &command_lists);
 
 	hr = pimpl->WaitForPreviousFrame();
@@ -315,7 +317,7 @@ HRESULT Device::Impl::CreateFactory()
 		if (FAILED(hr))
 		{
 			Comment(L"デバッグインターフェースの取得に失敗",
-				L"device.cpp/Device::CreateFactory");
+				L"device.cpp/Device::Impl::CreateFactory");
 			return hr;
 		}
 		debug->EnableDebugLayer();
@@ -326,7 +328,7 @@ HRESULT Device::Impl::CreateFactory()
 	if (FAILED(hr))
 	{
 		Comment(L"factoryの作成に失敗",
-			L"device.cpp/Device::CreateFactory");
+			L"device.cpp/Device::Impl::CreateFactory");
 		return hr;
 	}
 
@@ -342,18 +344,18 @@ HRESULT Device::Impl::CreateDevice()
 	HRESULT hr = S_OK;
 
 	ComPtr<IDXGIAdapter3> adapter;
-	hr = factory->EnumAdapters(0, (IDXGIAdapter**)adapter.GetAddressOf());
+	hr = factory->EnumAdapters(0, (IDXGIAdapter * *)adapter.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Comment(L"アダプタが見つかりませんでした。",
-			L"device.cpp/Device::CreateDevice");
+			L"device.cpp/Device::Impl::CreateDevice");
 		return hr;
 	}
 	hr = D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_1, IID_PPV_ARGS(&device));
 	if (FAILED(hr))
 	{
 		Comment(L"デバイスの作成に失敗",
-			L"device.cpp/Device::CreateDevice");
+			L"device.cpp/Device::Impl::CreateDevice");
 		return hr;
 	}
 
@@ -376,7 +378,7 @@ HRESULT Device::Impl::CreateCommandQueue()
 	if (FAILED(hr))
 	{
 		Comment(L"コマンドキューの作成に失敗",
-			L"device.cpp/Device::CreateCommandQueue");
+			L"device.cpp/Device::Impl::CreateCommandQueue");
 		return hr;
 	}
 
@@ -389,7 +391,7 @@ HRESULT Device::Impl::CreateCommandQueue()
 	if (FAILED(hr))
 	{
 		Comment(L"フェンスの作成に失敗",
-			L"device.cpp/Device::CreateCommandQueue");
+			L"device.cpp/Device::Impl::CreateCommandQueue");
 		return hr;
 	}
 
@@ -427,14 +429,14 @@ HRESULT Device::Impl::CreateSwapChain(HWND hwnd)
 	if (FAILED(hr))
 	{
 		Comment(L"スワップチェインの作成に失敗",
-			L"device.cpp/Device::CreateSwapChain");
+			L"device.cpp/Device::Impl::CreateSwapChain");
 		return hr;
 	}
 	hr = swap_chain_temp->QueryInterface(swap_chain.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Comment(L"SwapChainインターフェースをサポートしていません",
-			L"device.cpp/Device::CreateSwapChain");
+			L"device.cpp/Device::Impl::CreateSwapChain");
 		return hr;
 	}
 	//現在のバックバッファのインデックスを取得
@@ -456,7 +458,7 @@ HRESULT Device::Impl::CreateCommandAllocator()
 	if (FAILED(hr))
 	{
 		Comment(L"コマンドアロケーターの作成に失敗",
-			L"device.cpp/Device::CreateCommandAllocator");
+			L"device.cpp/Device::Impl::CreateCommandAllocator");
 		return hr;
 	}
 
@@ -476,7 +478,7 @@ HRESULT Device::Impl::CreateCommandList()
 	if (FAILED(hr))
 	{
 		Comment(L"コマンドリストの作成に失敗",
-			L"device.cpp/Device::CreateCommandList");
+			L"device.cpp/Device::Impl::CreateCommandList");
 		return hr;
 	}
 
@@ -546,7 +548,7 @@ HRESULT Device::Impl::CreateRootSignature()
 	if (FAILED(hr))
 	{
 		Comment(L"ルートシグネチャのシリアライズに失敗",
-			L"device.cpp/Device::CreateRootSignature");
+			L"device.cpp/Device::Impl::CreateRootSignature");
 		return hr;
 	}
 	hr = device->CreateRootSignature(0,
@@ -554,7 +556,7 @@ HRESULT Device::Impl::CreateRootSignature()
 	if (FAILED(hr))
 	{
 		Comment(L"ルートシグネチャの作成に失敗",
-			L"device.cpp/Device::CreateRootSignature");
+			L"device.cpp/Device::Impl::CreateRootSignature");
 		return hr;
 	}
 
@@ -578,7 +580,7 @@ HRESULT Device::Impl::CreateRenderTargetView()
 	if (FAILED(hr))
 	{
 		Comment(L"RTV用デスクリプタヒープの作成に失敗",
-			L"device.cpp/Device::CreateRenderTargetView");
+			L"device.cpp/Device::Impl::CreateRenderTargetView");
 		return hr;
 	}
 	UINT size = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
@@ -588,7 +590,7 @@ HRESULT Device::Impl::CreateRenderTargetView()
 		if (FAILED(hr))
 		{
 			Comment(L"スワップチェインからのバッファの受け取りに失敗",
-				L"device.cpp/Device::CreateRenderTargetView");
+				L"device.cpp/Device::Impl::CreateRenderTargetView");
 			return hr;
 		}
 		rtv_handle[i] = dh_rtv->GetCPUDescriptorHandleForHeapStart();
@@ -617,7 +619,7 @@ HRESULT Device::Impl::CreateDepthStencilBuffer()
 	if (FAILED(hr))
 	{
 		Comment(L"DSV用デスクリプタヒープの作成に失敗",
-			L"device.cpp/Device::CreateDepthStencilBuffer");
+			L"device.cpp/Device::Impl::CreateDepthStencilBuffer");
 		return hr;
 	}
 
@@ -651,7 +653,7 @@ HRESULT Device::Impl::CreateDepthStencilBuffer()
 	if (FAILED(hr))
 	{
 		Comment(L"DSV用のリソースとヒープの作成に失敗",
-			L"device.cpp/Device::CreateDepthStencilBuffer");
+			L"device.cpp/Device::Impl::CreateDepthStencilBuffer");
 		return hr;
 	}
 
@@ -683,7 +685,7 @@ HRESULT Device::Impl::WaitForPreviousFrame()
 	if (FAILED(hr))
 	{
 		Comment(L"fenceの更新に失敗",
-			L"device.cpp/Device::WaitForPreviousFrame");
+			L"device.cpp/Device::Impl::WaitForPreviousFrame");
 		return hr;
 	}
 	if (queue_fence->GetCompletedValue() < fence)
@@ -692,7 +694,7 @@ HRESULT Device::Impl::WaitForPreviousFrame()
 		if (FAILED(hr))
 		{
 			Comment(L"イベントの指定に失敗",
-				L"device.cpp/Device::WaitForPreviousFrame");
+				L"device.cpp/Device::Impl::WaitForPreviousFrame");
 			return hr;
 		}
 		WaitForSingleObject(fence_event, INFINITE);

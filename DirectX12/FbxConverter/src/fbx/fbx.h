@@ -12,6 +12,15 @@
 #include <array>
 #include <saki/vector.h>
 
+#ifdef _DLL
+#ifdef _DEBUG
+#pragma comment(lib,"debug/libfbxsdk-md.lib")
+#else
+#pragma comment(lib,"release/libfbxsdk-md.lib")
+
+#endif //_DEBUG
+#endif //_DLL
+
 /**
 * @brief ’¸“_î•ñ
 */

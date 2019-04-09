@@ -1,4 +1,0 @@
-﻿  main.cpp
-c:\users\tokir\documents\github\directx12\directx12\pngconverter\src\png\png.h(11): fatal error C1083: include ファイルを開けません。'libpng/png.h':No such file or directory
-  png.cpp
-c:\users\tokir\documents\github\directx12\directx12\pngconverter\src\png\png.h(11): fatal error C1083: include ファイルを開けません。'libpng/png.h':No such file or directory

@@ -1,3 +1,5 @@
 # Visual Studio cache directory
 .vs/
 vs2015/
+libfbxsdk-md.lib
+libfbxsdk-mt.lib

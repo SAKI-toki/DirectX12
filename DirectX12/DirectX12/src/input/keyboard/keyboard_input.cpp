@@ -5,9 +5,6 @@
 * @date 2018/12/20
 */
 #include "keyboard_input.h"
-#include <dinput.h>
-#pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
 #include "../../common/message_box.h"
 
 /**

@@ -9,8 +9,14 @@
 #include <vector>
 #include <iostream>
 #include <libpng/png.h>
-#pragma comment(lib,"libpng16.lib")
-#pragma comment(lib,"zlib.lib")
+#ifdef _DEBUG
+#pragma comment(lib,"debug/libpng16.lib")
+#pragma comment(lib,"debug/zlib.lib")
+#else
+#pragma comment(lib,"release/libpng16.lib")
+#pragma comment(lib,"release/zlib.lib")
+#endif
+
 static constexpr std::size_t PNG_SIG_SIZE = 8;
 struct Color
 {

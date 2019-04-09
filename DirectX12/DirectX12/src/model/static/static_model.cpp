@@ -162,7 +162,7 @@ HRESULT StaticModel::Impl::CreateBuffer()
 	if (FAILED(hr))
 	{
 		Comment(L"定数バッファ用のリソースとヒープの作成に失敗",
-			L"static_model.cpp/StaticModel::CreateBuffer");
+			L"static_model.cpp/StaticModel::Impl::CreateBuffer");
 		return hr;
 	}
 
@@ -213,7 +213,7 @@ HRESULT StaticModel::Impl::UpdateTransform(const Transform& transform)
 	if (FAILED(hr))
 	{
 		Comment(L"定数バッファのMapに失敗",
-			L"static_model.cpp/StaticModel::UpdateTransform");
+			L"static_model.cpp/StaticModel::Impl::UpdateTransform");
 		return hr;
 	}
 	buf->m = mat;

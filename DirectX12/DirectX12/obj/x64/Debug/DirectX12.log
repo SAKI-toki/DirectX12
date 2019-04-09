@@ -1,6 +1,37 @@
-﻿  device.cpp
+﻿  camera.cpp
+  bundle.cpp
+  execute_command_list.cpp
+  cube_command_list.cpp
+  cube.cpp
+  device.cpp
+  entry.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  gamepad_input.cpp
+  keyboard_input.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  directional_light.cpp
   main.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  static_model_command_list.cpp
+  static_model_manager.cpp
+  static_model.cpp
+  game_scene.cpp
   title_scene.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  scene_manager.cpp
+  shader_manager.cpp
+  shader.cpp
+  sound_manager.cpp
+  コードを生成中...
+  コンパイル中...
+  sound.cpp
+  sphere_command_list.cpp
+  sphere.cpp
+  sprite_command_list.cpp
+  sprite.cpp
+  texture_manager.cpp
+  texture.cpp
+  text_ui.cpp
   time.cpp
   コードを生成中...
   DirectX12.vcxproj -> C:\Users\tokir\Documents\GitHub\DirectX12\DirectX12\DirectX12\bin\x64\Debug\DirectX12.exe

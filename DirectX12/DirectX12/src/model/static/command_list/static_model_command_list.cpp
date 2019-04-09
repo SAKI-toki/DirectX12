@@ -111,7 +111,7 @@ HRESULT StaticModelCommandList::CreatePipeline()
 	if (FAILED(hr))
 	{
 		Comment(L"グラフィックスパイプラインステートの作成に失敗",
-			L"cube_command_list.cpp/CobeCommandList::CreatePipeline");
+			L"static_model_command_list.cpp/StaticModelCommandList::CreatePipeline");
 		return hr;
 	}
 

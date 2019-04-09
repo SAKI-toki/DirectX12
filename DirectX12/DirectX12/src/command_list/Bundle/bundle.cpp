@@ -109,7 +109,7 @@ HRESULT Bundle::Impl::CreateCommandAllocator()
 	if (FAILED(hr))
 	{
 		Comment(L"バンドル用のコマンドアロケーターの作成に失敗",
-			L"bundle.cpp/Bundle::CreateCommandAllocator");
+			L"bundle.cpp/Bundle::Impl::CreateCommandAllocator");
 		return hr;
 	}
 
@@ -131,7 +131,7 @@ HRESULT Bundle::Impl::CreateCommandList(ComPtr<ID3D12PipelineState>& pipeline)
 	if (FAILED(hr))
 	{
 		Comment(L"バンドル用のコマンドリストの作成に失敗",
-			L"bundle.cpp/Bundle::CreateCommandList");
+			L"bundle.cpp/Bundle::Impl::CreateCommandList");
 		return hr;
 	}
 

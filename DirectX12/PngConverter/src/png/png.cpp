@@ -17,6 +17,13 @@ bool ConvertPng(const std::string& path)
 {
 	FILE* fp = NULL;
 	fopen_s(&fp, path.c_str(), "rb");
+	std::cout << "ファイルをオープン : ";
+	if (fp == NULL)
+	{
+		std::cout << "失敗" << std::endl;
+		return false;
+	}
+	std::cout << "成功" << std::endl;
 	int  x, y;
 	int width, height;
 	png_structp png = NULL;

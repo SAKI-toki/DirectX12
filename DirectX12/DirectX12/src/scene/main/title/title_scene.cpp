@@ -17,6 +17,8 @@
 #include <vector>
 #include "../../../cube/cube.h"
 #include "../../../cube/command_list/cube_command_list.h"
+#include "../../../sphere/sphere.h"
+#include "../../../sphere/command_list/sphere_command_list.h"
 
 /**
 * @brief タイトルシーンのpimplイディオム
@@ -31,6 +33,13 @@ public:
 		Transform transform;
 	};
 	std::vector<cube_struct> cubes;
+	SphereCommandList sphere_command_list;
+	struct sphere_struct
+	{
+		Sphere model;
+		Transform transform;
+	};
+	std::vector<sphere_struct> spheres;
 };
 
 #pragma region public
@@ -52,21 +61,16 @@ TitleScene::~TitleScene()noexcept = default;
 HRESULT TitleScene::Init()
 {
 	HRESULT hr = S_OK;
-	hr = pimpl->cube_command_list.Init();
+
+	hr = pimpl->sphere_command_list.Init();
 	if (FAILED(hr))return hr;
-	for (int i = 0; i < 2; ++i)
-	{
-		pimpl->cubes.push_back({});
-		hr = pimpl->cubes.rbegin()->model.Init(
-			L"resources/texture/monster.sakitex",
-			pimpl->cube_command_list.GetPipeline());
-		if (FAILED(hr))return hr;
-	}
-	pimpl->cubes[0].transform.set_pos({ 0.0f,-6.0f,0.0f });
-	pimpl->cubes[0].transform.set_scale({ 10.0f,1.0f,10.0f });
-	pimpl->cubes[1].transform.set_pos({ 0.0f,2.0f,-1.0f });
-	Camera::getinstance()->SetPos({ 0.0f,8.0f,-10.0f });
-	Camera::getinstance()->LookAt({ 0.0f,-3.0f,0.0f });
+	pimpl->spheres.push_back({});
+
+	hr = pimpl->spheres[0].model.Init(L"resources/texture/background.sakitex", pimpl->sphere_command_list.GetPipeline());
+	if (FAILED(hr))return hr;
+	pimpl->spheres[0].transform.set_scale({ 1.0f,1.0f,1.0f });
+	Camera::getinstance()->SetPos({ 0.0f,0.0f,-10.0f });
+	Camera::getinstance()->LookAt({});
 
 	return hr;
 }
@@ -77,10 +81,17 @@ HRESULT TitleScene::Init()
 * @param hr 成功したかどうかを格納する
 * @return 次のシーンのポインタ
 */
-ScenePtrType TitleScene::Update(ScenePtrType scene_ptr, HRESULT & hr)
+ScenePtrType TitleScene::Update(ScenePtrType scene_ptr, HRESULT& hr)
 {
 	hr = S_OK;
 
+	auto rot = pimpl->spheres[0].transform.get_rot();
+
+	rot.x += 0.01f;
+	rot.y += 0.02f;
+	rot.z += 0.03f;
+
+	pimpl->spheres[0].transform.set_rot(rot);
 
 	return scene_ptr;
 }
@@ -93,14 +104,14 @@ HRESULT TitleScene::Render()
 {
 	HRESULT hr = S_OK;
 
-	hr = pimpl->cube_command_list.BeginScene();
+	hr = pimpl->sphere_command_list.BeginScene();
 	if (FAILED(hr))return hr;
-	for (auto&& s : pimpl->cubes)
+	for (auto&& s : pimpl->spheres)
 	{
-		hr = s.model.Draw(s.transform, pimpl->cube_command_list.GetCommandList());
+		hr = s.model.Draw(s.transform, pimpl->sphere_command_list.GetCommandList());
 		if (FAILED(hr))return hr;
 	}
-	hr = pimpl->cube_command_list.Execute();
+	hr = pimpl->sphere_command_list.Execute();
 	if (FAILED(hr))return hr;
 
 	return hr;
